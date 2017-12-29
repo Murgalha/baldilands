@@ -1,0 +1,1 @@
+csc /out:prog.exe Source\*
