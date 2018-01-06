@@ -1,9 +1,14 @@
-public class Attack {
+public class MeleeAttack {
 	
 	private int _Dmg;
 	private bool _Crit;
 
-	public Attack(Creature c) {
+	public MeleeAttack() {
+		this._Dmg = 0;
+		this._Crit = false;
+	}
+
+	public MeleeAttack(Creature c) {
 		int d = Dice.Roll(6);
 
 		if(d == 6) {

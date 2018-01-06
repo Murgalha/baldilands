@@ -101,9 +101,9 @@ public class BattleManager {
 	}
 
 	private void SaveLog(int damage, bool crit) {
-		if(list[turn].IsPlayer())
+		if(list[turn].IsPlayer() && damage != 0)
 			TurnLog = "You hit the enemy. It loses "+damage+" life points. ";
-		else
+		else if(!list[turn].IsPlayer() && damage != 0)
 			TurnLog = "The enemy hits you. You lose "+damage+" life points. ";
 		if(crit)
 			TurnLog += "It's a critical hit!";
@@ -114,13 +114,24 @@ public class BattleManager {
 		int NextP = (turn+1)%2;
 		Creature temp = list[turn].c;
 		string cmd = list[turn].Cmd;
-		Attack a = temp.Attack;
 		Defense d = list[NextP].c.Defense;
-		int damage = a.Dmg - d.Def;
+		int damage = 0;
+		bool IsCritical = false;
 
 		if(cmd.Equals("attack")) {
+			MeleeAttack a = temp.Melee;
+			damage = a.Dmg - d.Def;
 			damage = Math.Max(damage, 1);
 			list[NextP].c.Damage = damage;
+			IsCritical = a.IsCritical();
+		}
+
+		else if(cmd.Equals("ranged attack")) {
+			RangedAttack ra = temp.Ranged;
+			damage = ra.Dmg - d.Def;
+			damage = Math.Max(damage, 0);
+			list[NextP].c.Damage = damage;
+			IsCritical = ra.IsCritical();
 		}
 
 		else if(cmd.Equals("run"))
@@ -129,7 +140,7 @@ public class BattleManager {
 		list[turn].PostTurn();
 		if(b1.c.HP == 0 || b2.c.HP == 0)
 			this.Ended = true;
-		this.SaveLog(damage, a.IsCritical());
+		this.SaveLog(damage, IsCritical);
 		turn = NextP;
 	}
 

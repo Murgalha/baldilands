@@ -13,18 +13,14 @@ public class BattleController {
 
 	private string ParseInput(string Raw) {
 		string Input = null;
+		Raw = Raw.ToLower();
 
-		if(Raw.Equals("1"))
+		if(Raw.Equals("1") || Raw.Equals("attack"))
 			Input = "attack";
-		else if(Raw.Equals("2"))
+		else if(Raw.Equals("2") || Raw.Equals("ranged attack"))
+			Input = "ranged attack";
+		else if(Raw.Equals("3") || Raw.Equals("run"))
 			Input = "run";
-		else {
-			Raw = Raw.ToLower();
-			if(Raw.Equals("attack"))
-				Input = Raw;
-			else if(Raw.Equals("run"))
-				Input = Raw;
-		}
 
 		return Input;
 	}
@@ -51,7 +47,8 @@ public class BattleController {
 				PrintStats();
 				Console.WriteLine("Choose Your Command:");
 				Console.WriteLine("1. Attack");
-				Console.WriteLine("2. Run");
+				Console.WriteLine("2. Ranged Attack");
+				Console.WriteLine("3. Run");
 				
 				Input = Console.ReadLine();
 				Input = ParseInput(Input);

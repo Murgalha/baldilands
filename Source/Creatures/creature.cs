@@ -11,6 +11,7 @@ public abstract class Creature {
 	protected int _DefenseBuff;
 	protected int _AttackDebuff;
 	protected int _DefenseDebuff;
+	protected Equipment _Equip;
 
 	public Creature(int str, int ab, int res, int armr, int firepwr) {
 		this._Strength = str;
@@ -24,6 +25,7 @@ public abstract class Creature {
 		this._DefenseDebuff = 0;
 		this._AttackBuff = 0;
 		this._AttackDebuff = 0;
+		this._Equip = new Equipment();
 	}
 
 	public int Strength {
@@ -67,9 +69,7 @@ public abstract class Creature {
 
 	public int Damage {
 		set {
-			this._HP -= value;
-			if(this._HP <= 0)
-				this._HP = 0;
+			this._HP = (this._HP <= 0 ? 0 : this._HP-value);
 		}
 	}
 
@@ -97,10 +97,25 @@ public abstract class Creature {
 		}
 	}
 
-	public Attack Attack{
+	public RangedAttack Ranged {
 		get {
-			Attack A = new Attack(this);
-			return A;
+			RangedAttack RA;
+			if(this.Weapon != null && this.Weapon.Type.Equals("ranged weapon"))
+				RA = new RangedAttack(this);
+			else
+				RA = new RangedAttack();
+			return RA;
+		}
+	}
+
+	public MeleeAttack Melee {
+		get {
+			MeleeAttack MA;
+			if(this.Weapon != null && this.Weapon.Type.Equals("weapon"))
+				MA = new MeleeAttack(this);
+			else
+				MA = new MeleeAttack();
+			return MA;			
 		}
 	}
 
@@ -108,6 +123,22 @@ public abstract class Creature {
 		get {
 			Defense D = new Defense(this);
 			return D;
+		}
+	}
+
+	public int Gold {
+		get {
+			return this._Equip.Gold;
+		}
+	}
+
+	public Item Weapon {
+		get {
+			return this._Equip.Weapon;
+		}
+		set {
+			this._Equip.Equip(value);
+			this._AttackBuff = this._Equip.AttackBuff;
 		}
 	}
 }

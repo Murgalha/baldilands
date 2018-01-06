@@ -51,7 +51,7 @@ public class Equipment {
 			this._DefenseBuff += it.Buff;
 		}
 
-		else if(it.Type.Equals("weapon")) {
+		else if(it.Type.Equals("weapon") || it.Type.Equals("ranged weapon")) {
 			if(this._Weapon != null)
 				this._AttackBuff -= this._Weapon.Buff;
 			this._Weapon = it;
