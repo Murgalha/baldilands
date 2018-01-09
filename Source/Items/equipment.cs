@@ -74,4 +74,28 @@ public class Equipment {
 			return this._Weapon;
 		}
 	}
+
+	public Item Head {
+		get {
+			return this._Head;
+		}
+	}
+
+	public Item Torso {
+		get {
+			return this._Torso;
+		}
+	}
+
+	public Item Hand {
+		get {
+			return this._Hand;
+		}
+	}
+
+	public Item Leg {
+		get {
+			return this._Leg;
+		}
+	}
 }
