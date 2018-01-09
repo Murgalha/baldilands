@@ -135,4 +135,10 @@ public abstract class Creature {
 			this._AttackBuff = this._Equip.AttackBuff;
 		}
 	}
+
+	public Equipment Equip {
+		get {
+			return this._Equip;
+		}
+	}
 }
