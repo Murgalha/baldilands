@@ -52,12 +52,11 @@ public class BattleManager {
 
 	private Battling b1;
 	private Battling b2;
-	public int turn;
 	private List<Battling> list;
-	private string TurnLog;
-	private string CombatLog;
+	private BattleLogger BL;
 	private bool Ended;
 	private bool EnemyDodge;
+	public int turn;
 
 	private int RollIniciative(Creature c) {
 		return Dice.Roll(6) + c.Ability;
@@ -94,10 +93,9 @@ public class BattleManager {
 			list.Add(b1);
 		}
 		this.turn = 0;
-		this.TurnLog = "";
-		this.CombatLog = "";
 		this.Ended = false;
 		this.EnemyDodge = false;
+		this.BL = new BattleLogger();
 	}
 
 	private bool CheckDodge(int Buff) {
@@ -106,70 +104,13 @@ public class BattleManager {
 	}
 
 	public void SaveRunLog(bool HasRun) {
-		if(HasRun)
-			TurnLog = "You ran away!";
-		else
-			TurnLog = "You failed to run away";
-		TurnLog += "\n";
-		CombatLog += TurnLog;
+		BL.SaveRunLog(HasRun);
 	}
 
 	public void SetTurn(string cmd1, string cmd2) {
 		int NextP = (turn+1)%2;
 		list[turn].SetCommand(cmd1); 
 		list[NextP].SetCommand(cmd2); 
-	}
-
-	private void SaveLog(string cmd, int damage, bool crit, bool dodge) {
-		TurnLog = "";
-		if(list[turn].IsPlayer()) {
-			if(dodge)
-				TurnLog += "The enemy dodged your attack!";
-			else {
-				if(cmd.Equals("run")) {
-					TurnLog += "You prepare to run";
-				}
-				if(damage != 0) {
-					TurnLog += "You hit the enemy. It loses " + damage + " life point";
-					if(damage > 1)
-						TurnLog += "s";
-					if(crit)
-						TurnLog += "It is a critical hit!";
-				}
-			}
-			if(cmd.Equals("dodge")) {
-				TurnLog += "You attempt to dodge";
-			}
-			if((list[turn].c.Weapon == null || list[turn].c.Weapon.Type == "weapon") && cmd.Equals("ranged attack")) {
-				TurnLog += "You do not have a ranged weapon equipped. No damage dealt";
-			}
-		}
-		else {
-			if(dodge) {
-				TurnLog += "You dodged the attack!";
-			}
-			else {
-				if(cmd.Equals("run")) {
-					TurnLog += "The enemy prepares to run";
-				}
-				if(damage != 0) {
-					TurnLog += "The enemy hits you. You lose " + damage + " life point";
-					if(damage > 1)
-						TurnLog += "s";
-					if(crit)
-						TurnLog += "It is a critical hit!";
-				}
-			}
-			if(cmd.Equals("dodge")) {
-				TurnLog += "The enemy attempts to dodge.";
-			}
-			if((list[turn].c.Weapon == null || list[turn].c.Weapon.Type == "weapon") && cmd.Equals("ranged attack")) {
-				TurnLog += "The enemy does not have a ranged weapon equipped. No damage dealt";
-			}
-		}
-
-		TurnLog += "\n";
-		CombatLog += TurnLog;
 	}
 
 	public void Turn() {
@@ -215,7 +156,7 @@ public class BattleManager {
 		list[turn].PostTurn();
 		if(b1.c.HP == 0 || b2.c.HP == 0)
 			this.Ended = true;
-		this.SaveLog(cmd, damage, IsCritical, DodgeSuccess);
+		BL.SaveTurnLog(list[turn].c, list[turn].IsPlayer(), cmd, damage, IsCritical, DodgeSuccess);
 		turn = NextP;
 	}
 
@@ -235,12 +176,16 @@ public class BattleManager {
 		return false;
 	}
 
-	public string ShowTurnLog() {
-		return this.TurnLog;
+	public string TurnLog {
+		get {
+			return BL.TurnLog;
+		}
 	}
 
-	public string ShowFullLog() {
-		return this.CombatLog;
+	public string CombatLog {
+		get {
+			return BL.CombatLog;
+		}
 	}
 
 	public bool HasEnded() {

@@ -14,11 +14,18 @@ public class BattleController {
 	}
 
 	private void PrintBattleLog() {
-		string[] split = BM.ShowFullLog().Split('\n');
+		int i = 0, k = 0;
+		string[] split = BM.CombatLog.Split('\n');
 		Console.WriteLine();
 		foreach(var substring in split)
-			if(!string.IsNullOrEmpty(substring))
+			if(!string.IsNullOrEmpty(substring)) {
+				if(k%2 == 0) {
+					Console.WriteLine("\nTurn " + i + ":");
+					i++;
+				}
 				Console.WriteLine("> " + substring);
+				k++;
+			}
 	}
 
 	private string ParseCommand(string Raw) {
@@ -69,7 +76,7 @@ public class BattleController {
 			}
 			else if(BM.TriedRun()) {
 				BM.SaveRunLog(RunSuccess);
-				Console.Write(BM.ShowTurnLog());
+				Console.Write(BM.TurnLog);
 			}
 			Input = null;
 			while(Input == null) {
@@ -89,11 +96,11 @@ public class BattleController {
 			if(BM.HasEnded()) break;
 			BM.SetTurn(Input, "attack");
 			BM.Turn();
-			Console.Write(BM.ShowTurnLog());
+			Console.Write(BM.TurnLog);
 			if(BM.HasEnded())
 				break;
 			BM.Turn();
-			Console.Write(BM.ShowTurnLog());
+			Console.Write(BM.TurnLog);
 		}
 
 		if(this.H.HP == 0) {
