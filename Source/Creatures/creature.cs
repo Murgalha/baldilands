@@ -69,7 +69,7 @@ public abstract class Creature {
 
 	public int Damage {
 		set {
-			this._HP = (this._HP <= 0 ? 0 : this._HP-value);
+			this._HP = (this._HP-value <= 0 ? 0 : this._HP-value);
 		}
 	}
 
