@@ -3,12 +3,12 @@ using System.Collections.Generic;
 public class Bag {
 	
 	private List<Item> _Inventory;
-	private int _ItemsNumber;
+	private int _Size;
 	private int _Gold;
 
 	public Bag() {
 		this._Inventory = new List<Item>();
-		this._ItemsNumber = 0;
+		this._Size = 0;
 		this._Gold = Dice.Roll(6)*100;
 	}
 
@@ -16,7 +16,14 @@ public class Bag {
 		if(it == null)
 			return;
 		this._Inventory.Add(it);
-		this._ItemsNumber++;
+		this._Size++;
+	}
+
+	public void Remove(Item it) {
+		if(it == null)
+			return;
+		this._Inventory.Remove(it);
+		this._Size--;
 	}
 
 	public List<Item> Inventory {
@@ -25,9 +32,9 @@ public class Bag {
 		}
 	}
 
-	public int ItemsNumber {
+	public int Size {
 		get {
-			return this._ItemsNumber;
+			return this._Size;
 		}
 	}
 
