@@ -17,9 +17,7 @@ public class BattleLogger {
 				this._TurnLog += "You prepare to run";
 			}
 			else if(damage != 0) {
-				this._TurnLog += "You hit the enemy. It loses " + damage + " life point";
-				if(damage > 1)
-					this._TurnLog += "s";
+				this._TurnLog += "You hit the enemy. It loses " + damage + " life point" + (damage > 1 ? "s" : "");
 				if(crit)
 					this._TurnLog += "It is a critical hit!";
 			}
@@ -38,9 +36,7 @@ public class BattleLogger {
 				this._TurnLog += "The enemy prepares to run";
 			}
 			if(damage != 0) {
-				this._TurnLog += "The enemy hits you. You lose " + damage + " life point";
-				if(damage > 1)
-					this._TurnLog += "s";
+				this._TurnLog += "The enemy hits you. You lose " + damage + " life point" + (damage > 1 ? "s" : "");
 				if(crit)
 					this._TurnLog += "It is a critical hit!";
 			}
