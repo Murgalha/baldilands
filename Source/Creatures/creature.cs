@@ -126,12 +126,6 @@ public abstract class Creature {
 		}
 	}
 
-	public int Gold {
-		get {
-			return this._Equip.Gold;
-		}
-	}
-
 	public Item Weapon {
 		get {
 			return this._Equip.Weapon;

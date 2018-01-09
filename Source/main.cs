@@ -8,7 +8,7 @@ class main {
 
 		BattleController BC = new BattleController(c, e);
 
-		BC.StartBattle();
+		BC.Battle();
 
 	}
 }

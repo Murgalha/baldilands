@@ -5,12 +5,10 @@ public class Equipment {
 	private Item _Leg;
 	private Item _Hand;
 	private Item _Weapon;
-	private int _Gold;
 	private int _AttackBuff;
 	private int _DefenseBuff;
 
 	public Equipment() {
-		this._Gold = Dice.Roll(6)*100;
 		this._AttackBuff = 0;
 		this._DefenseBuff = 0;
 		this._Head = null;
@@ -56,12 +54,6 @@ public class Equipment {
 				this._AttackBuff -= this._Weapon.Buff;
 			this._Weapon = it;
 			this._AttackBuff += it.Buff;
-		}
-	}
-
-	public int Gold {
-		get {
-			return this._Gold;
 		}
 	}
 

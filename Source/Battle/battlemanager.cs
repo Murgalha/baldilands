@@ -44,6 +44,10 @@ public class BattleManager {
 		public bool IsPlayer() {
 			return _P;
 		}
+
+		public int StatSum() {
+			return this.c.Strength + this.c.Ability + this.c.Resistance + this.c.Armor + this.c.FirePower;
+		}
 	}
 
 	private Battling b1;
@@ -53,6 +57,7 @@ public class BattleManager {
 	private string TurnLog;
 	private string CombatLog;
 	private bool Ended;
+	private bool EnemyDodge;
 
 	private int RollIniciative(Creature c) {
 		return Dice.Roll(6) + c.Ability;
@@ -92,6 +97,21 @@ public class BattleManager {
 		this.TurnLog = "";
 		this.CombatLog = "";
 		this.Ended = false;
+		this.EnemyDodge = false;
+	}
+
+	private bool CheckDodge(int Buff) {
+		int dice = Dice.Roll(100);
+		return (dice <= Buff+2 ? true : false);
+	}
+
+	public void SaveRunLog(bool HasRun) {
+		if(HasRun)
+			TurnLog = "You ran away!";
+		else
+			TurnLog = "You failed to run away";
+		TurnLog += "\n";
+		CombatLog += TurnLog;
 	}
 
 	public void SetTurn(string cmd1, string cmd2) {
@@ -100,13 +120,55 @@ public class BattleManager {
 		list[NextP].SetCommand(cmd2); 
 	}
 
-	private void SaveLog(int damage, bool crit) {
-		if(list[turn].IsPlayer() && damage != 0)
-			TurnLog = "You hit the enemy. It loses "+damage+" life points. ";
-		else if(!list[turn].IsPlayer() && damage != 0)
-			TurnLog = "The enemy hits you. You lose "+damage+" life points. ";
-		if(crit)
-			TurnLog += "It's a critical hit!";
+	private void SaveLog(string cmd, int damage, bool crit, bool dodge) {
+		TurnLog = "";
+		if(list[turn].IsPlayer()) {
+			if(dodge)
+				TurnLog += "The enemy dodged your attack!";
+			else {
+				if(cmd.Equals("run")) {
+					TurnLog += "You prepare to run";
+				}
+				if(damage != 0) {
+					TurnLog += "You hit the enemy. It loses " + damage + " life point";
+					if(damage > 1)
+						TurnLog += "s";
+					if(crit)
+						TurnLog += "It is a critical hit!";
+				}
+			}
+			if(cmd.Equals("dodge")) {
+				TurnLog += "You attempt to dodge";
+			}
+			if((list[turn].c.Weapon == null || list[turn].c.Weapon.Type == "weapon") && cmd.Equals("ranged attack")) {
+				TurnLog += "You do not have a ranged weapon equipped. No damage dealt";
+			}
+		}
+		else {
+			if(dodge) {
+				TurnLog += "You dodged the attack!";
+			}
+			else {
+				if(cmd.Equals("run")) {
+					TurnLog += "The enemy prepares to run";
+				}
+				if(damage != 0) {
+					TurnLog += "The enemy hits you. You lose " + damage + " life point";
+					if(damage > 1)
+						TurnLog += "s";
+					if(crit)
+						TurnLog += "It is a critical hit!";
+				}
+			}
+			if(cmd.Equals("dodge")) {
+				TurnLog += "The enemy attempts to dodge.";
+			}
+			if((list[turn].c.Weapon == null || list[turn].c.Weapon.Type == "weapon") && cmd.Equals("ranged attack")) {
+				TurnLog += "The enemy does not have a ranged weapon equipped. No damage dealt";
+			}
+		}
+
+		TurnLog += "\n";
 		CombatLog += TurnLog;
 	}
 
@@ -117,12 +179,13 @@ public class BattleManager {
 		Defense d = list[NextP].c.Defense;
 		int damage = 0;
 		bool IsCritical = false;
+		int DodgeBuff = 0;
+		bool DodgeSuccess = false;
 
 		if(cmd.Equals("attack")) {
 			MeleeAttack a = temp.Melee;
 			damage = a.Dmg - d.Def;
 			damage = Math.Max(damage, 1);
-			list[NextP].c.Damage = damage;
 			IsCritical = a.IsCritical();
 		}
 
@@ -130,17 +193,29 @@ public class BattleManager {
 			RangedAttack ra = temp.Ranged;
 			damage = ra.Dmg - d.Def;
 			damage = Math.Max(damage, 0);
-			list[NextP].c.Damage = damage;
 			IsCritical = ra.IsCritical();
 		}
 
 		else if(cmd.Equals("run"))
 			damage = 0;
+		
+		if(this.EnemyDodge)
+			DodgeBuff = 50;
+		DodgeSuccess = CheckDodge(DodgeBuff);
+		damage = (DodgeSuccess ? 0 : damage);
+		this.EnemyDodge = false;
+
+		list[NextP].c.Damage = damage;
+
+		
+		if(cmd.Equals("dodge")) {
+			this.EnemyDodge = true;
+		}
 
 		list[turn].PostTurn();
 		if(b1.c.HP == 0 || b2.c.HP == 0)
 			this.Ended = true;
-		this.SaveLog(damage, IsCritical);
+		this.SaveLog(cmd, damage, IsCritical, DodgeSuccess);
 		turn = NextP;
 	}
 
@@ -150,6 +225,13 @@ public class BattleManager {
 			this.Ended = true;
 			return true;
 		}
+		return false;
+	}
+
+	public bool TriedRun() {
+		Battling B = list[turn];
+		if(B.Run)
+			return true;
 		return false;
 	}
 
@@ -163,6 +245,20 @@ public class BattleManager {
 
 	public bool HasEnded() {
 		return this.Ended;
+	}
+
+	public Reward GetReward() {
+		int Exp, Gold = 0;
+		Item item;
+		if(b2.StatSum() <= b1.StatSum()/2)
+			Exp = 0;
+		else if(b2.StatSum() >= 2*b1.StatSum())
+			Exp = 2;
+		else
+			Exp = 1;
+		item = null;
+		Reward r = new Reward(item, Exp, Gold);
+		return r;
 	}
 
 }
