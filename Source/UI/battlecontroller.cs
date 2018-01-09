@@ -109,7 +109,7 @@ public class BattleController {
 
 		else if (this.E.HP == 0) {
 			Rwrd = BM.GetReward();
-			Console.WriteLine("You have slain the enemy! You won " + Rwrd.Exp + " experience points and " + Rwrd.Gold + " gold coins");
+			Console.WriteLine("You have slain the enemy! You won " + Rwrd.Exp + " experience point" + (Rwrd.Exp > 1 ? "s" : "") + " and " + Rwrd.Gold + " gold coin" + (Rwrd.Gold > 1 ? "s" : ""));
 			if(Rwrd.Item != null)
 				Console.WriteLine("You got " + Rwrd.Item.Name);
 			this.H.ReceiveReward(Rwrd);
