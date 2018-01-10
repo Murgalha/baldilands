@@ -17,10 +17,10 @@ public static class CharSheet {
 			Console.WriteLine("> " + item.Name);
 
 		Console.WriteLine("\nEquipment:");
-		Console.WriteLine("> Weapon: " + H.Equip.Weapon);
-		Console.WriteLine("> Head: " + H.Equip.Head);
-		Console.WriteLine("> Torso: " + H.Equip.Torso);
-		Console.WriteLine("> Hand: " + H.Equip.Hand);
-		Console.WriteLine("> Leg: " + H.Equip.Leg);
+		Console.WriteLine("> Weapon: " + (H.Equip.Weapon != null ? H.Equip.Weapon.Name : ""));
+		Console.WriteLine("> Head: " + (H.Equip.Head != null ? H.Equip.Head.Name : ""));
+		Console.WriteLine("> Torso: " + (H.Equip.Torso != null ? H.Equip.Torso.Name : ""));
+		Console.WriteLine("> Hand: " + (H.Equip.Hand != null ? H.Equip.Hand.Name : ""));
+		Console.WriteLine("> Leg: " + (H.Equip.Leg != null ? H.Equip.Leg.Name : ""));
 	} 
 }
