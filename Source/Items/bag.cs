@@ -43,7 +43,7 @@ public class Bag {
 			return this._Gold;
 		}
 		set {
-			this._Gold += value;
+			this._Gold = value;
 		}
 	}
 }

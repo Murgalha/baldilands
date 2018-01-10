@@ -57,6 +57,40 @@ public class Equipment {
 		}
 	}
 
+	public Item Remove(string part) {
+		Item aux = null;
+		if(part.Equals("head") && this._Head != null) {
+			aux = this._Head;
+			this._DefenseBuff -= this._Head.Buff;
+			this._Head = null;
+		}
+
+		else if(part.Equals("torso") && this._Torso != null) {
+			aux = this._Torso;
+			this._DefenseBuff -= this._Torso.Buff;
+			this._Torso = null;
+		}
+
+		else if(part.Equals("leg") && this._Leg != null) {
+			aux = this._Leg;
+			this._DefenseBuff -= this._Leg.Buff;
+			this._Leg = null;
+		}
+
+		else if(part.Equals("hand") && this._Hand != null) {
+			aux = this._Hand;
+			this._DefenseBuff -= this._Hand.Buff;
+			this._Hand = null;			
+		}
+
+		else if((part.Equals("weapon") || part.Equals("ranged weapon")) && this._Weapon != null) {
+			aux = this._Weapon;
+			this._AttackBuff -= this._Weapon.Buff;
+			this._Weapon = null;
+		}
+		return aux;
+	}
+
 	public int AttackBuff {
 		get {
 			return this._AttackBuff;

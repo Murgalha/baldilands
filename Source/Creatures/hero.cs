@@ -15,8 +15,8 @@ public class Hero : Creature {
 
 	public void ReceiveReward(Reward R) {
 		this._Bag.Add(R.Item);
-		this._Bag.Gold = R.Gold;
-		this._Exp = R.Exp;
+		this._Bag.Gold += R.Gold;
+		this._Exp += R.Exp;
 	}
 
 	public void PickItem(Item it) {
@@ -25,6 +25,20 @@ public class Hero : Creature {
 
 	public void DropItem(Item it) {
 		this._Bag.Remove(it);
+	}
+
+	public void EquipFromBag(string name) {
+		Item New = this._Bag.Inventory.Find(x => x.Name.Equals(name));
+		Item Old = this._Equip.Remove(New.Type);
+		this._Bag.Remove(New);
+		this._Equip.Equip(New);
+		if(Old != null)
+			this._Bag.Add(Old);
+	}
+
+	public void RemoveEquip(string part) {
+		Item it = this._Equip.Remove(part);
+		this._Bag.Add(it);
 	}
 
 	public string Name {
@@ -59,7 +73,7 @@ public class Hero : Creature {
 			return this._Exp;
 		}
 		set {
-			this._Exp += value;
+			this._Exp = value;
 		}
 	}
 }
