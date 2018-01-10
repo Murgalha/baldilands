@@ -130,10 +130,6 @@ public abstract class Creature {
 		get {
 			return this._Equip.Weapon;
 		}
-		set {
-			this._Equip.Equip(value);
-			this._AttackBuff = this._Equip.AttackBuff;
-		}
 	}
 
 	public Equipment Equip {
