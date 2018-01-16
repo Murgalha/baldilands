@@ -24,7 +24,7 @@ public class BattleLogger {
 			else if(cmd.Equals("dodge")) {
 				this._TurnLog += "You attempt to dodge";
 			}
-			else if((c.Weapon == null || c.Weapon.Type == "weapon") && cmd.Equals("ranged attack")) {
+			else if((c.Weapon == null || c.Weapon.Type == "melee") && cmd.Equals("ranged attack")) {
 				this._TurnLog += "You do not have a ranged weapon equipped. No damage dealt";
 			}
 		}
@@ -43,7 +43,7 @@ public class BattleLogger {
 			else if(cmd.Equals("dodge")) {
 				this._TurnLog += "The enemy attempts to dodge.";
 			}
-			else if((c.Weapon == null || c.Weapon.Type == "weapon") && cmd.Equals("ranged attack")) {
+			else if((c.Weapon == null || c.Weapon.Type == "melee") && cmd.Equals("ranged attack")) {
 				this._TurnLog += "The enemy does not have a ranged weapon equipped. No damage dealt";
 			}
 		}

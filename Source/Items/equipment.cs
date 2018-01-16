@@ -49,7 +49,7 @@ public class Equipment {
 			this._DefenseBuff += it.Buff;
 		}
 
-		else if(it.Type.Equals("weapon") || it.Type.Equals("ranged weapon")) {
+		else if(it.Type.Equals("melee") || it.Type.Equals("ranged")) {
 			if(this._Weapon != null)
 				this._AttackBuff -= this._Weapon.Buff;
 			this._Weapon = it;
@@ -83,7 +83,7 @@ public class Equipment {
 			this._Hand = null;			
 		}
 
-		else if((part.Equals("weapon") || part.Equals("ranged weapon")) && this._Weapon != null) {
+		else if((part.Equals("melee") || part.Equals("ranged")) && this._Weapon != null) {
 			aux = this._Weapon;
 			this._AttackBuff -= this._Weapon.Buff;
 			this._Weapon = null;

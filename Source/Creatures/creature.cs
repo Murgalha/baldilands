@@ -100,7 +100,7 @@ public abstract class Creature {
 	public RangedAttack Ranged {
 		get {
 			RangedAttack RA;
-			if(this.Weapon != null && this.Weapon.Type.Equals("ranged weapon"))
+			if(this.Weapon != null && this.Weapon.Type.Equals("ranged"))
 				RA = new RangedAttack(this);
 			else
 				RA = new RangedAttack();
@@ -111,7 +111,7 @@ public abstract class Creature {
 	public MeleeAttack Melee {
 		get {
 			MeleeAttack MA;
-			if(this.Weapon != null && this.Weapon.Type.Equals("weapon"))
+			if(this.Weapon != null && this.Weapon.Type.Equals("melee"))
 				MA = new MeleeAttack(this);
 			else
 				MA = new MeleeAttack();
