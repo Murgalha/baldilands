@@ -1,1 +1,0 @@
-csc /out:prog.exe /recurse:*.cs
