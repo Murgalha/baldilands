@@ -46,7 +46,7 @@ public class BattleManager {
 		}
 
 		public int StatSum() {
-			return this.c.Strength + this.c.Ability + this.c.Resistance + this.c.Armor + this.c.FirePower;
+			return this.c.Strength + this.c.Ability + this.c.Resistance + this.c.Armor + this.c.Firepower;
 		}
 	}
 

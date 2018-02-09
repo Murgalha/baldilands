@@ -4,7 +4,7 @@ public abstract class Creature {
 	protected int _Ability;
 	protected int _Resistance;
 	protected int _Armor;
-	protected int _FirePower;
+	protected int _Firepower;
 	protected int _HP;
 	protected int _MP;
 	protected int _AttackBuff;
@@ -18,7 +18,7 @@ public abstract class Creature {
 		this._Ability = ab;
 		this._Resistance = res;
 		this._Armor = armr;
-		this._FirePower = firepwr;
+		this._Firepower = firepwr;
 		this._HP = this._Resistance*5;
 		this._MP = this._Resistance*5;
 		this._DefenseBuff = 0;
@@ -49,9 +49,9 @@ public abstract class Creature {
 			return this._Armor;
 		}
 	}
-	public int FirePower {
+	public int Firepower {
 		get {
-			return this._FirePower;
+			return this._Firepower;
 		}
 	}
 

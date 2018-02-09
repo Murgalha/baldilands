@@ -11,11 +11,12 @@ public static class CharSheet {
 		Console.WriteLine("\nName: " + H.Name + "\tRace: " + H.Race);
 		Console.WriteLine("HP: " + H.HP + "\t\tMP: " + H.MP);
 
-		Console.WriteLine("\nStrength: " + H.Strength + "\tFire Power: "+ H.FirePower);
+		Console.WriteLine("\nStrength: " + H.Strength + "\tFirepower: "+ H.Firepower);
 		Console.WriteLine("Resistance: " + H.Resistance+ "\tArmor: "+ H.Armor);
 		Console.WriteLine("Ability: " + H.Ability);
 		
-		Console.WriteLine("\nGold: " + H.Gold);
+		Console.WriteLine("\nEXP: " + H.Exp);
+		Console.WriteLine("Gold: " + H.Gold);
 		Console.WriteLine("Items:");
 		foreach(var item in H.Bag.Inventory)
 			Console.WriteLine("> " + FirstToUpper(item.Name));

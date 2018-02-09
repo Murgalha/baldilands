@@ -13,11 +13,11 @@ public class RangedAttack {
 
 		if(d == 6) {
 			this._Crit = true;
-			this._Dmg = d + (c.FirePower*2) + c.Ability + c.AttackBuff - c.AttackDebuff;
+			this._Dmg = d + (c.Firepower*2) + c.Ability + c.AttackBuff - c.AttackDebuff;
 		}
 		else {
 			this._Crit = false;
-			this._Dmg = d + c.FirePower + c.Ability + c.AttackBuff - c.AttackDebuff;
+			this._Dmg = d + c.Firepower + c.Ability + c.AttackBuff - c.AttackDebuff;
 		}
 	}
 
