@@ -29,7 +29,9 @@ public class Hero : Creature {
 
 	public void EquipFromBag(string name) {
 		Item New = this._Bag.Inventory.Find(x => x.Name.Equals(name));
-		Item Old = this._Equip.Remove(New.Type);
+		Item Old;
+		string Type = (New.Type.Equals("melee") || New.Type.Equals("ranged") ? "weapon" : New.Type);
+		Old = this._Equip.Remove(Type);
 		this._Bag.Remove(New);
 		this._Equip.Equip(New);
 		if(Old != null)
