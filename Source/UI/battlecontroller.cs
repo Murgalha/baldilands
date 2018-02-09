@@ -1,5 +1,4 @@
 using System;
-using System.Text.RegularExpressions;
 
 public class BattleController {
 
@@ -25,7 +24,7 @@ public class BattleController {
 				}
 				Console.WriteLine("> " + substring);
 				k++;
-			}
+		}
 	}
 
 	private string ParseCommand(string Raw) {
