@@ -5,11 +5,14 @@ using System.Text;
 
 public static class DungeonMaster {
 
+	public static Hero Hero;
+
 	private static Item LoadItem(string[] Tokens, int k) {
 		string Name = Tokens[k];
 		string Type = Tokens[k+1];
 		int Buff = Int32.Parse(Tokens[k+2]);
-		Item It = new Item(Name, Type, Buff);
+		int Value = Int32.Parse(Tokens[k+3]);
+		Item It = new Item(Name, Type, Buff, Value);
 		return It;
 	}
 
@@ -31,7 +34,7 @@ public static class DungeonMaster {
 		string Data = H.Name + "," + H.Race + "," + H.Strength + "," + H.Ability + "," + H.Resistance + "," + H.Armor + "," + H.Firepower + "," + H.Exp + "," + H.Gold + "," + H.Bag.Size + ",";
 
 		foreach (var It in H.Bag.Inventory)
-			Data += It.Name + "," + It.Type + "," + It.Buff + ",";
+			Data += It.Name + "," + It.Type + "," + It.Buff + "," + It.Value + ",";
 
 		if(H.Equip.Head != null) {
 			Data += "1,";
@@ -117,19 +120,26 @@ public static class DungeonMaster {
 		int Size = Int32.Parse(Tokens[k++]);
 		for(i = 0; i < Size; i++) {
 			Item It = LoadItem(Tokens, k);
-			k += 3;
+			k += 4;
 			H.PickItem(It);
 		}
 
 		for(i = 0; i < 5; i++) {
 			if(Tokens[k++] == "1") {
 				Item It = LoadItem(Tokens, k);
-				k += 3;
+				k += 4;
 				H.PickItem(It);
 				H.EquipFromBag(It.Name);
 			}
 		}
 
 		return H;
+	}
+
+
+	public static void StartGame() {
+		Menu.MainMenu();
+		if(DungeonMaster.Hero != null)
+			CharacterSheet.Show(DungeonMaster.Hero);
 	}
 }
