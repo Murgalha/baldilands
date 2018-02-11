@@ -19,8 +19,8 @@ public abstract class Creature {
 		this._Resistance = res;
 		this._Armor = armr;
 		this._Firepower = firepwr;
-		this._HP = this._Resistance*5;
-		this._MP = this._Resistance*5;
+		this._HP = (this._Resistance < 1 ? 1 : this._Resistance*5);
+		this._MP = (this._Resistance < 1 ? 1 : this._Resistance*5);
 		this._DefenseBuff = 0;
 		this._DefenseDebuff = 0;
 		this._AttackBuff = 0;
