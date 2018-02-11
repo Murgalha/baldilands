@@ -45,7 +45,7 @@ public static class InventoryController {
 		string Name;
 
 		while(true) {
-			Console.WriteLine("What item do you want to equip? Type ENTER with empty name to return)");
+			Console.WriteLine("What item do you want to equip? (Type ENTER with empty name to return)");
 			foreach (var Item in H.Bag.Inventory) {
 				Console.WriteLine("> {0} ({1})", StringModify.FirstToUpper(Item.Name), StringModify.FirstToUpper(Item.Type));
 			}
@@ -130,16 +130,17 @@ public static class InventoryController {
 	}
 
 	private static string ParseCommand(string Raw) {
-		string Input = "";
 		Raw = Raw.ToLower();
 
 		if(Raw.Equals("1") || Raw.Equals("equip"))
-			Input = "equip";
+			return "equip";
 		else if(Raw.Equals("2") || Raw.Equals("unequip"))
-			Input = "unequip";
+			return "unequip";
 		else if(Raw.Equals("3") || Raw.Equals("drop"))
-			Input = "drop";
-		return Input;
+			return "drop";
+		else if(Raw.Equals("4") || Raw.Equals("return"))
+			return "return";
+		return "";
 	}
 
 	public static void Manage(Hero H) {
@@ -149,10 +150,11 @@ public static class InventoryController {
 		string Input;
 
 		while(true) {
-			Console.WriteLine("What do you want to do with your items? (Type empty command to return");
+			Console.WriteLine("What do you want to do with your items?");
 			Console.WriteLine("1. Equip");
 			Console.WriteLine("2. Unequip");
 			Console.WriteLine("3. Drop");
+			Console.WriteLine("4. Return");
 		
 			Input = Console.ReadLine();
 			Input = InventoryController.ParseCommand(Input);
@@ -164,10 +166,10 @@ public static class InventoryController {
 				InventoryController.Unequip(H);
 			else if(Input.Equals("drop"))
 				InventoryController.Drop(H);		
-			else if(Input.Equals(""))
+			else if(Input.Equals("return"))
 				return;
 			else
-				Console.WriteLine("Invalid command");
+				Console.WriteLine("Invalid command\n");
 		}
 	}
 }

@@ -91,9 +91,8 @@ public static class DungeonMaster {
     		Crypto.CreateDecryptor(),CryptoStreamMode.Read);
 
 		StreamReader Reader = new StreamReader(CrStream);
-
 		string Data = Reader.ReadToEnd();
-
+		
 		Reader.Close();
 		Stream.Close();
 		
@@ -138,8 +137,8 @@ public static class DungeonMaster {
 
 
 	public static void StartGame() {
-		Menu.MainMenu();
-		if(DungeonMaster.Hero != null)
-			CharacterSheet.Show(DungeonMaster.Hero);
+		if(Menu.MainMenu()) {
+			Menu.Town();
+		}
 	}
 }
