@@ -4,7 +4,7 @@ public static class CharacterSheet {
 
 	public static void Show(Hero H) {
 
-		Console.WriteLine("Name: " + H.Name + "\tRace: " + H.Race);
+		Console.WriteLine("Name: " + H.Name + "\tRace: " + StringModify.FirstToUpper(H.Race));
 		Console.WriteLine("HP: " + H.HP + "\t\tMP: " + H.MP);
 
 		Console.WriteLine("\nStrength: " + H.Strength + "\tFirepower: "+ H.Firepower);
