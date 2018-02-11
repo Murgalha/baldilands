@@ -84,7 +84,7 @@ public static class CharacterCreator {
 			}
 			else {
 				Console.Clear();
-				Console.WriteLine("Invalid name. Do not leave name empty");
+				Console.WriteLine("Invalid name. Do not leave name empty\n");
 			}
 		}
 	}
