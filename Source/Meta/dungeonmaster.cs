@@ -16,11 +16,27 @@ public static class DungeonMaster {
 		return It;
 	}
 
-	public static void SaveGame(Hero H) {
-		FileInfo File = new System.IO.FileInfo("./Save/");
-		File.Directory.Create();
+	public static int SlotNum() {
+		for(int i = 1; i <= 20; i++) {
+			string Filename = String.Join("", "./Save/slot", i, ".sav");
+			if(!File.Exists(Filename))
+				return i; 	
+		}
+		return -1;
+	}
 
-		FileStream Stream = new FileStream("./Save/game.sav", FileMode.OpenOrCreate,FileAccess.Write);
+	public static bool SaveGame(Hero H, int slot) {
+		FileInfo FileDir = new System.IO.FileInfo("./Save/");
+		FileDir.Directory.Create();
+		string Slot;
+			
+		Slot = "./Save/slot" + slot + ".sav";
+
+		if(File.Exists(Slot)) {
+			File.Delete(Slot);
+		}
+		
+		FileStream Stream = new FileStream(Slot, FileMode.OpenOrCreate,FileAccess.Write);
 
 		DESCryptoServiceProvider Crypto = new DESCryptoServiceProvider();
 
@@ -77,11 +93,19 @@ public static class DungeonMaster {
 
 		CrStream.Close();
 		Stream.Close();
+
+		return true;
 	}
 
-	public static Hero LoadGame() {
-		FileStream Stream = new FileStream("./Save/game.sav",
-                              FileMode.Open,FileAccess.Read);
+	public static Hero LoadGame(int slot) {
+		string Slot;
+
+		Slot = String.Join("", "./Save/slot", slot, ".sav");
+
+		if(!File.Exists(Slot))
+			return null;
+
+		FileStream Stream = new FileStream(Slot, FileMode.Open,FileAccess.Read);
 		DESCryptoServiceProvider Crypto = new DESCryptoServiceProvider();
 
 		Crypto.Key = ASCIIEncoding.ASCII.GetBytes("MURGALHA");
@@ -135,10 +159,20 @@ public static class DungeonMaster {
 		return H;
 	}
 
+	public static void DeleteGame(int slot) {
+		string Slot = String.Join("", "./Save/slot", slot, ".sav");
+		File.Delete(Slot);
+	}
 
 	public static void StartGame() {
-		if(Menu.MainMenu()) {
-			Menu.Town();
+		while(true) {
+			Menu M = new Menu();
+			if(M.MainMenu()) {
+				M.Town();
+			}
+			else {
+				return;
+			}
 		}
 	}
 }

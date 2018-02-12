@@ -1,22 +1,33 @@
 using System;
 using System.IO;
+using System.Security.Cryptography;
+using System.Text;
 
-public static class Menu {
+public class Menu {
 
-	private static string ParseCommand(string Raw) {
+	public SaveManager SM;
+
+	public Menu() {
+		this.SM = new SaveManager();
+	}
+
+	private string ParseCommand(string Raw) {
 		Raw = Raw.ToLower();
 
 		if(Raw.Equals("1") || Raw.Equals("new game"))
 			return "new game";
 		else if(Raw.Equals("2") || Raw.Equals("load game"))
 			return "load game";
-		else if(Raw.Equals("3") || Raw.Equals("exit"))
+		else if(Raw.Equals("3") || Raw.Equals("delete save") 
+		|| Raw.Equals("delete"))
+			return "delete";
+		else if(Raw.Equals("4") || Raw.Equals("exit"))
 			return "exit";
 		else
 			return "";
 	}
 
-	private static string ParseTownCommand(string Raw) {
+	private string ParseTownCommand(string Raw) {
 		Raw = Raw.ToLower();
 	
 		if(Raw.Equals("1") || Raw.Equals("fight"))
@@ -36,7 +47,7 @@ public static class Menu {
 			return "";
 	}
 
-	public static void Town() {
+	public void Town() {
 		string Input;
 
 		Console.Clear();
@@ -49,7 +60,7 @@ public static class Menu {
 			Console.WriteLine("5. Exit Game");
 
 			Input = Console.ReadLine();
-			Input = Menu.ParseTownCommand(Input);
+			Input = this.ParseTownCommand(Input);
 
 			if(Input.Equals("fight")) {
 			}
@@ -58,9 +69,11 @@ public static class Menu {
 			else if(Input.Equals("manage inventory"))
 				InventoryController.Manage(DungeonMaster.Hero);
 			else if(Input.Equals("save game")) {
-				DungeonMaster.SaveGame(DungeonMaster.Hero);
 				Console.Clear();
-				Console.WriteLine("Game saved!\n");
+				if(DungeonMaster.SaveGame(DungeonMaster.Hero, this.SM.CurrentSlot))
+					Console.WriteLine("Game saved!\n");
+				else
+					Console.WriteLine("Error! Could not save game\n");
 			}
 			else if(Input.Equals("exit")) {
 				Console.Clear();
@@ -73,52 +86,43 @@ public static class Menu {
 		}
 	}
 
-	public static bool MainMenu() {
+	public bool MainMenu() {
 		string Input;
 		Hero H = null;
+		this.SM.CurrentSlot = -1;
 
 		Console.Clear();
 		while(true) {
 			Console.WriteLine("1. New Game");
 			Console.WriteLine("2. Load Game");
-			Console.WriteLine("3. Exit");
+			Console.WriteLine("3. Delete Save");
+			Console.WriteLine("4. Exit");
 
 			Input = Console.ReadLine();
-			Input = Menu.ParseCommand(Input);
+			Input = this.ParseCommand(Input);
 
 			if(Input.Equals("new game")) {
-				H = CharacterCreator.Create();
+				this.SM.SetSaveSlot();
+				if(this.SM.CurrentSlot != -1)
+					H = CharacterCreator.Create();
+				else {
+					Console.Clear();
+					continue;
+				}
 			}
 			else if(Input.Equals("load game")) {
-				if(File.Exists("./Save/game.sav")) {
-					H = DungeonMaster.LoadGame();
+				this.SM.SetLoadSlot();
+				if(this.SM.CurrentSlot != -1) {
+					H = DungeonMaster.LoadGame(this.SM.CurrentSlot);
 				}
 				else {
-					string Ans;
 					Console.Clear();
-					Console.WriteLine("No save file detected\n");
-					while(true) {
-						Console.WriteLine("Do you wish to start a new game?");
-						Console.WriteLine("1. Yes");
-						Console.WriteLine("2. No");
-
-						Ans = Console.ReadLine();
-						Ans = YesNoInput.Parse(Ans);
-
-						if(Ans.Equals("yes")) {
-							H = CharacterCreator.Create();
-							break;
-						}
-						else if(Ans.Equals("no")) {
-							Console.Clear();
-							break;
-						}
-						else {
-							Console.Clear();
-							Console.WriteLine("Invalid command\n");
-						}
-					}
+					continue;
 				}
+			}
+			else if(Input.Equals("delete")) {
+				Console.Clear();
+				this.SM.ClearSlot();
 			}
 			else if(Input.Equals("exit")) {
 				Console.Clear();
@@ -130,7 +134,7 @@ public static class Menu {
 			}
 			if(H != null) {
 				DungeonMaster.Hero = H;
-				DungeonMaster.SaveGame(H);
+				DungeonMaster.SaveGame(H, this.SM.CurrentSlot);
 				return true;
 			}
 		}
