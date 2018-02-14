@@ -8,12 +8,14 @@ public class SaveManager {
 	public int SlotsNum;
 	public int CurrentSlot;
 	public string[] SlotState;
+	private SaveExpert SE;
 
 	public SaveManager() {
 		this.SlotsNum = 20;
 		this.CurrentSlot = -1;
 		this.SlotState = new string[this.SlotsNum+1];
-		
+		this.SE = new SaveExpert();
+
 		string Data = "";
 		for(int i = 1; i <= this.SlotsNum; i++) {
 			string SlotFile = String.Join("", "./Save/slot", i, ".sav");
@@ -227,7 +229,7 @@ public class SaveManager {
 			}
 			if(SlotState[Value].Equals("full")) {
 				Console.Clear();
-				DungeonMaster.DeleteGame(Value);
+				this.SE.DeleteGame(Value);
 				this.SlotState[Value] = "empty";
 				return;
 			}
@@ -237,5 +239,13 @@ public class SaveManager {
 				continue;
 			}
 		}
+	}
+
+	public bool SaveGame(Hero H, int slot) {
+		return this.SE.SaveGame(H, slot);
+	}
+
+	public Hero LoadGame(int slot) {
+		return this.SE.LoadGame(slot);
 	}
 }
