@@ -340,6 +340,12 @@ public static class CharacterCreator {
 		int Resistance = Stats.Resistance + Race.ResistanceBonus;
 		int Armor = Stats.Armor + Race.ArmorBonus;
 		int Firepower = Stats.Firepower + Race.FirepowerBonus;
-		return new Hero(Strength, Ability, Resistance, Armor, Firepower, Name, Race.race);
+		Hero H = new Hero(Strength, Ability, Resistance, Armor, Firepower, Name, Race.race);
+		H.PickItem(new Item("broken sword", "melee", 0, 50));
+		H.PickItem(new Item("ragged cloth shirt", "torso", 0, 10));
+		H.PickItem(new Item("ragged cloth pants", "leg", 0, 10));
+		H.PickItem(new Item("broken bow", "ranged", 0, 50));
+		H.EquipFromBag("broken sword");
+		return H;
 	}
 }
