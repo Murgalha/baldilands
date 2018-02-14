@@ -6,9 +6,11 @@ using System.Text;
 public class Menu {
 
 	public SaveManager SM;
+	public DungeonMaster DM;
 
-	public Menu() {
+	public Menu(DungeonMaster DM) {
 		this.SM = new SaveManager();
+		this.DM = DM;
 	}
 
 	private string ParseCommand(string Raw) {
@@ -65,12 +67,14 @@ public class Menu {
 			if(Input.Equals("fight")) {
 			}
 			else if(Input.Equals("shop")) {
+				Market MK = new Market(this.DM.Hero);
+				MK.Shop();
 			}
 			else if(Input.Equals("manage inventory"))
-				InventoryController.Manage(DungeonMaster.Hero);
+				InventoryController.Manage(this.DM.Hero);
 			else if(Input.Equals("save game")) {
 				Console.Clear();
-				if(DungeonMaster.SaveGame(DungeonMaster.Hero, this.SM.CurrentSlot))
+				if(this.SM.SaveGame(this.DM.Hero, this.SM.CurrentSlot))
 					Console.WriteLine("Game saved!\n");
 				else
 					Console.WriteLine("Error! Could not save game\n");
@@ -113,7 +117,7 @@ public class Menu {
 			else if(Input.Equals("load game")) {
 				this.SM.SetLoadSlot();
 				if(this.SM.CurrentSlot != -1) {
-					H = DungeonMaster.LoadGame(this.SM.CurrentSlot);
+					H = this.SM.LoadGame(this.SM.CurrentSlot);
 				}
 				else {
 					Console.Clear();
@@ -133,8 +137,8 @@ public class Menu {
 				Console.WriteLine("Invalid command\n");
 			}
 			if(H != null) {
-				DungeonMaster.Hero = H;
-				DungeonMaster.SaveGame(H, this.SM.CurrentSlot);
+				this.DM.Hero = H;
+				this.SM.SaveGame(H, this.SM.CurrentSlot);
 				return true;
 			}
 		}
