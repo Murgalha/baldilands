@@ -32,8 +32,8 @@ public class Menu {
 	private string ParseTownCommand(string Raw) {
 		Raw = Raw.ToLower();
 	
-		if(Raw.Equals("1") || Raw.Equals("fight"))
-			return "fight";
+		if(Raw.Equals("1") || Raw.Equals("battle"))
+			return "battle";
 		else if(Raw.Equals("2") || Raw.Equals("shop"))
 			return "shop";
 		else if(Raw.Equals("3") || Raw.Equals("manage inventory") 
@@ -55,7 +55,7 @@ public class Menu {
 		Console.Clear();
 		while(true) {
 			Console.WriteLine("Where do you want to go now?");
-			Console.WriteLine("1. Fight");
+			Console.WriteLine("1. Battle");
 			Console.WriteLine("2. Shop");
 			Console.WriteLine("3. Manage Inventory");
 			Console.WriteLine("4. Save Game");
@@ -64,11 +64,18 @@ public class Menu {
 			Input = Console.ReadLine();
 			Input = this.ParseTownCommand(Input);
 
-			if(Input.Equals("fight")) {
+			if(Input.Equals("battle")) {
+				string[] monsters = Initializer.InitMonsters();
+				int d = Dice.Roll(monsters.Length)-1;
+				Enemy E = Bestiary.Load(monsters[d]);
+				BattleController BC = new BattleController(this.DM.Hero, E);
+				BC.Battle();
+				Console.Clear();				
 			}
 			else if(Input.Equals("shop")) {
 				Market MK = new Market(this.DM.Hero);
 				MK.Shop();
+				Console.Clear();
 			}
 			else if(Input.Equals("manage inventory"))
 				InventoryController.Manage(this.DM.Hero);
