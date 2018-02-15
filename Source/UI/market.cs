@@ -8,16 +8,40 @@ public class Market {
 		this.H = h;
 	}
 
+	private Item Find(Hero H, string Name) {
+		foreach(var It in H.Bag.Inventory) {
+			if(It.Name.Equals(Name)) {
+				return It;
+			}
+		}
+		return null;
+	}
+
 	public void Sell() {
-		string Input;
+		string Name;
 
 		while(true) {
-			Console.WriteLine("Which item do you want to sell?");
+			Console.WriteLine("Which item do you want to sell? (Type ENTER on empty item to return)");
 			foreach(var It in this.H.Bag.Inventory) {
 				Console.WriteLine("> {0} ({1}) - Selling price: {2}", StringModify.FirstToUpper(It.Name), StringModify.FirstToUpper(It.Type), It.Value/2);
 			}
-			Console.ReadLine();
-			return;
+
+			Name = Console.ReadLine();
+			Name = Name.ToLower();
+			if(Name.Equals("")) {
+				Console.Clear();
+				return;
+			}
+			Item Item = this.Find(this.H, Name);
+			Console.Clear();
+			if(Item == null) {
+				Console.WriteLine("Item not found\n");
+			}
+			else {
+				H.DropItem(Item);
+				H.Gold += (Item.Value/2);
+				Console.WriteLine("{0} sold\n", StringModify.FirstToUpper(Item.Name));
+			}		
 		}
 	}
 
@@ -37,6 +61,7 @@ public class Market {
 	public void Shop() {
 		string Input;
 		
+		Console.Clear();
 		while(true) {
 			Console.WriteLine("What do you want to do?");
 			Console.WriteLine("1. Buy");
@@ -45,7 +70,8 @@ public class Market {
 
 			Input = Console.ReadLine();
 			Input = ParseCommand(Input);
-
+			
+			Console.Clear();
 			if(Input.Equals("buy")) {
 				// this.Buy();
 			}
@@ -56,7 +82,6 @@ public class Market {
 				return;
 			}
 			else {
-				Console.Clear();
 				Console.WriteLine("Invalid command\n");
 			}
 		}
