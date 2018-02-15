@@ -19,7 +19,7 @@ public class BattleLogger {
 			else if(damage != 0) {
 				this._TurnLog += "You hit the enemy. It loses " + damage + " life point" + (damage > 1 ? "s" : "");
 				if(crit)
-					this._TurnLog += ".It is a critical hit!";
+					this._TurnLog += ". It is a critical hit!";
 			}
 			else if(cmd.Equals("dodge")) {
 				this._TurnLog += "You attempt to dodge";
@@ -38,10 +38,10 @@ public class BattleLogger {
 			if(damage != 0) {
 				this._TurnLog += "The enemy hits you. You lose " + damage + " life point" + (damage > 1 ? "s" : "");
 				if(crit)
-					this._TurnLog += ".It is a critical hit!";
+					this._TurnLog += ". It is a critical hit!";
 			}
 			else if(cmd.Equals("dodge")) {
-				this._TurnLog += "The enemy attempts to dodge.";
+				this._TurnLog += "The enemy attempts to dodge";
 			}
 			else if((c.Weapon == null || c.Weapon.Type == "melee") && cmd.Equals("ranged attack")) {
 				this._TurnLog += "The enemy does not have a ranged weapon equipped. No damage dealt";

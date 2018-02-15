@@ -54,7 +54,7 @@ public class BattleController {
 	}
 
 	private void PrintStats() {
-		string str = "\n" + this.H.Name + "\t\t" + this.E.Species + "\n";
+		string str = "\n" + "You\t\t" + this.E.Species + "\n";
 		str += "HP: " + this.H.HP + "\t\tHP: " + this.E.HP + "\n";
 		str += "MP: " + this.H.MP + "\n";
 		/* Enemy MP using skill */
@@ -62,11 +62,17 @@ public class BattleController {
 		Console.WriteLine(str);
 	}
 
+	private bool IsVowel(char c) {
+		return ("aeiouAEIOU".IndexOf(c) >= 0);
+	}
+
 	public void Battle() {
 		bool RunSuccess = false;
 		string Input = null;
 		Reward Rwrd;
 		
+		Console.Clear();
+		Console.WriteLine("You are now battling a{0} {1}", (this.IsVowel(this.E.Species[0]) ? "n" : ""), this.E.Species);
 		while(!BM.HasEnded()) {
 			RunSuccess = BM.CheckRun();
 			if(RunSuccess) {
@@ -103,7 +109,12 @@ public class BattleController {
 		}
 
 		if(this.H.HP == 0) {
+			int Lost = this.BM.LostExp();
 			Console.WriteLine("You lost the battle, but you managed to escape the enemy");
+			Console.WriteLine("You lost {0} experience point{1}", Lost, 
+			(Lost > 1 ? "s" : ""));
+			this.H.Exp = Math.Max(this.H.Exp-Lost, 0);
+			this.H.Damage = -1;
 		}
 
 		else if (this.E.HP == 0) {

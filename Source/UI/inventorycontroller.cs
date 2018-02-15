@@ -145,12 +145,11 @@ public static class InventoryController {
 
 	public static void Manage(Hero H) {
 		Console.Clear();
-		CharacterSheet.Show(H);
-		Console.WriteLine();
 		string Input;
 
 		while(true) {
-			Console.WriteLine("What do you want to do with your items?");
+			CharacterSheet.Show(H);
+			Console.WriteLine("\nWhat do you want to do with your items?");
 			Console.WriteLine("1. Equip");
 			Console.WriteLine("2. Unequip");
 			Console.WriteLine("3. Drop");
