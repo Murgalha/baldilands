@@ -193,17 +193,29 @@ public class BattleManager {
 	}
 
 	public Reward GetReward() {
-		int Exp, Gold = 0;
-		Item item;
+		int Exp, Gold;
+		Item item = null;
 		if(b2.StatSum() <= b1.StatSum()/2)
 			Exp = 0;
 		else if(b2.StatSum() >= 2*b1.StatSum())
 			Exp = 2;
 		else
 			Exp = 1;
-		item = null;
+		if(Dice.Roll(100) <= 5)
+			item = b2.c.Equip.Weapon;
+		Gold = Exp*2;
 		Reward r = new Reward(item, Exp, Gold);
 		return r;
 	}
 
+	public int LostExp() {
+		int Exp;
+		if(b2.StatSum() <= b1.StatSum()/2)
+			Exp = 2;
+		else if(b2.StatSum() >= 2*b1.StatSum())
+			Exp = 1;
+		else
+			Exp = 1;
+		return Exp;
+	}
 }
