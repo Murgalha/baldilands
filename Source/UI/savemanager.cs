@@ -231,12 +231,11 @@ public class SaveManager {
 				Console.Clear();
 				this.SE.DeleteGame(Value);
 				this.SlotState[Value] = "empty";
-				return;
+				Console.WriteLine("Slot {0} deleted\n", Value);
 			}
 			else {
 				Console.Clear();
 				Console.WriteLine("Empty slot\n");
-				continue;
 			}
 		}
 	}
