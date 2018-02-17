@@ -43,6 +43,11 @@ public class Hero : Creature {
 		this._Bag.Add(it);
 	}
 
+	public void Rest() {
+		this._HP = (this._Resistance < 1 ? 1 : this._Resistance*5);
+		this._MP = (this._Resistance < 1 ? 1 : this._Resistance*5);
+	}
+
 	public string Name {
 		get {
 			return this._Name;

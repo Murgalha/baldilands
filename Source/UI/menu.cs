@@ -39,10 +39,12 @@ public class Menu {
 		else if(Raw.Equals("3") || Raw.Equals("manage inventory") 
 		|| Raw.Equals("inventory"))
 			return "manage inventory";
-		else if(Raw.Equals("4") || Raw.Equals("save game") 
+		else if(Raw.Equals("4") || Raw.Equals("rest"))
+			return "rest";
+		else if(Raw.Equals("5") || Raw.Equals("save game") 
 		|| Raw.Equals("save"))
 			return "save game";
-		else if(Raw.Equals("5") || Raw.Equals("exit game") 
+		else if(Raw.Equals("6") || Raw.Equals("exit game") 
 		|| Raw.Equals("exit"))
 			return "exit";
 		else
@@ -58,8 +60,9 @@ public class Menu {
 			Console.WriteLine("1. Battle");
 			Console.WriteLine("2. Shop");
 			Console.WriteLine("3. Manage Inventory");
-			Console.WriteLine("4. Save Game");
-			Console.WriteLine("5. Exit Game");
+			Console.WriteLine("4. Rest");
+			Console.WriteLine("5. Save Game");
+			Console.WriteLine("6. Exit Game");
 
 			Input = Console.ReadLine();
 			Input = this.ParseTownCommand(Input);
@@ -79,6 +82,11 @@ public class Menu {
 			}
 			else if(Input.Equals("manage inventory"))
 				InventoryController.Manage(this.DM.Hero);
+			else if(Input.Equals("rest")) {
+				this.DM.Hero.Rest();
+				Console.Clear();
+				Console.WriteLine("You are fully replenished\n");
+			}
 			else if(Input.Equals("save game")) {
 				Console.Clear();
 				if(this.SM.SaveGame(this.DM.Hero, this.SM.CurrentSlot))
