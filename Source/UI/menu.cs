@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
+using System.Collections.Generic;
 
 public class Menu {
 
@@ -51,11 +52,20 @@ public class Menu {
 			return "";
 	}
 
+	private void ShowMonsters(List<string> Monsters) {
+		Console.WriteLine("Which monster do you want to battle with? (Type ENTER on empty monster to return)");
+		Console.WriteLine("1. Random\t\t21. Ghost\t\t41. Phoenix");
+		for(int i = 2; i <= 16; i++) {
+			Console.WriteLine("{0}. {3}\t{6}{1}. {4}\t{7}{2}. {5}", i, i+20, i+40, StringModify.FirstToUpper(Monsters[i-2]), StringModify.FirstToUpper(Monsters[i+18]), StringModify.FirstToUpper(Monsters[i+38]), Monsters[i-2].Length < 12 ? "\t" : "", 
+			Monsters[i+18].Length < 12 ? "\t" : "");
+		}
+	}
+
 	public void Town() {
 		string Input;
 
-		Console.Clear();
 		while(true) {
+			Console.Clear();
 			Console.WriteLine("Where do you want to go now?");
 			Console.WriteLine("1. Battle");
 			Console.WriteLine("2. Shop");
@@ -68,12 +78,40 @@ public class Menu {
 			Input = this.ParseTownCommand(Input);
 
 			if(Input.Equals("battle")) {
-				string[] monsters = Initializer.InitMonsters();
-				int d = Dice.Roll(monsters.Length)-1;
-				Enemy E = Bestiary.Load(monsters[d]);
-				BattleController BC = new BattleController(this.DM.Hero, E);
-				BC.Battle();
-				Console.Clear();				
+				Console.Clear();
+				List<string> Monsters = Initializer.InitMonsters();
+				while(true) {
+					this.ShowMonsters(Monsters);
+					
+					string Ans = Console.ReadLine();
+					Ans = Ans.ToLower();
+					int Index = new int();
+
+					if(Ans.Equals("1") || Ans.Equals("random")) {		
+						int d = Dice.Roll(Monsters.Count)-1;
+						Enemy E = Bestiary.Load(Monsters[d]);
+						BattleController BC = new BattleController(this.DM.Hero, E);
+						BC.Battle();
+						break;
+					}
+					else if(Ans.Equals(""))
+						break;
+
+					Index = Monsters.BinarySearch(Ans);
+
+					if(Index < 0) {
+						Console.Clear();
+						Console.WriteLine("Invalid monster\n");
+					}
+					else {
+						string[] tokens = Monsters[Index].Split(' ');
+						string file = String.Join("", tokens);
+						Enemy E = Bestiary.Load(file);
+						BattleController BC = new BattleController(this.DM.Hero, E);
+						BC.Battle();
+						break;
+					}
+				}
 			}
 			else if(Input.Equals("shop")) {
 				Market MK = new Market(this.DM.Hero);
