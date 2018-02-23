@@ -116,10 +116,9 @@ public static class CharacterCreator {
 	}
 
 	private static bool IsNum(string Num) {
+		string digits = "1234567890";
 		for(int i = 0; i < Num.Length; i++) {
-			if(Num[i] == '0' || Num[i] == '1' || Num[i] == '2' || Num[i] == '3' || Num[i] == '4' || Num[i] == '5' || Num[i] == '6' || Num[i] == '7' || Num[i] == '8' || Num[i] == '9')
-				continue;
-			else
+			if(digits.IndexOf(Num[i]) < 0)
 				return false;
 		}
 		return true;
