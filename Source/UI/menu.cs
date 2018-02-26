@@ -89,7 +89,9 @@ public class Menu {
 
 					if(Ans.Equals("1") || Ans.Equals("random")) {		
 						int d = Dice.Roll(Monsters.Count)-1;
-						Enemy E = Bestiary.Load(Monsters[d]);
+						string[] tokens = Monsters[d].Split(' ');
+						string file = String.Join("", tokens);
+						Enemy E = Bestiary.Load(file);
 						BattleController BC = new BattleController(this.DM.Hero, E);
 						BC.Battle();
 						break;
