@@ -6,8 +6,8 @@ using System.Text;
 public static class Bestiary {
 
 	public static void Make(string spec, int s, int ab, int r, int a, int fp, bool ranged) {
-		FileInfo File = new System.IO.FileInfo("./Bestiary/");
-		File.Directory.Create();
+		FileInfo Dir = new System.IO.FileInfo("./Bestiary/");
+		Dir.Directory.Create();
 
 		string[] Tokens = spec.Split(' ');
 		string FileName = "";
@@ -16,7 +16,6 @@ public static class Bestiary {
 			FileName = String.Join("", FileName, Token.ToLower());
 
 		FileName = String.Join("", "./Bestiary/", FileName, ".mon");
-
 
 		FileStream Stream = new FileStream(FileName, FileMode.OpenOrCreate,FileAccess.Write);
 
@@ -37,6 +36,8 @@ public static class Bestiary {
 		byte[] EncodedData = ASCIIEncoding.ASCII.GetBytes(Data);
 
 		CrStream.Write(EncodedData, 0, EncodedData.Length);
+
+		File.SetAttributes(FileName, FileAttributes.ReadOnly);
 
 		CrStream.Close();
 		Stream.Close();
