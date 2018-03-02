@@ -59,6 +59,63 @@ public class FileCreator {
 	}
 
 	public static void Items() {
-
+		Inventory.Make("wood sword", "melee", 0, 50);
+		Inventory.Make("rusty iron dagger", "melee", 1, 125);
+		Inventory.Make("iron dagger", "melee", 3, 210);
+		Inventory.Make("steel dagger", "melee", 4, 270);
+		Inventory.Make("iron longsword", "melee", 6, 300);
+		Inventory.Make("silver longsword", "melee", 7, 500);
+		Inventory.Make("claymore", "melee", 8, 750);
+		Inventory.Make("zweihander", "melee", 10, 1000);
+		Inventory.Make("iron war axe", "melee", 5, 450);
+		Inventory.Make("dwarven war axe", "melee", 8, 1250);
+		Inventory.Make("club", "melee", 3, 200);
+		Inventory.Make("steel mace", "melee", 7, 625);
+		Inventory.Make("steel warhammer", "melee", 8, 1300);
+		Inventory.Make("bionic sledgehammer", "melee", 15, 5000);
+		Inventory.Make("wood bow", "ranged", 0, 50);
+		Inventory.Make("iron bow", "ranged", 2, 150 );
+		Inventory.Make("short bow", "ranged", 1, 100);
+		Inventory.Make("long bow", "ranged", 3, 250);
+		Inventory.Make("elven bow", "ranged", 10, 2000);
+		Inventory.Make("steel bow", "ranged", 6, 650);
+		Inventory.Make("black bow", "ranged", 8, 975);
+		Inventory.Make("heavy crossbow", "ranged", 7, 700);
+		Inventory.Make("wood helmet", "head", 0, 100);
+		Inventory.Make("leather helmet", "head", 2, 150);
+		Inventory.Make("fur helmet", "head", 4, 200);
+		Inventory.Make("iron helmet", "head", 6, 275);
+		Inventory.Make("steel helmet", "head", 7, 500);
+		Inventory.Make("chainmail helmet", "head", 9, 575);
+		Inventory.Make("elven helmet", "head", 10, 800);
+		Inventory.Make("orcish helmet", "head", 11, 1000);
+		Inventory.Make("mithril helmet", "head", 13, 1250);
+		Inventory.Make("wood cuirass", "torso", 0, 150);
+		Inventory.Make("leather cuirass", "torso", 3, 300);
+		Inventory.Make("fur cuirass", "torso", 5, 500);
+		Inventory.Make("iron cuirass", "torso", 6, 700);
+		Inventory.Make("steel cuirass", "torso", 7, 725);
+		Inventory.Make("chainmail cuirass", "torso", 11, 1350);
+		Inventory.Make("elven cuirass", "torso", 12, 1500);
+		Inventory.Make("orcish cuirass", "torso", 14, 1750);
+		Inventory.Make("mithril cuirass", "torso", 15, 2500);
+		Inventory.Make("wood greaves", "leg", 0, 50);
+		Inventory.Make("leather greaves", "leg", 1, 125);
+		Inventory.Make("fur greaves", "leg", 2, 190);
+		Inventory.Make("iron greaves", "leg", 4, 225);
+		Inventory.Make("steel greaves", "leg", 5, 350);
+		Inventory.Make("orcish greaves", "leg", 6, 440);
+		Inventory.Make("chainmail greaves", "leg", 8, 750);
+		Inventory.Make("elven greaves", "leg", 7, 950);
+		Inventory.Make("mithril greaves", "leg", 10, 1200);
+		Inventory.Make("wood gauntlets", "hand", 0, 100);
+		Inventory.Make("leather gauntlets", "hand", 1, 150);
+		Inventory.Make("fur gauntlets", "hand", 1, 175);
+		Inventory.Make("iron gauntlets", "hand", 2, 200);
+		Inventory.Make("steel gauntlets", "hand", 3, 300);
+		Inventory.Make("chainmail gauntlets", "hand", 5, 375);
+		Inventory.Make("elven gauntlets", "hand", 7, 425);
+		Inventory.Make("orcish gauntlets", "hand", 8, 450);
+		Inventory.Make("mithril gauntlets", "hand", 10, 500);
 	}
 }
