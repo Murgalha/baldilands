@@ -29,9 +29,9 @@ public static class Bestiary {
 		string Data = spec + "," + s + "," + ab + "," + r + "," + a + "," + fp + ",";
 
 		if(ranged)
-			Data += "1," + "broken bow,ranged,0,50"; 
+			Data += "1," + "wood bow,ranged,0,50"; 
 		else
-			Data += "1," + "broken sword,melee,0,50"; 
+			Data += "1," + "wood sword,melee,0,50"; 
 
 		byte[] EncodedData = ASCIIEncoding.ASCII.GetBytes(Data);
 
