@@ -5,16 +5,17 @@ using System.Text;
 
 public static class Inventory {
 
-	public static void Make(string name, string type, int buff, int value) {
-		FileInfo Dir = new System.IO.FileInfo("./Inventory/");
-		Dir.Directory.Create();
+	public static void Make(string name, string type, string category, int buff, int value) {
+		string DirPath = "./Inventory/" + StringModify.FirstToUpper(category) + "/";
+
+		Directory.CreateDirectory(DirPath);
 
 		string[] Tokens = name.Split(' ');
 		string FileName = "";
 
 		FileName = String.Join("", Tokens);
 
-		FileName = String.Join("", "./Inventory/", FileName, ".itm");
+		FileName = String.Join("", DirPath, FileName, ".itm");
 
 		FileStream Stream = new FileStream(FileName, FileMode.OpenOrCreate,FileAccess.Write);
 
@@ -25,7 +26,7 @@ public static class Inventory {
 
 		CryptoStream CrStream = new CryptoStream(Stream, Crypto.CreateEncryptor(), CryptoStreamMode.Write);
 
-		string Data = name + "," + type + "," + buff + "," + value;
+		string Data = name + "," + type + "," + category + "," + buff + "," + value;
 
 		byte[] EncodedData = ASCIIEncoding.ASCII.GetBytes(Data);
 
@@ -37,8 +38,8 @@ public static class Inventory {
 		Stream.Close();
 	}
 
-	public static Item Load(string item) {
-		string FullPath = String.Join("", "./Inventory/", item, ".itm");
+	public static Item Load(string item, string category) {
+		string FullPath = String.Join("", "./Inventory/", StringModify.FirstToUpper(category), item, ".itm");
 		FileStream Stream = new FileStream(FullPath, FileMode.Open,FileAccess.Read);
 		DESCryptoServiceProvider Crypto = new DESCryptoServiceProvider();
 
@@ -60,10 +61,11 @@ public static class Inventory {
 		int k = 0;
 		string Name = Tokens[k++];
 		string Type = Tokens[k++];
+		string Category = Tokens[k++];
 		int Buff = Int32.Parse(Tokens[k++]);
 		int Value = Int32.Parse(Tokens[k++]);
 
-		Item I = new Item(Name, Type, Buff, Value);
+		Item I = new Item(Name, Type, Category, Buff, Value);
 
 		return I;
 	}

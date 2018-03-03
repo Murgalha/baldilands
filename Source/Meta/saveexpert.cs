@@ -8,9 +8,10 @@ public class SaveExpert {
 	private Item LoadItem(string[] Tokens, int k) {
 		string Name = Tokens[k];
 		string Type = Tokens[k+1];
-		int Buff = Int32.Parse(Tokens[k+2]);
-		int Value = Int32.Parse(Tokens[k+3]);
-		Item It = new Item(Name, Type, Buff, Value);
+		string Category = Tokens[k+2];
+		int Buff = Int32.Parse(Tokens[k+3]);
+		int Value = Int32.Parse(Tokens[k+4]);
+		Item It = new Item(Name, Type, Category, Buff, Value);
 		return It;
 	}
 
@@ -39,7 +40,7 @@ public class SaveExpert {
 		string Data = H.Name + "," + H.Race + "," + H.Strength + "," + H.Ability + "," + H.Resistance + "," + H.Armor + "," + H.Firepower + "," + H.Exp + "," + H.Gold + "," + H.Bag.Size + ",";
 
 		foreach (var It in H.Bag.Inventory)
-			Data += It.Name + "," + It.Type + "," + It.Buff + "," + It.Value + ",";
+			Data += It.Name + "," + It.Type + "," + It.Category + "," + It.Buff + "," + It.Value + ",";
 
 		if(H.Equip.Head != null) {
 			Data += "1,";
@@ -132,7 +133,7 @@ public class SaveExpert {
 		int Size = Int32.Parse(Tokens[k++]);
 		for(i = 0; i < Size; i++) {
 			Item It = LoadItem(Tokens, k);
-			k += 4;
+			k += 5;
 			H.PickItem(It);
 		}
 

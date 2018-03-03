@@ -2,12 +2,14 @@ public class Item {
 	
 	private string _Name;
 	private string _Type;
+	private string _Category;
 	private int _Buff;
 	private int _Value;
 
-	public Item(string name, string type, int buff, int value) {
+	public Item(string name, string type, string category, int buff, int value) {
 		this._Name = name;
 		this._Type = type;
+		this._Category = category;
 		this._Buff = buff;
 		this._Value = value;
 	}
@@ -27,6 +29,12 @@ public class Item {
 	public string Name {
 		get {
 			return this._Name;
+		}
+	}
+
+	public string Category {
+		get {
+			return this._Category;
 		}
 	}
 

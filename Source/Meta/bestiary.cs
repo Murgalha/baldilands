@@ -29,9 +29,9 @@ public static class Bestiary {
 		string Data = spec + "," + s + "," + ab + "," + r + "," + a + "," + fp + ",";
 
 		if(ranged)
-			Data += "1," + "wood bow,ranged,0,50"; 
+			Data += "1," + "wood bow,ranged,weapon,0,50"; 
 		else
-			Data += "1," + "wood sword,melee,0,50"; 
+			Data += "1," + "wood sword,melee,weapon,0,50"; 
 
 		byte[] EncodedData = ASCIIEncoding.ASCII.GetBytes(Data);
 
@@ -79,9 +79,10 @@ public static class Bestiary {
 		if(Tokens[k++].Equals("1")) {
 			string Name = Tokens[k++];
 			string Type = Tokens[k++];
+			string Category = Tokens[k++];
 			int Buff = Int32.Parse(Tokens[k++]);
 			int Value = Int32.Parse(Tokens[k++]);
-			Weapon = new Item(Name, Type, Buff, Value);
+			Weapon = new Item(Name, Type, Category, Buff, Value);
 		}
 
 		E.Equip.Equip(Weapon);
