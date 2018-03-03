@@ -86,6 +86,8 @@ public class Menu {
 					string Ans = Console.ReadLine();
 					Ans = Ans.ToLower();
 					int Index = new int();
+					int Value = -1;
+					bool Numeric = false;
 
 					if(Ans.Equals("1") || Ans.Equals("random")) {		
 						int d = Dice.Roll(Monsters.Count)-1;
@@ -98,8 +100,25 @@ public class Menu {
 					}
 					else if(Ans.Equals(""))
 						break;
+					else {
+						try {
+							Value = Int32.Parse(Ans);
+							Numeric = true;
+						}
+						catch(SystemException) {
+							Console.Clear();
+							Console.WriteLine("Invalid monster\n");
+							Numeric = false;
+						}
+					}
 
-					Index = Monsters.BinarySearch(Ans);
+					if(Numeric)
+						if(Value >= 2 && Value <= Monsters.Count+1)
+							Index = Value-2;
+						else
+							Index = Monsters.BinarySearch(Ans);
+					else
+						Index = Monsters.BinarySearch(Ans);
 
 					if(Index < 0) {
 						Console.Clear();
@@ -152,6 +171,9 @@ public class Menu {
 
 		Console.Clear();
 		while(true) {
+			Console.WriteLine("+------------+");
+			Console.WriteLine("| Baldilands |");
+			Console.WriteLine("+------------+\n");
 			Console.WriteLine("1. New Game");
 			Console.WriteLine("2. Load Game");
 			Console.WriteLine("3. Delete Save");
