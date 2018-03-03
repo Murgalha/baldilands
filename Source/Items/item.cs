@@ -14,6 +14,14 @@ public class Item {
 		this._Value = value;
 	}
 
+	public Item(Item It) {
+		this._Name = It.Name;
+		this._Type = It.Type;
+		this._Category = It.Category;
+		this._Buff = It.Buff;
+		this._Value = It.Value;
+	}
+
 	public int Buff {
 		get {
 			return this._Buff;
