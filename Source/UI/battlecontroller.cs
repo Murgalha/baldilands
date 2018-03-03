@@ -139,9 +139,12 @@ public class BattleController {
 			Input = ParseLogInput(Input);
 		}
 
-		if(Input.Equals("yes"))
+		if(Input.Equals("yes")) {
+			Console.Clear();
 			PrintBattleLog();
-	
+			Console.Write("\nType ENTER to return...");
+			Console.ReadLine();
+		}
 	}
 
 }

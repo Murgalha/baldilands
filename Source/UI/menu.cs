@@ -53,7 +53,7 @@ public class Menu {
 	}
 
 	private void ShowMonsters(List<string> Monsters) {
-		Console.WriteLine("Which monster do you want to battle with? (Type ENTER on empty monster to return)");
+		Console.WriteLine("Which monster do you want to battle with? (Type ENTER on empty monster to return)\n");
 		Console.WriteLine("1. Random\t\t21. Ghost\t\t41. Phoenix");
 		for(int i = 2; i <= 16; i++) {
 			Console.WriteLine("{0}. {3}\t{6}{1}. {4}\t{7}{2}. {5}", i, i+20, i+40, StringModify.FirstToUpper(Monsters[i-2]), StringModify.FirstToUpper(Monsters[i+18]), StringModify.FirstToUpper(Monsters[i+38]), Monsters[i-2].Length < 12 ? "\t" : "", 
@@ -64,8 +64,8 @@ public class Menu {
 	public void Town() {
 		string Input;
 
+		Console.Clear();
 		while(true) {
-			Console.Clear();
 			Console.WriteLine("Where do you want to go now?");
 			Console.WriteLine("1. Battle");
 			Console.WriteLine("2. Shop");
@@ -96,6 +96,7 @@ public class Menu {
 						Enemy E = Bestiary.Load(file);
 						BattleController BC = new BattleController(this.DM.Hero, E);
 						BC.Battle();
+						Console.Clear();
 						break;
 					}
 					else if(Ans.Equals(""))
@@ -130,6 +131,7 @@ public class Menu {
 						Enemy E = Bestiary.Load(file);
 						BattleController BC = new BattleController(this.DM.Hero, E);
 						BC.Battle();
+						Console.Clear();
 						break;
 					}
 				}
