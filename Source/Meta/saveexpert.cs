@@ -44,35 +44,35 @@ public class SaveExpert {
 
 		if(H.Equip.Head != null) {
 			Data += "1,";
-			Data += H.Equip.Head.Name + "," + H.Equip.Head.Type + "," + H.Equip.Head.Buff + "," + H.Equip.Head.Value + ",";
+			Data += H.Equip.Head.Name + "," + H.Equip.Head.Type + "," + H.Equip.Head.Category + "," + H.Equip.Head.Buff + "," + H.Equip.Head.Value + ",";
 		}
 		else
 			Data += "0,";
 
 		if(H.Equip.Torso != null) {
 			Data += "1,";
-			Data += H.Equip.Torso.Name + "," + H.Equip.Torso.Type + "," + H.Equip.Torso.Buff + "," + H.Equip.Torso.Value + ",";
+			Data += H.Equip.Torso.Name + "," + H.Equip.Torso.Type + "," + H.Equip.Torso.Category + "," + H.Equip.Torso.Buff + "," + H.Equip.Torso.Value + ",";
 		}
 		else
 			Data += "0,";
 
 		if(H.Equip.Hand != null) {
 			Data += "1,";
-			Data += H.Equip.Hand.Name + "," + H.Equip.Hand.Type + "," + H.Equip.Hand.Buff + "," + H.Equip.Hand.Value + ",";
+			Data += H.Equip.Hand.Name + "," + H.Equip.Hand.Type + "," + H.Equip.Hand.Category + "," + H.Equip.Hand.Buff + "," + H.Equip.Hand.Value + ",";
 		}
 		else
 			Data += "0,";
 
 		if(H.Equip.Leg != null) {
 			Data += "1,";
-			Data += H.Equip.Leg.Name + "," + H.Equip.Leg.Type + "," + H.Equip.Leg.Buff + "," + H.Equip.Leg.Value + ",";
+			Data += H.Equip.Leg.Name + "," + H.Equip.Leg.Type + "," + H.Equip.Leg.Category + "," + H.Equip.Leg.Buff + "," + H.Equip.Leg.Value + ",";
 		}
 		else
 			Data += "0,";
 
 		if(H.Weapon != null) {
 			Data += "1,";
-			Data += H.Equip.Weapon.Name + "," + H.Equip.Weapon.Type + "," + H.Equip.Weapon.Buff + "," + H.Equip.Weapon.Value;
+			Data += H.Equip.Weapon.Name + "," + H.Equip.Weapon.Type + "," + H.Equip.Weapon.Category + "," + H.Equip.Weapon.Buff + "," + H.Equip.Weapon.Value;
 		}
 		else
 			Data += "0";
@@ -140,7 +140,7 @@ public class SaveExpert {
 		for(i = 0; i < 5; i++) {
 			if(Tokens[k++] == "1") {
 				Item It = LoadItem(Tokens, k);
-				k += 4;
+				k += 5;
 				H.PickItem(It);
 				H.EquipFromBag(It.Name);
 			}
