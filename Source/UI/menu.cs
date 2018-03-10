@@ -61,6 +61,21 @@ public class Menu {
 		}
 	}
 
+	private string ParseShop(string Raw) {
+		Raw = Raw.ToLower();
+
+		if(Raw.Equals("1") || Raw.Equals("gold shop") ||
+		Raw.Equals("gold"))
+			return "gold";
+		else if(Raw.Equals("2") || Raw.Equals("experience shop") ||
+		Raw.Equals("experience") || Raw.Equals("exp"))
+			return "exp";
+		else if(Raw.Equals("3") || Raw.Equals("return"))
+			return "return";
+		else
+			return "";
+	}
+
 	public void Town() {
 		string Input;
 
@@ -137,9 +152,37 @@ public class Menu {
 				}
 			}
 			else if(Input.Equals("shop")) {
-				Market MK = new Market(this.DM.Hero);
-				MK.Shop();
+				string Market;
+
 				Console.Clear();
+				while(true) {
+					Console.WriteLine("Which shop do you want to visit?");
+					Console.WriteLine("1. Gold Shop");
+					Console.WriteLine("2. Experience Shop");
+					Console.WriteLine("3. Return");
+
+					Market = Console.ReadLine();
+					Market = this.ParseShop(Market);
+
+					if(Market.Equals("gold")) {
+						Market MK = new Market(this.DM.Hero);
+						MK.Shop();
+						Console.Clear();
+					}
+					else if(Market.Equals("exp")) {
+						ExpMarket EM = new ExpMarket(this.DM.Hero);
+						EM.Shop();
+						Console.Clear();
+					}
+					else if(Market.Equals("return")) {
+						Console.Clear();
+						break;
+					}
+					else {
+						Console.Clear();
+						Console.WriteLine("Invalid shop\n");
+					}
+				}
 			}
 			else if(Input.Equals("manage inventory"))
 				InventoryController.Manage(this.DM.Hero);
