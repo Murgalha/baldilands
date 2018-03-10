@@ -4,6 +4,7 @@ public class Hero : Creature {
 	protected string _Race;
 	protected Bag _Bag;
 	protected int _Exp;
+	protected int _Level;
 
 	public Hero(int str, int ab, int res, int armr, int firepwr, string name, string race)
 	: base(str, ab, res, armr, firepwr) {
@@ -11,6 +12,7 @@ public class Hero : Creature {
 		this._Race = race;
 		this._Bag = new Bag();
 		this._Exp = 0;
+		this._Level = 1;
 	}
 
 	public void ReceiveReward(Reward R) {
@@ -48,6 +50,23 @@ public class Hero : Creature {
 		this._MP = (this._Resistance < 1 ? 1 : this._Resistance*5);
 	}
 
+	public void LevelUp(string c) {
+		if(c.Equals("strength"))
+			this._Strength++;
+		else if(c.Equals("ability"))
+			this._Ability++;
+		else if(c.Equals("resistance"))
+			this._Resistance++;
+		else if(c.Equals("armor"))
+			this._Armor++;
+		else if(c.Equals("Firepower"))
+			this._Firepower++;
+		else
+			return;
+		this._Level++;
+		this.Exp -= 10;
+	}
+
 	public string Name {
 		get {
 			return this._Name;
@@ -81,6 +100,15 @@ public class Hero : Creature {
 		}
 		set {
 			this._Exp = value;
+		}
+	}
+
+	public int Level {
+		get {
+			return this._Level;
+		}
+		set {
+			this._Level = value;
 		}
 	}
 }

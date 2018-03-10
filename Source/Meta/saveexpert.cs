@@ -37,7 +37,7 @@ public class SaveExpert {
 		   Crypto.CreateEncryptor(),CryptoStreamMode.Write);
 
 
-		string Data = H.Name + "," + H.Race + "," + H.Strength + "," + H.Ability + "," + H.Resistance + "," + H.Armor + "," + H.Firepower + "," + H.Exp + "," + H.Gold + "," + H.Bag.Size + ",";
+		string Data = H.Name + "," + H.Race + "," + H.Strength + "," + H.Ability + "," + H.Resistance + "," + H.Armor + "," + H.Firepower + "," + H.Exp + "," + H.Level + "," + H.Gold + "," + H.Bag.Size + ",";
 
 		foreach (var It in H.Bag.Inventory)
 			Data += It.Name + "," + It.Type + "," + It.Category + "," + It.Buff + "," + It.Value + ",";
@@ -113,7 +113,7 @@ public class SaveExpert {
 		string[] Tokens = Data.Split(',');
 
 		int Strength, Ability, Resistance, Armor, Firepower;
-		int Exp, Gold, i, k = 0;
+		int Exp, Gold, Level, i, k = 0;
 		string Name = Tokens[k++];
 		string Race = Tokens[k++];
 		Strength = Int32.Parse(Tokens[k++]);
@@ -125,9 +125,11 @@ public class SaveExpert {
 		Hero H = new Hero(Strength, Ability, Resistance, Armor, Firepower, Name, Race);
 
 		Exp = Int32.Parse(Tokens[k++]);
+		Level = Int32.Parse(Tokens[k++]);
 		Gold = Int32.Parse(Tokens[k++]);
 
 		H.Exp = Exp;
+		H.Level = Level;
 		H.Gold = Gold;
 
 		int Size = Int32.Parse(Tokens[k++]);
