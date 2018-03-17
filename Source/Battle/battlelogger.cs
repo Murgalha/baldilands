@@ -9,10 +9,11 @@ public class BattleLogger {
 	}
 
 	private void _Save(Creature c, bool IsPlayer, string cmd, int damage, bool crit, bool EnemyDodge) {
+		string WeaponName = (c.Equip.Weapon != null ? c.Equip.Weapon.Name : "powerful strike");
 		if(IsPlayer) {
 			if(damage == 0) {
-				if(cmd.Equals("ranged attack") && 
-				!c.Equip.Weapon.Type.Equals("ranged"))
+				if(cmd.Equals("ranged attack") && (c.Equip.Weapon == null ||
+				!c.Equip.Weapon.Type.Equals("ranged")))
 					this._TurnLog += "You do not have a ranged weapon equipped. No damage dealt";
 				else if(EnemyDodge)
 					this._TurnLog += "The enemy dodged the attack!";
@@ -25,7 +26,7 @@ public class BattleLogger {
 			}
 			else if(damage > 0) {
 				if(cmd.Equals("attack")) {
-					this._TurnLog += "You strike the enemy with your " + c.Equip.Weapon.Name + ". It loses " + damage + " life point" + (damage > 1 ? "s" : "");
+					this._TurnLog += "You strike the enemy with your " + WeaponName + ". It loses " + damage + " life point" + (damage > 1 ? "s" : "");
 				}
 				else if(cmd.Equals("ranged attack")) {
 					this._TurnLog += "You shoot the enemy with your " + c.Equip.Weapon.Name + ". It loses " + damage + " life point" + (damage > 1 ? "s" : "");
@@ -36,8 +37,8 @@ public class BattleLogger {
 		}
 		else {
 			if(damage == 0) {
-				if(cmd.Equals("ranged attack") && 
-				!c.Equip.Weapon.Type.Equals("ranged"))
+				if(cmd.Equals("ranged attack") && (c.Equip.Weapon == null ||
+				!c.Equip.Weapon.Type.Equals("ranged")))
 					this._TurnLog += "The enemy does not have a ranged weapon equipped. No damage dealt";
 				if(EnemyDodge)
 					this._TurnLog += "You dodged the attack!";
@@ -50,10 +51,10 @@ public class BattleLogger {
 			}
 			else if(damage > 0) {
 				if(cmd.Equals("attack")) {
-					this._TurnLog += "The enemy strikes you with his " + c.Equip.Weapon.Name + ". You lose " + damage + " life point" + (damage > 1 ? "s" : "");
+					this._TurnLog += "The enemy strikes you with its " + WeaponName + ". You lose " + damage + " life point" + (damage > 1 ? "s" : "");
 				}
 				else if(cmd.Equals("ranged attack")) {
-					this._TurnLog += "The enemy shoots you with his " + c.Equip.Weapon.Name + ". You lose " + damage + " life point" + (damage > 1 ? "s" : "");
+					this._TurnLog += "The enemy shoots you with its " + c.Equip.Weapon.Name + ". You lose " + damage + " life point" + (damage > 1 ? "s" : "");
 				}
 				if(crit)
 					this._TurnLog += ". It is a critical hit!";
@@ -64,7 +65,6 @@ public class BattleLogger {
 
 	public void SaveTurnLog(Creature c1, bool IsPlayer1, string cmd1, int damage1, bool crit1, bool dodge1) {
 		this._Save(c1, IsPlayer1, cmd1, damage1, crit1, dodge1);
-		this._CombatLog += TurnLog;
 	}
 
 	public void SaveRunLog(bool HasRun) {

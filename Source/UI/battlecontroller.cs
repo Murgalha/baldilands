@@ -13,10 +13,9 @@ public class BattleController {
 	}
 
 	private void PrintBattleLog() {
-		int i = 0, k = 0;
+		int i = 1, k = 0;
 		string[] split = BM.CombatLog.Split('\n');
-		Console.WriteLine();
-		foreach(var substring in split)
+		foreach(var substring in split) {
 			if(!string.IsNullOrEmpty(substring)) {
 				if(k%2 == 0) {
 					Console.WriteLine("\nTurn " + i + ":");
@@ -24,6 +23,7 @@ public class BattleController {
 				}
 				Console.WriteLine("> " + substring);
 				k++;
+			}
 		}
 	}
 
@@ -127,6 +127,7 @@ public class BattleController {
 				PrintBattleLog();
 				Console.Write("\nType ENTER to return...");
 				Console.ReadLine();
+				return;
 			}
 
 			else if(Input.Equals("no"))

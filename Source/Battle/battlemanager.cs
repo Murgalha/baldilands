@@ -214,6 +214,7 @@ public class BattleManager {
 		CurrentCMD, CurrentDamage, CurrentCrit, NextDodgeSuccess);
 
 		if(NextCreature.HP == 0) {
+			this.BL.CombatLog += TurnLog;
 			this.Ended = true;
 			return false;
 		}
@@ -225,6 +226,8 @@ public class BattleManager {
 
 		this.BL.SaveTurnLog(NextCreature, list[Next].IsPlayer(), NextCMD, 
 		NextDamage, NextCrit, CurrentDodgeSuccess);
+
+		this.BL.CombatLog += TurnLog;
 
 		if(CurrentCreature.HP == 0) {
 			this.Ended = true;
