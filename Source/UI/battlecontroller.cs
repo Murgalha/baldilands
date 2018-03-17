@@ -50,7 +50,7 @@ public class BattleController {
 		else if(Raw.Equals("2") || Raw.Equals("no") || Raw.Equals("n"))
 			return "no";
 		else
-			return null;
+			return "";
 	}
 
 	private void PrintStats() {
@@ -67,22 +67,12 @@ public class BattleController {
 	}
 
 	public void Battle() {
-		bool RunSuccess = false;
 		string Input = null;
 		Reward Rwrd;
 		
 		Console.Clear();
 		Console.WriteLine("You are now battling a{0} {1}", (this.IsVowel(this.E.Species[0]) ? "n" : ""), this.E.Species);
 		while(!BM.HasEnded()) {
-			RunSuccess = BM.CheckRun();
-			if(RunSuccess) {
-				BM.SaveRunLog(RunSuccess);
-				break;
-			}
-			else if(BM.TriedRun()) {
-				BM.SaveRunLog(RunSuccess);
-				Console.Write(BM.TurnLog);
-			}
 			Input = null;
 			while(Input == null) {
 				PrintStats();
@@ -98,14 +88,12 @@ public class BattleController {
 				if(Input == null)
 					Console.WriteLine("Invalid command");
 			}
-			if(BM.HasEnded()) break;
 			BM.SetTurn(Input, "attack");
 			BM.Turn();
 			Console.Write(BM.TurnLog);
+
 			if(BM.HasEnded())
 				break;
-			BM.Turn();
-			Console.Write(BM.TurnLog);
 		}
 
 		if(this.H.HP == 0) {
@@ -125,26 +113,30 @@ public class BattleController {
 			this.H.ReceiveReward(Rwrd);
 		}
 
-		else if(RunSuccess) {
-			Console.WriteLine("You ran away!");
-		}
-
 		Input = null;
-		while(Input == null) {
+		while(true) {
 			Console.WriteLine("\nDo you want to see the full battle log?");
 			Console.WriteLine("1. Yes");
 			Console.WriteLine("2. No");
 
 			Input = Console.ReadLine();
 			Input = ParseLogInput(Input);
+			
+			if(Input.Equals("yes")) {
+				Console.Clear();
+				PrintBattleLog();
+				Console.Write("\nType ENTER to return...");
+				Console.ReadLine();
+			}
+
+			else if(Input.Equals("no"))
+				return;
+			else if(Input.Equals("")) {
+				Console.Clear();
+				Console.WriteLine("Invalid answer\n");
+			}
 		}
 
-		if(Input.Equals("yes")) {
-			Console.Clear();
-			PrintBattleLog();
-			Console.Write("\nType ENTER to return...");
-			Console.ReadLine();
-		}
 	}
 
 }

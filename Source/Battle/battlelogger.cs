@@ -8,54 +8,70 @@ public class BattleLogger {
 		this._CombatLog = "";
 	}
 
-	public void SaveTurnLog(Creature c, bool IsPlayer, string cmd, int damage, bool crit, bool dodge) {
-		this._TurnLog = "";
+	private void _Save(Creature c, bool IsPlayer, string cmd, int damage, bool crit, bool EnemyDodge) {
 		if(IsPlayer) {
-			if(dodge)
-				this._TurnLog += "The enemy dodged your attack!";
-			else if(cmd.Equals("run")) {
-				this._TurnLog += "You prepare to run";
+			if(damage == 0) {
+				if(cmd.Equals("ranged attack") && 
+				!c.Equip.Weapon.Type.Equals("ranged"))
+					this._TurnLog += "You do not have a ranged weapon equipped. No damage dealt";
+				else if(EnemyDodge)
+					this._TurnLog += "The enemy dodged the attack!";
+				else if(cmd.Equals("dodge"))
+					this._TurnLog += "You attempt to dodge";
+				else if(cmd.Equals("run"))
+					this._TurnLog += "You prepare to run";
+				else
+					this._TurnLog += "The enemy blocked the attack!";
 			}
-			else if(damage != 0) {
-				this._TurnLog += "You hit the enemy. It loses " + damage + " life point" + (damage > 1 ? "s" : "");
+			else if(damage > 0) {
+				if(cmd.Equals("attack")) {
+					this._TurnLog += "You strike the enemy with your " + c.Equip.Weapon.Name + ". It loses " + damage + " life point" + (damage > 1 ? "s" : "");
+				}
+				else if(cmd.Equals("ranged attack")) {
+					this._TurnLog += "You shoot the enemy with your " + c.Equip.Weapon.Name + ". It loses " + damage + " life point" + (damage > 1 ? "s" : "");
+				}
 				if(crit)
 					this._TurnLog += ". It is a critical hit!";
-			}
-			else if(cmd.Equals("dodge")) {
-				this._TurnLog += "You attempt to dodge";
-			}
-			else if((c.Weapon == null || c.Weapon.Type == "melee") && cmd.Equals("ranged attack")) {
-				this._TurnLog += "You do not have a ranged weapon equipped. No damage dealt";
 			}
 		}
 		else {
-			if(dodge) {
-				this._TurnLog += "You dodged the attack!";
+			if(damage == 0) {
+				if(cmd.Equals("ranged attack") && 
+				!c.Equip.Weapon.Type.Equals("ranged"))
+					this._TurnLog += "The enemy does not have a ranged weapon equipped. No damage dealt";
+				if(EnemyDodge)
+					this._TurnLog += "You dodged the attack!";
+				else if(cmd.Equals("dodge"))
+					this._TurnLog += "The enemy attempts to dodge";
+				else if(cmd.Equals("run"))
+					this._TurnLog += "The enemy prepares to run";
+				else
+					this._TurnLog += "You blocked the attack!";
 			}
-			else if(cmd.Equals("run")) {
-				this._TurnLog += "The enemy prepares to run";
-			}
-			if(damage != 0) {
-				this._TurnLog += "The enemy hits you. You lose " + damage + " life point" + (damage > 1 ? "s" : "");
+			else if(damage > 0) {
+				if(cmd.Equals("attack")) {
+					this._TurnLog += "The enemy strikes you with his " + c.Equip.Weapon.Name + ". You lose " + damage + " life point" + (damage > 1 ? "s" : "");
+				}
+				else if(cmd.Equals("ranged attack")) {
+					this._TurnLog += "The enemy shoots you with his " + c.Equip.Weapon.Name + ". You lose " + damage + " life point" + (damage > 1 ? "s" : "");
+				}
 				if(crit)
 					this._TurnLog += ". It is a critical hit!";
 			}
-			else if(cmd.Equals("dodge")) {
-				this._TurnLog += "The enemy attempts to dodge";
-			}
-			else if((c.Weapon == null || c.Weapon.Type == "melee") && cmd.Equals("ranged attack")) {
-				this._TurnLog += "The enemy does not have a ranged weapon equipped. No damage dealt";
-			}
 		}
 		this._TurnLog += "\n";
+	}
+
+	public void SaveTurnLog(Creature c1, bool IsPlayer1, string cmd1, int damage1, bool crit1, bool dodge1) {
+		this._Save(c1, IsPlayer1, cmd1, damage1, crit1, dodge1);
 		this._CombatLog += TurnLog;
 	}
 
 	public void SaveRunLog(bool HasRun) {
 		if(HasRun)
-			this._TurnLog = "You ran away!\n";
+			this._TurnLog += "You ran away!\n";
 		else
-			this._TurnLog = "You failed to run away\n";
+			this._TurnLog += "You failed to run away\n";
 		this._CombatLog += this._TurnLog;
 	}
 
