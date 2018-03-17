@@ -16,11 +16,11 @@ public class SaveExpert {
 	}
 
 	public bool SaveGame(Hero H, int slot) {
-		FileInfo FileDir = new System.IO.FileInfo("./Save/");
+		FileInfo FileDir = new System.IO.FileInfo("./GameData/Save/");
 		FileDir.Directory.Create();
 		string Slot;
 			
-		Slot = "./Save/slot" + slot + ".sav";
+		Slot = "./GameData/Save/slot" + slot + ".sav";
 
 		if(File.Exists(Slot)) {
 			File.Delete(Slot);
@@ -90,7 +90,7 @@ public class SaveExpert {
 	public Hero LoadGame(int slot) {
 		string Slot;
 
-		Slot = String.Join("", "./Save/slot", slot, ".sav");
+		Slot = String.Join("", "./GameData/Save/slot", slot, ".sav");
 
 		if(!File.Exists(Slot))
 			return null;
@@ -152,7 +152,7 @@ public class SaveExpert {
 	}
 
 	public void DeleteGame(int slot) {
-		string Slot = String.Join("", "./Save/slot", slot, ".sav");
+		string Slot = String.Join("", "./GameData/Save/slot", slot, ".sav");
 		File.Delete(Slot);
 	}
 }

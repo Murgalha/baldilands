@@ -6,7 +6,7 @@ using System.Text;
 public static class Bestiary {
 
 	public static void Make(string spec, int s, int ab, int r, int a, int fp, bool ranged) {
-		FileInfo Dir = new System.IO.FileInfo("./Bestiary/");
+		FileInfo Dir = new System.IO.FileInfo("./GameData/Bestiary/");
 		Dir.Directory.Create();
 
 		string[] Tokens = spec.Split(' ');
@@ -15,7 +15,7 @@ public static class Bestiary {
 		foreach (var Token in Tokens)
 			FileName = String.Join("", FileName, Token.ToLower());
 
-		FileName = String.Join("", "./Bestiary/", FileName, ".mon");
+		FileName = String.Join("", "./GameData/Bestiary/", FileName, ".mon");
 
 		FileStream Stream = new FileStream(FileName, FileMode.OpenOrCreate,FileAccess.Write);
 
@@ -44,7 +44,7 @@ public static class Bestiary {
 	}
 
 	public static Enemy Load(string File) {
-		string FullPath = String.Join("", "./Bestiary/", File, ".mon");
+		string FullPath = String.Join("", "./GameData/Bestiary/", File, ".mon");
 		FileStream Stream = new FileStream(FullPath, FileMode.Open,FileAccess.Read);
 		DESCryptoServiceProvider Crypto = new DESCryptoServiceProvider();
 

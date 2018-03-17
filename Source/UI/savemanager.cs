@@ -18,7 +18,7 @@ public class SaveManager {
 
 		string Data = "";
 		for(int i = 1; i <= this.SlotsNum; i++) {
-			string SlotFile = String.Join("", "./Save/slot", i, ".sav");
+			string SlotFile = String.Join("", "./GameData/Save/slot", i, ".sav");
 			if(!File.Exists(SlotFile))
 				SlotState[i] = "empty";
 			else {
@@ -32,7 +32,7 @@ public class SaveManager {
 
 	private bool LoadSlotData(int slot, ref string data) {
 		string Slot;
-		Slot = String.Join("", "./Save/slot", slot, ".sav");
+		Slot = String.Join("", "./GameData/Save/slot", slot, ".sav");
 		
 		FileStream Stream = new FileStream(Slot, FileMode.Open,FileAccess.Read);
 		DESCryptoServiceProvider Crypto = new DESCryptoServiceProvider();
@@ -69,7 +69,7 @@ public class SaveManager {
 		while(true) {
 			Console.WriteLine("Which slot would you like to load? (Type ENTER on empty slot to return)");
 			for(int i = 1; i <= this.SlotsNum; i++) {
-				string SlotFile = String.Join("", "./Save/slot", i, ".sav");
+				string SlotFile = String.Join("", "./GameData/Save/slot", i, ".sav");
 				Console.Write("> {0}", i);
 				if(!File.Exists(SlotFile)) {
 					Console.Write(" - Empty\n");
@@ -120,7 +120,7 @@ public class SaveManager {
 		while(true) {
 			Console.WriteLine("Which slot do you want to save in? (Type ENTER on empty slot to return)");
 			for(int i = 1; i <= this.SlotsNum; i++) {
-				string SlotFile = String.Join("", "./Save/slot", i, ".sav");
+				string SlotFile = String.Join("", "./GameData/Save/slot", i, ".sav");
 				Console.Write("> {0}", i);
 				if(!File.Exists(SlotFile)) {
 					Console.Write(" - Empty\n");
@@ -195,7 +195,7 @@ public class SaveManager {
 		while(true) {
 			Console.WriteLine("Which slot would you like to delete? (Type ENTER on empty slot to return)");
 			for(int i = 1; i <= this.SlotsNum; i++) {
-				string SlotFile = String.Join("", "./Save/slot", i, ".sav");
+				string SlotFile = String.Join("", "./GameData/Save/slot", i, ".sav");
 				Console.Write("> {0}", i);
 				if(!File.Exists(SlotFile)) {
 					Console.Write(" - Empty\n");

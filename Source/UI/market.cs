@@ -38,7 +38,7 @@ public class Market {
 	}
 
 	private void LoadWeapons(out List<Item> Melee, out List<Item> Ranged) {
-		string[] paths = Directory.GetFileSystemEntries("./Inventory/Weapon", "*.itm");
+		string[] paths = Directory.GetFileSystemEntries("./GameData/Inventory/Weapon", "*.itm");
 		Melee = new List<Item>();
 		Ranged = new List<Item>();
 		foreach(var filepath in paths) {
@@ -53,7 +53,7 @@ public class Market {
 	}
 
 	private void LoadArmors(out List<Item> Armor) {
-		string[] paths = Directory.GetFileSystemEntries("./Inventory/Armor", "*.itm");
+		string[] paths = Directory.GetFileSystemEntries("./GameData/Inventory/Armor", "*.itm");
 		Armor = new List<Item>();
 		foreach(var filepath in paths) {
 			string file = Path.GetFileNameWithoutExtension(filepath);

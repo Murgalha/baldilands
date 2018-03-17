@@ -6,7 +6,7 @@ using System.Text;
 public static class Inventory {
 
 	public static void Make(string name, string type, string category, int buff, int value) {
-		string DirPath = "./Inventory/" + StringModify.FirstToUpper(category) + "/";
+		string DirPath = "./GameData/Inventory/" + StringModify.FirstToUpper(category) + "/";
 		Directory.CreateDirectory(DirPath);
 
 		string[] Tokens = name.Split(' ');
@@ -38,7 +38,7 @@ public static class Inventory {
 	}
 
 	public static Item Load(string item, string category) {
-		string FullPath = String.Join("", "./Inventory/", StringModify.FirstToUpper(category), "/", item, ".itm");
+		string FullPath = String.Join("", "./GameData/Inventory/", StringModify.FirstToUpper(category), "/", item, ".itm");
 		FileStream Stream = new FileStream(FullPath, FileMode.Open,FileAccess.Read);
 		DESCryptoServiceProvider Crypto = new DESCryptoServiceProvider();
 
