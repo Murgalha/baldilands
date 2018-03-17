@@ -110,11 +110,7 @@ public abstract class Creature {
 
 	public MeleeAttack Melee {
 		get {
-			MeleeAttack MA;
-			if(this.Weapon != null && this.Weapon.Type.Equals("melee"))
-				MA = new MeleeAttack(this);
-			else
-				MA = new MeleeAttack();
+			MeleeAttack MA = new MeleeAttack(this);
 			return MA;			
 		}
 	}
