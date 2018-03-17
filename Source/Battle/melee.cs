@@ -11,9 +11,6 @@ public class MeleeAttack {
 	public MeleeAttack(Creature c) {
 		int d = Dice.Roll(6);
 
-		if(c.Equip.Weapon == null)
-			d = 0;
-
 		if(d == 6) {
 			this._Crit = true;
 			this._Dmg = d + (c.Strength*2) + c.Ability + c.AttackBuff - c.AttackDebuff;
