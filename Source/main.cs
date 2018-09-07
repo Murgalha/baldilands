@@ -1,7 +1,8 @@
 class main {
 
 	static void Main() {
-		DungeonMaster DM = new DungeonMaster();
-		DM.StartGame();
+        FileCreator.Items();
+        //DungeonMaster DM = new DungeonMaster();
+		//DM.StartGame();
 	}
 }
