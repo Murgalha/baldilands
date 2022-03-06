@@ -21,8 +21,8 @@ public class Menu {
 			return "new game";
 		else if(Raw.Equals("2") || Raw.Equals("load game"))
 			return "load game";
-		else if(Raw.Equals("3") || Raw.Equals("delete save") 
-		|| Raw.Equals("delete"))
+		else if(Raw.Equals("3") || Raw.Equals("delete save")
+				|| Raw.Equals("delete"))
 			return "delete";
 		else if(Raw.Equals("4") || Raw.Equals("exit"))
 			return "exit";
@@ -32,21 +32,21 @@ public class Menu {
 
 	private string ParseTownCommand(string Raw) {
 		Raw = Raw.ToLower();
-	
+
 		if(Raw.Equals("1") || Raw.Equals("battle"))
 			return "battle";
 		else if(Raw.Equals("2") || Raw.Equals("shop"))
 			return "shop";
-		else if(Raw.Equals("3") || Raw.Equals("manage inventory") 
-		|| Raw.Equals("inventory"))
+		else if(Raw.Equals("3") || Raw.Equals("manage inventory")
+				|| Raw.Equals("inventory"))
 			return "manage inventory";
 		else if(Raw.Equals("4") || Raw.Equals("rest"))
 			return "rest";
-		else if(Raw.Equals("5") || Raw.Equals("save game") 
-		|| Raw.Equals("save"))
+		else if(Raw.Equals("5") || Raw.Equals("save game")
+				|| Raw.Equals("save"))
 			return "save game";
-		else if(Raw.Equals("6") || Raw.Equals("exit game") 
-		|| Raw.Equals("exit"))
+		else if(Raw.Equals("6") || Raw.Equals("exit game")
+				|| Raw.Equals("exit"))
 			return "exit";
 		else
 			return "";
@@ -56,8 +56,8 @@ public class Menu {
 		Console.WriteLine("Which monster do you want to battle with? (Type ENTER on empty monster to return)\n");
 		Console.WriteLine("1. Random\t\t21. Ghost\t\t41. Phoenix");
 		for(int i = 2; i <= 16; i++) {
-			Console.WriteLine("{0}. {3}\t{6}{1}. {4}\t{7}{2}. {5}", i, i+20, i+40, StringModify.FirstToUpper(Monsters[i-2]), StringModify.FirstToUpper(Monsters[i+18]), StringModify.FirstToUpper(Monsters[i+38]), Monsters[i-2].Length < 12 ? "\t" : "", 
-			Monsters[i+18].Length < 12 ? "\t" : "");
+			Console.WriteLine("{0}. {3}\t{6}{1}. {4}\t{7}{2}. {5}", i, i+20, i+40, StringModify.FirstToUpper(Monsters[i-2]), StringModify.FirstToUpper(Monsters[i+18]), StringModify.FirstToUpper(Monsters[i+38]), Monsters[i-2].Length < 12 ? "\t" : "",
+							  Monsters[i+18].Length < 12 ? "\t" : "");
 		}
 	}
 
@@ -65,10 +65,10 @@ public class Menu {
 		Raw = Raw.ToLower();
 
 		if(Raw.Equals("1") || Raw.Equals("gold shop") ||
-		Raw.Equals("gold"))
+		   Raw.Equals("gold"))
 			return "gold";
 		else if(Raw.Equals("2") || Raw.Equals("experience shop") ||
-		Raw.Equals("experience") || Raw.Equals("exp"))
+				Raw.Equals("experience") || Raw.Equals("exp"))
 			return "exp";
 		else if(Raw.Equals("3") || Raw.Equals("return"))
 			return "return";
@@ -97,14 +97,14 @@ public class Menu {
 				List<string> Monsters = Initializer.InitMonsters();
 				while(true) {
 					this.ShowMonsters(Monsters);
-					
+
 					string Ans = Console.ReadLine();
 					Ans = Ans.ToLower();
 					int Index = new int();
 					int Value = -1;
 					bool Numeric = false;
 
-					if(Ans.Equals("1") || Ans.Equals("random")) {		
+					if(Ans.Equals("1") || Ans.Equals("random")) {
 						int d = Dice.Roll(Monsters.Count)-1;
 						string[] tokens = Monsters[d].Split(' ');
 						string file = String.Join("", tokens);

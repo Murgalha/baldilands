@@ -33,7 +33,7 @@ public class SaveManager {
 	private bool LoadSlotData(int slot, ref string data) {
 		string Slot;
 		Slot = String.Join("", "./GameData/Save/slot", slot, ".sav");
-		
+
 		FileStream Stream = new FileStream(Slot, FileMode.Open,FileAccess.Read);
 		DESCryptoServiceProvider Crypto = new DESCryptoServiceProvider();
 
@@ -41,7 +41,7 @@ public class SaveManager {
 		Crypto.IV = ASCIIEncoding.ASCII.GetBytes("MURGALHA");
 
 		CryptoStream CrStream = new CryptoStream(Stream,
-    		Crypto.CreateDecryptor(),CryptoStreamMode.Read);
+			Crypto.CreateDecryptor(),CryptoStreamMode.Read);
 
 		StreamReader Reader = new StreamReader(CrStream);
 		string Data = "";
@@ -58,7 +58,7 @@ public class SaveManager {
 		data = String.Join(", the ", Tokens[0], Tokens[1]);
 
 		return true;
-	} 
+	}
 
 	public void SetLoadSlot() {
 		string Data = "";

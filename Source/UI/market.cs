@@ -23,13 +23,13 @@ public class Market {
 		Raw = Raw.ToLower();
 
 		if(Raw.Equals("1") || Raw.Equals("weapons merchant") ||
-		Raw.Equals("weapons"))
+		   Raw.Equals("weapons"))
 			return "weapons";
 		else if(Raw.Equals("2") || Raw.Equals("armors merchant") ||
-		Raw.Equals("armors"))
+				Raw.Equals("armors"))
 			return "armors";
 		else if(Raw.Equals("3") || Raw.Equals("armors merchant") ||
-		Raw.Equals("consumables"))
+				Raw.Equals("consumables"))
 			return "consumables";
 		else if(Raw.Equals("4") || Raw.Equals("return"))
 			return "return";
@@ -70,7 +70,7 @@ public class Market {
 		return -1;
 	}
 
-private void BuyRanged(List<Item> Ranged) {
+	private void BuyRanged(List<Item> Ranged) {
 		string Weapon;
 		int Index = new int();
 		while(true) {
@@ -78,7 +78,7 @@ private void BuyRanged(List<Item> Ranged) {
 			Console.WriteLine("Current gold: {0}\n", this.H.Gold);
 			foreach(var weapon in Ranged)
 				Console.WriteLine("> {0} - Buying price: {2}", StringModify.FirstToUpper(weapon.Name), weapon.Type, weapon.Value);
-			
+
 			Weapon = Console.ReadLine();
 			Weapon = Weapon.ToLower();
 
@@ -101,8 +101,8 @@ private void BuyRanged(List<Item> Ranged) {
 				else {
 					this.H.Gold -= It.Value;
 					this.H.PickItem(It);
-					Console.WriteLine("{0} bought\n", 
-					StringModify.FirstToUpper(It.Name));
+					Console.WriteLine("{0} bought\n",
+									  StringModify.FirstToUpper(It.Name));
 				}
 			}
 		}
@@ -116,7 +116,7 @@ private void BuyRanged(List<Item> Ranged) {
 			Console.WriteLine("Current gold: {0}\n", this.H.Gold);
 			foreach(var weapon in Melee)
 				Console.WriteLine("> {0} - Buying price: {2}", StringModify.FirstToUpper(weapon.Name), weapon.Type, weapon.Value);
-			
+
 			Weapon = Console.ReadLine();
 			Weapon = Weapon.ToLower();
 
@@ -139,8 +139,8 @@ private void BuyRanged(List<Item> Ranged) {
 				else {
 					this.H.Gold -= It.Value;
 					this.H.PickItem(It);
-					Console.WriteLine("{0} bought\n", 
-					StringModify.FirstToUpper(It.Name));
+					Console.WriteLine("{0} bought\n",
+									  StringModify.FirstToUpper(It.Name));
 				}
 			}
 		}
@@ -166,18 +166,18 @@ private void BuyRanged(List<Item> Ranged) {
 		while(true) {
 			Console.WriteLine("Which armor do you want to buy? (Type ENTER on empty armor to return)");
 			Console.WriteLine("Current gold: {0}\n", this.H.Gold);
-			
-			Console.Write("> {0} - Buying price: {1}\t", StringModify.FirstToUpper(Armor[0].Name), Armor[0].Type, 
-			Armor[0].Value);
-			Console.Write("> {0} - Buying price: {1}\n", StringModify.FirstToUpper(Armor[1].Name), 
-			Armor[1].Value);
+
+			Console.Write("> {0} - Buying price: {1}\t", StringModify.FirstToUpper(Armor[0].Name), Armor[0].Type,
+						  Armor[0].Value);
+			Console.Write("> {0} - Buying price: {1}\n", StringModify.FirstToUpper(Armor[1].Name),
+						  Armor[1].Value);
 			for(int i = 2; i < Armor.Count; i+=2) {
-				Console.Write("> {0} - Buying price: {1}\t\t", StringModify.FirstToUpper(Armor[i].Name), 
-				Armor[i].Value);
-				Console.Write("> {0} - Buying price: {1}\n", StringModify.FirstToUpper(Armor[i+1].Name), 
-				Armor[i+1].Value);
+				Console.Write("> {0} - Buying price: {1}\t\t", StringModify.FirstToUpper(Armor[i].Name),
+							  Armor[i].Value);
+				Console.Write("> {0} - Buying price: {1}\n", StringModify.FirstToUpper(Armor[i+1].Name),
+							  Armor[i+1].Value);
 			}
-			
+
 			ArmorName = Console.ReadLine();
 			ArmorName = ArmorName.ToLower();
 
@@ -200,8 +200,8 @@ private void BuyRanged(List<Item> Ranged) {
 				else {
 					this.H.Gold -= It.Value;
 					this.H.PickItem(It);
-					Console.WriteLine("{0} bought\n", 
-					StringModify.FirstToUpper(It.Name));
+					Console.WriteLine("{0} bought\n",
+									  StringModify.FirstToUpper(It.Name));
 				}
 			}
 		}
@@ -221,7 +221,7 @@ private void BuyRanged(List<Item> Ranged) {
 			Console.WriteLine("2. Armors Merchant");
 			Console.WriteLine("3. Consumables Merchant");
 			Console.WriteLine("4. Return");
-		
+
 			Merchant = Console.ReadLine();
 			Merchant = this.ParseMerchant(Merchant);
 
@@ -295,7 +295,7 @@ private void BuyRanged(List<Item> Ranged) {
 				H.DropItem(Item);
 				H.Gold += (Item.Value/2);
 				Console.WriteLine("{0} sold\n", StringModify.FirstToUpper(Item.Name));
-			}		
+			}
 		}
 	}
 
@@ -314,7 +314,7 @@ private void BuyRanged(List<Item> Ranged) {
 
 	public void Shop() {
 		string Input;
-		
+
 		Console.Clear();
 		while(true) {
 			Console.WriteLine("What do you want to do?");
@@ -324,7 +324,7 @@ private void BuyRanged(List<Item> Ranged) {
 
 			Input = Console.ReadLine();
 			Input = ParseCommand(Input);
-			
+
 			Console.Clear();
 			if(Input.Equals("buy")) {
 				this.Buy();

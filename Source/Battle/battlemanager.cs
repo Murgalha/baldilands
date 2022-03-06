@@ -203,15 +203,15 @@ public class BattleManager {
 			CurrentDamage = 0;
 		}
 
-		CurrentDamage = (CurrentDamage-NextDefense.Def < 0 ? 0 : 
-		CurrentDamage-NextDefense.Def);
+		CurrentDamage = (CurrentDamage-NextDefense.Def < 0 ? 0 :
+						 CurrentDamage-NextDefense.Def);
 
 		NextCreature.Damage = CurrentDamage;
 
 		this.BL.TurnLog = "";
 
 		this.BL.SaveTurnLog(CurrentCreature, list[turn].IsPlayer(),
-		CurrentCMD, CurrentDamage, CurrentCrit, NextDodgeSuccess);
+							CurrentCMD, CurrentDamage, CurrentCrit, NextDodgeSuccess);
 
 		if(NextCreature.HP == 0) {
 			this.BL.CombatLog += TurnLog;
@@ -219,13 +219,13 @@ public class BattleManager {
 			return false;
 		}
 
-		NextDamage = (NextDamage-CurrentDefense.Def < 0 ? 0 : 
-		NextDamage-CurrentDefense.Def);
+		NextDamage = (NextDamage-CurrentDefense.Def < 0 ? 0 :
+					  NextDamage-CurrentDefense.Def);
 
 		CurrentCreature.Damage = NextDamage;
 
-		this.BL.SaveTurnLog(NextCreature, list[Next].IsPlayer(), NextCMD, 
-		NextDamage, NextCrit, CurrentDodgeSuccess);
+		this.BL.SaveTurnLog(NextCreature, list[Next].IsPlayer(), NextCMD,
+							NextDamage, NextCrit, CurrentDodgeSuccess);
 
 		this.BL.CombatLog += TurnLog;
 
@@ -258,10 +258,10 @@ public class BattleManager {
 		if(CurrentCreature.HP == 0 || NextCreature.HP == 0)
 			this.Ended = true;
 
-		list[turn].PostTurn();	
+		list[turn].PostTurn();
 		list[Next].PostTurn();
 
-		return true;	
+		return true;
 	}
 
 	private bool CheckRun(Battling B) {

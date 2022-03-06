@@ -55,7 +55,7 @@ public abstract class Creature {
 		}
 	}
 
-		public int HP {
+	public int HP {
 		get {
 			return this._HP;
 		}
@@ -91,7 +91,7 @@ public abstract class Creature {
 		}
 	}
 
-		public int DefenseDebuff {
+	public int DefenseDebuff {
 		get {
 			return this._DefenseDebuff;
 		}
@@ -111,7 +111,7 @@ public abstract class Creature {
 	public MeleeAttack Melee {
 		get {
 			MeleeAttack MA = new MeleeAttack(this);
-			return MA;			
+			return MA;
 		}
 	}
 

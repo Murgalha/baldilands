@@ -1,7 +1,7 @@
 using System;
 
 public class ExpMarket {
-	
+
 	private Hero H;
 
 	public ExpMarket(Hero H) {
@@ -66,13 +66,13 @@ public class ExpMarket {
 		Raw = Raw.ToLower();
 
 		if(Raw.Equals("1") || Raw.Equals("characteristics") ||
-		Raw.Equals("buy characteristics"))
+		   Raw.Equals("buy characteristics"))
 			return "characteristics";
 		else if(Raw.Equals("2") || Raw.Equals("exchange") ||
-		Raw.Equals("exchange for gold"))
+				Raw.Equals("exchange for gold"))
 			return "exchange";
 		else if(Raw.Equals("3") || Raw.Equals("spells") ||
-		Raw.Equals("buy spells"))
+				Raw.Equals("buy spells"))
 			return "spells";
 		else if(Raw.Equals("4") || Raw.Equals("return"))
 			return "return";
@@ -123,18 +123,18 @@ public class ExpMarket {
 
 	public void Shop() {
 		string Input;
-		
+
 		Console.Clear();
 		while(true) {
 			Console.WriteLine("What do you want to do with your experience points?");
 			Console.WriteLine("1. Buy Characteristics");
 			Console.WriteLine("2. Exchange for gold");
 			Console.WriteLine("3. Buy Spells");
-			Console.WriteLine("4. Return"); 
+			Console.WriteLine("4. Return");
 
 			Input = Console.ReadLine();
 			Input = ParseCommand(Input);
-			
+
 			Console.Clear();
 			if(Input.Equals("characteristics")) {
 				this.BuyCharacteristics();

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 
 public class Bag {
-	
+
 	private List<Item> _Inventory;
 	private int _Size;
 	private int _Gold;

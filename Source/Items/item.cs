@@ -1,5 +1,5 @@
 public class Item {
-	
+
 	private string _Name;
 	private string _Type;
 	private string _Category;

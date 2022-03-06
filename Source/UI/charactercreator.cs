@@ -9,7 +9,7 @@ public static class CharacterCreator {
 		public int ArmorBonus;
 		public int AbilityBonus;
 		public string race;
-	
+
 		public Race(string race) {
 			this.StrengthBonus = 0;
 			this.FirepowerBonus = 0;
@@ -319,7 +319,7 @@ public static class CharacterCreator {
 
 				Input = Console.ReadLine();
 				Input = CharacterCreator.ParseCommand(Input);
-			
+
 				if(Input.Equals("name"))
 					Name = CharacterCreator.ChooseName();
 				else if(Input.Equals("race"))

@@ -1,5 +1,5 @@
 public class RangedAttack {
-	
+
 	private int _Dmg;
 	private bool _Crit;
 

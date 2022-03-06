@@ -1,5 +1,5 @@
 public class Defense {
-	
+
 	private int _Def;
 	private bool _Crit;
 

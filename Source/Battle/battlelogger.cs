@@ -1,5 +1,5 @@
 public class BattleLogger {
-	
+
 	private string _TurnLog;
 	private string _CombatLog;
 
@@ -13,7 +13,7 @@ public class BattleLogger {
 		if(IsPlayer) {
 			if(damage == 0) {
 				if(cmd.Equals("ranged attack") && (c.Equip.Weapon == null ||
-				!c.Equip.Weapon.Type.Equals("ranged")))
+												   !c.Equip.Weapon.Type.Equals("ranged")))
 					this._TurnLog += "You do not have a ranged weapon equipped. No damage dealt";
 				else if(EnemyDodge)
 					this._TurnLog += "The enemy dodged the attack!";
@@ -38,7 +38,7 @@ public class BattleLogger {
 		else {
 			if(damage == 0) {
 				if(cmd.Equals("ranged attack") && (c.Equip.Weapon == null ||
-				!c.Equip.Weapon.Type.Equals("ranged")))
+												   !c.Equip.Weapon.Type.Equals("ranged")))
 					this._TurnLog += "The enemy does not have a ranged weapon equipped. No damage dealt";
 				if(EnemyDodge)
 					this._TurnLog += "You dodged the attack!";
