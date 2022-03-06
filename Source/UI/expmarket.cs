@@ -1,11 +1,10 @@
 using System;
 
 public class ExpMarket {
-
 	private Hero H;
 
-	public ExpMarket(Hero H) {
-		this.H = H;
+	public ExpMarket(Hero h) {
+		H = h;
 	}
 
 	private string ParseCharacteristic(string Raw) {
@@ -34,7 +33,7 @@ public class ExpMarket {
 		while(true) {
 			Console.WriteLine("Each characteristic point costs 10 experience points");
 			Console.WriteLine("Which characteristic do you want to buy?");
-			Console.WriteLine("(Current Exp: {0})\n", this.H.Exp);
+			Console.WriteLine("(Current Exp: {0})\n", H.Exp);
 			Console.WriteLine("1. Strength");
 			Console.WriteLine("2. Ability");
 			Console.WriteLine("3. Resistance");
@@ -43,7 +42,7 @@ public class ExpMarket {
 			Console.WriteLine("6. Return");
 
 			Charac = Console.ReadLine();
-			Charac = this.ParseCharacteristic(Charac);
+			Charac = ParseCharacteristic(Charac);
 
 			if(Charac.Equals("return"))
 				return;
@@ -52,12 +51,12 @@ public class ExpMarket {
 				Console.WriteLine("Invalid characteristic\n");
 			}
 			else {
-				if(this.H.Exp < 10) {
+				if(H.Exp < 10) {
 					Console.Clear();
 					Console.WriteLine("Not enough experience\n");
 				}
 				else
-					this.H.LevelUp(Charac);
+					H.LevelUp(Charac);
 			}
 		}
 	}
@@ -90,7 +89,7 @@ public class ExpMarket {
 		while(true) {
 			Console.WriteLine("Here you can trade 1 experience point for 100 gold coins");
 			Console.WriteLine("How many experience points do you want to trade: (Type ENTER on empty number to return)");
-			Console.WriteLine("(Current Exp: {0})", this.H.Exp);
+			Console.WriteLine("(Current Exp: {0})", H.Exp);
 
 			Value = Console.ReadLine();
 
@@ -108,9 +107,9 @@ public class ExpMarket {
 				continue;
 			}
 
-			if(V > 0 && V <= this.H.Exp) {
-				this.H.Gold += V*100;
-				this.H.Exp -= V;
+			if(V > 0 && V <= H.Exp) {
+				H.Gold += V*100;
+				H.Exp -= V;
 				Console.Clear();
 				Console.WriteLine("{0} gold acquired. {1} experience lost", V*100, V);
 			}
@@ -137,10 +136,10 @@ public class ExpMarket {
 
 			Console.Clear();
 			if(Input.Equals("characteristics")) {
-				this.BuyCharacteristics();
+				BuyCharacteristics();
 			}
 			else if(Input.Equals("exchange")) {
-				this.ExchangeExp();
+				ExchangeExp();
 			}
 			else if(Input.Equals("spells")) {
 				Console.WriteLine("Coming soon\n");

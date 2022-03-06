@@ -1,5 +1,4 @@
 public static class Dice {
-
 	public static int Roll(int faces) {
 		System.Random rnd = new System.Random((int)System.DateTime.Now.Ticks);
 		return (rnd.Next()%faces)+1;

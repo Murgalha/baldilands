@@ -1,5 +1,4 @@
 public static class CharacteristicCheck {
-
 	public static bool Ability(Creature c, string df) {
 		int mark = c.Ability;
 		System.Random rnd = new System.Random((int)System.DateTime.Now.Ticks);

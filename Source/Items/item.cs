@@ -1,54 +1,23 @@
 public class Item {
-
-	private string _Name;
-	private string _Type;
-	private string _Category;
-	private int _Buff;
-	private int _Value;
+	public readonly string Name;
+	public readonly string Type;
+	public readonly string Category;
+	public readonly int Buff;
+	public readonly int Value;
 
 	public Item(string name, string type, string category, int buff, int value) {
-		this._Name = name;
-		this._Type = type;
-		this._Category = category;
-		this._Buff = buff;
-		this._Value = value;
+		Name = name;
+		Type = type;
+		Category = category;
+		Buff = buff;
+		Value = value;
 	}
 
 	public Item(Item It) {
-		this._Name = It.Name;
-		this._Type = It.Type;
-		this._Category = It.Category;
-		this._Buff = It.Buff;
-		this._Value = It.Value;
-	}
-
-	public int Buff {
-		get {
-			return this._Buff;
-		}
-	}
-
-	public string Type {
-		get {
-			return this._Type;
-		}
-	}
-
-	public string Name {
-		get {
-			return this._Name;
-		}
-	}
-
-	public string Category {
-		get {
-			return this._Category;
-		}
-	}
-
-	public int Value {
-		get {
-			return this._Value;
-		}
+		Name = It.Name;
+		Type = It.Type;
+		Category = It.Category;
+		Buff = It.Buff;
+		Value = It.Value;
 	}
 }

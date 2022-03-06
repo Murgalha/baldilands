@@ -4,20 +4,19 @@ using System.Security.Cryptography;
 using System.Text;
 
 public class SaveManager {
-
 	public int SlotsNum;
 	public int CurrentSlot;
 	public string[] SlotState;
 	private SaveExpert SE;
 
 	public SaveManager() {
-		this.SlotsNum = 20;
-		this.CurrentSlot = -1;
-		this.SlotState = new string[this.SlotsNum+1];
-		this.SE = new SaveExpert();
+		SlotsNum = 20;
+		CurrentSlot = -1;
+		SlotState = new string[SlotsNum+1];
+		SE = new SaveExpert();
 
 		string Data = "";
-		for(int i = 1; i <= this.SlotsNum; i++) {
+		for(int i = 1; i <= SlotsNum; i++) {
 			string SlotFile = String.Join("", "./GameData/Save/slot", i, ".sav");
 			if(!File.Exists(SlotFile))
 				SlotState[i] = "empty";
@@ -68,7 +67,7 @@ public class SaveManager {
 		Console.Clear();
 		while(true) {
 			Console.WriteLine("Which slot would you like to load? (Type ENTER on empty slot to return)");
-			for(int i = 1; i <= this.SlotsNum; i++) {
+			for(int i = 1; i <= SlotsNum; i++) {
 				string SlotFile = String.Join("", "./GameData/Save/slot", i, ".sav");
 				Console.Write("> {0}", i);
 				if(!File.Exists(SlotFile)) {
@@ -94,13 +93,13 @@ public class SaveManager {
 				Console.WriteLine("Invalid slot number\n");
 				continue;
 			}
-			if(Value < 1 || Value > this.SlotsNum) {
+			if(Value < 1 || Value > SlotsNum) {
 				Console.Clear();
 				Console.WriteLine("Invalid slot number\n");
 				continue;
 			}
 			if(SlotState[Value].Equals("full")) {
-				this.CurrentSlot = Value;
+				CurrentSlot = Value;
 				return;
 			}
 			else {
@@ -119,7 +118,7 @@ public class SaveManager {
 		Console.Clear();
 		while(true) {
 			Console.WriteLine("Which slot do you want to save in? (Type ENTER on empty slot to return)");
-			for(int i = 1; i <= this.SlotsNum; i++) {
+			for(int i = 1; i <= SlotsNum; i++) {
 				string SlotFile = String.Join("", "./GameData/Save/slot", i, ".sav");
 				Console.Write("> {0}", i);
 				if(!File.Exists(SlotFile)) {
@@ -150,9 +149,9 @@ public class SaveManager {
 				Console.WriteLine("Invalid slot number\n");
 				continue;
 			}
-			if(this.SlotState[Value].Equals("empty")) {
-				this.SlotState[Value] = "full";
-				this.CurrentSlot = Value;
+			if(SlotState[Value].Equals("empty")) {
+				SlotState[Value] = "full";
+				CurrentSlot = Value;
 				return Value;
 			}
 			else {
@@ -169,8 +168,8 @@ public class SaveManager {
 					Ans = YesNoInput.Parse(Ans);
 
 					if(Ans.Equals("yes")) {
-						this.SlotState[Value] = "full";
-						this.CurrentSlot = Value;
+						SlotState[Value] = "full";
+						CurrentSlot = Value;
 						return Value;
 					}
 					else if(Ans.Equals("no")) {
@@ -194,7 +193,7 @@ public class SaveManager {
 		Console.Clear();
 		while(true) {
 			Console.WriteLine("Which slot would you like to delete? (Type ENTER on empty slot to return)");
-			for(int i = 1; i <= this.SlotsNum; i++) {
+			for(int i = 1; i <= SlotsNum; i++) {
 				string SlotFile = String.Join("", "./GameData/Save/slot", i, ".sav");
 				Console.Write("> {0}", i);
 				if(!File.Exists(SlotFile)) {
@@ -222,15 +221,15 @@ public class SaveManager {
 				Console.WriteLine("Invalid slot number\n");
 				continue;
 			}
-			if(Value < 1 || Value > this.SlotsNum) {
+			if(Value < 1 || Value > SlotsNum) {
 				Console.Clear();
 				Console.WriteLine("Invalid slot number\n");
 				continue;
 			}
 			if(SlotState[Value].Equals("full")) {
 				Console.Clear();
-				this.SE.DeleteGame(Value);
-				this.SlotState[Value] = "empty";
+				SE.DeleteGame(Value);
+				SlotState[Value] = "empty";
 				Console.WriteLine("Slot {0} deleted\n", Value);
 			}
 			else {
@@ -241,10 +240,10 @@ public class SaveManager {
 	}
 
 	public bool SaveGame(Hero H, int slot) {
-		return this.SE.SaveGame(H, slot);
+		return SE.SaveGame(H, slot);
 	}
 
 	public Hero LoadGame(int slot) {
-		return this.SE.LoadGame(slot);
+		return SE.LoadGame(slot);
 	}
 }

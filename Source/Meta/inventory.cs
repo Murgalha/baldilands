@@ -4,7 +4,6 @@ using System.Security.Cryptography;
 using System.Text;
 
 public static class Inventory {
-
 	/* Create an item file and save it on Inventory folder */
 	public static void Make(string name, string type, string category, int buff, int value) {
 		string DirPath = "./GameData/Inventory/" + StringModify.FirstToUpper(category) + "/";

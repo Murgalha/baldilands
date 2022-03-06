@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 
 public class Market {
-
 	private Hero H;
 
 	public Market(Hero h) {
-		this.H = h;
+		H = h;
 	}
 
 	private Item Find(Hero H, string Name) {

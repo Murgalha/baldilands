@@ -1,5 +1,4 @@
 public class Skill {
-
 	protected string name;
 	protected string school;
 	protected string duration;

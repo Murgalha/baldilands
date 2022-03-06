@@ -1,11 +1,11 @@
 public class BattleLogger {
-
-	private string _TurnLog;
-	private string _CombatLog;
+	// TODO: Use StringBuilder
+	public string TurnLog { get; set; }
+	public string CombatLog { get; set; }
 
 	public BattleLogger() {
-		this._TurnLog = "";
-		this._CombatLog = "";
+		this.TurnLog = "";
+		this.CombatLog = "";
 	}
 
 	private void _Save(Creature c, bool IsPlayer, string cmd, int damage, bool crit, bool EnemyDodge) {
@@ -14,53 +14,53 @@ public class BattleLogger {
 			if(damage == 0) {
 				if(cmd.Equals("ranged attack") && (c.Equip.Weapon == null ||
 												   !c.Equip.Weapon.Type.Equals("ranged")))
-					this._TurnLog += "You do not have a ranged weapon equipped. No damage dealt";
+					this.TurnLog += "You do not have a ranged weapon equipped. No damage dealt";
 				else if(EnemyDodge)
-					this._TurnLog += "The enemy dodged the attack!";
+					this.TurnLog += "The enemy dodged the attack!";
 				else if(cmd.Equals("dodge"))
-					this._TurnLog += "You attempt to dodge";
+					this.TurnLog += "You attempt to dodge";
 				else if(cmd.Equals("run"))
-					this._TurnLog += "You prepare to run";
+					this.TurnLog += "You prepare to run";
 				else
-					this._TurnLog += "The enemy blocked the attack!";
+					this.TurnLog += "The enemy blocked the attack!";
 			}
 			else if(damage > 0) {
 				if(cmd.Equals("attack")) {
-					this._TurnLog += "You strike the enemy with your " + WeaponName + ". It loses " + damage + " life point" + (damage > 1 ? "s" : "");
+					this.TurnLog += "You strike the enemy with your " + WeaponName + ". It loses " + damage + " life point" + (damage > 1 ? "s" : "");
 				}
 				else if(cmd.Equals("ranged attack")) {
-					this._TurnLog += "You shoot the enemy with your " + c.Equip.Weapon.Name + ". It loses " + damage + " life point" + (damage > 1 ? "s" : "");
+					this.TurnLog += "You shoot the enemy with your " + c.Equip.Weapon.Name + ". It loses " + damage + " life point" + (damage > 1 ? "s" : "");
 				}
 				if(crit)
-					this._TurnLog += ". It is a critical hit!";
+					this.TurnLog += ". It is a critical hit!";
 			}
 		}
 		else {
 			if(damage == 0) {
 				if(cmd.Equals("ranged attack") && (c.Equip.Weapon == null ||
 												   !c.Equip.Weapon.Type.Equals("ranged")))
-					this._TurnLog += "The enemy does not have a ranged weapon equipped. No damage dealt";
+					this.TurnLog += "The enemy does not have a ranged weapon equipped. No damage dealt";
 				if(EnemyDodge)
-					this._TurnLog += "You dodged the attack!";
+					this.TurnLog += "You dodged the attack!";
 				else if(cmd.Equals("dodge"))
-					this._TurnLog += "The enemy attempts to dodge";
+					this.TurnLog += "The enemy attempts to dodge";
 				else if(cmd.Equals("run"))
-					this._TurnLog += "The enemy prepares to run";
+					this.TurnLog += "The enemy prepares to run";
 				else
-					this._TurnLog += "You blocked the attack!";
+					this.TurnLog += "You blocked the attack!";
 			}
 			else if(damage > 0) {
 				if(cmd.Equals("attack")) {
-					this._TurnLog += "The enemy strikes you with its " + WeaponName + ". You lose " + damage + " life point" + (damage > 1 ? "s" : "");
+					this.TurnLog += "The enemy strikes you with its " + WeaponName + ". You lose " + damage + " life point" + (damage > 1 ? "s" : "");
 				}
 				else if(cmd.Equals("ranged attack")) {
-					this._TurnLog += "The enemy shoots you with its " + c.Equip.Weapon.Name + ". You lose " + damage + " life point" + (damage > 1 ? "s" : "");
+					this.TurnLog += "The enemy shoots you with its " + c.Equip.Weapon.Name + ". You lose " + damage + " life point" + (damage > 1 ? "s" : "");
 				}
 				if(crit)
-					this._TurnLog += ". It is a critical hit!";
+					this.TurnLog += ". It is a critical hit!";
 			}
 		}
-		this._TurnLog += "\n";
+		this.TurnLog += "\n";
 	}
 
 	public void SaveTurnLog(Creature c1, bool IsPlayer1, string cmd1, int damage1, bool crit1, bool dodge1) {
@@ -69,27 +69,9 @@ public class BattleLogger {
 
 	public void SaveRunLog(bool HasRun) {
 		if(HasRun)
-			this._TurnLog += "You ran away!\n";
+			this.TurnLog += "You ran away!\n";
 		else
-			this._TurnLog += "You failed to run away\n";
-		this._CombatLog += this._TurnLog;
-	}
-
-	public string TurnLog {
-		get {
-			return this._TurnLog;
-		}
-		set {
-			this._TurnLog = value;
-		}
-	}
-
-	public string CombatLog {
-		get {
-			return this._CombatLog;
-		}
-		set {
-			this._CombatLog = value;
-		}
+			this.TurnLog += "You failed to run away\n";
+		this.CombatLog += this.TurnLog;
 	}
 }

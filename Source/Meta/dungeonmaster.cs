@@ -1,5 +1,4 @@
 public class DungeonMaster {
-
 	public Hero Hero;
 
 	public void StartGame() {

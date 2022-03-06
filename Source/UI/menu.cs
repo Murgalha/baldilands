@@ -5,13 +5,12 @@ using System.Text;
 using System.Collections.Generic;
 
 public class Menu {
-
 	public SaveManager SM;
 	public DungeonMaster DM;
 
-	public Menu(DungeonMaster DM) {
-		this.SM = new SaveManager();
-		this.DM = DM;
+	public Menu(DungeonMaster dm) {
+		SM = new SaveManager();
+		DM = dm;
 	}
 
 	private string ParseCommand(string Raw) {

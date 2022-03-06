@@ -1,9 +1,7 @@
 using System;
 
 public static class CharacterSheet {
-
 	public static void Show(Hero H) {
-
 		Console.WriteLine("Name: {0}\tRace: {1}", H.Name, StringModify.FirstToUpper(H.Race));
 		Console.WriteLine("HP: {0}\t\tMP: {1}", H.HP, H.MP);
 

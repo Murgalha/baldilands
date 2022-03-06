@@ -1,5 +1,4 @@
 public static class YesNoInput {
-
 	/* parse input given needed on a 'yes/no' question */
 	public static string Parse(string Raw) {
 		/* passing string to lower case */

@@ -1,114 +1,78 @@
 public class Hero : Creature {
 
-	protected string _Name;
-	protected string _Race;
-	protected Bag _Bag;
-	protected int _Exp;
-	protected int _Level;
+	public readonly string Name;
+	public readonly string Race;
+	public Bag Bag { get; private set; }
+	public int Exp { get; set; }
+	public int Level { get; set; }
 
 	public Hero(int str, int ab, int res, int armr, int firepwr, string name, string race)
 		: base(str, ab, res, armr, firepwr) {
-		this._Name = name;
-		this._Race = race;
-		this._Bag = new Bag();
-		this._Exp = 0;
-		this._Level = 1;
+		Name = name;
+		Race = race;
+		Bag = new Bag();
+		Exp = 0;
+		Level = 1;
 	}
 
 	public void ReceiveReward(Reward R) {
-		this._Bag.Add(R.Item);
-		this._Bag.Gold += R.Gold;
-		this._Exp += R.Exp;
+		Bag.Add(R.Item);
+		Bag.Gold += R.Gold;
+		Exp += R.Exp;
 	}
 
 	public void PickItem(Item it) {
-		this._Bag.Add(it);
+		Bag.Add(it);
 	}
 
 	public void DropItem(Item it) {
-		this._Bag.Remove(it);
+		Bag.Remove(it);
 	}
 
 	public void EquipFromBag(string name) {
-		Item New = this._Bag.Inventory.Find(x => x.Name.Equals(name));
+		Item New = Bag.Inventory.Find(x => x.Name.Equals(name));
 		Item Old;
 		string Type = (New.Type.Equals("melee") || New.Type.Equals("ranged") ? "weapon" : New.Type);
-		Old = this._Equip.Remove(Type);
-		this._Bag.Remove(New);
-		this._Equip.Equip(New);
+		Old = Equip.Remove(Type);
+		Bag.Remove(New);
+		Equip.Equip(New);
 		if(Old != null)
-			this._Bag.Add(Old);
+			Bag.Add(Old);
 	}
 
 	public void RemoveEquip(string part) {
-		Item it = this._Equip.Remove(part);
-		this._Bag.Add(it);
+		Item it = Equip.Remove(part);
+		Bag.Add(it);
 	}
 
 	public void Rest() {
-		this._HP = (this._Resistance < 1 ? 1 : this._Resistance*5);
-		this._MP = (this._Resistance < 1 ? 1 : this._Resistance*5);
+		HP = _GetMaxHpOrMp();
+		MP = _GetMaxHpOrMp();
 	}
 
 	public void LevelUp(string c) {
 		if(c.Equals("strength"))
-			this._Strength++;
+			Strength++;
 		else if(c.Equals("ability"))
-			this._Ability++;
+			Ability++;
 		else if(c.Equals("resistance"))
-			this._Resistance++;
+			Resistance++;
 		else if(c.Equals("armor"))
-			this._Armor++;
+			Armor++;
 		else if(c.Equals("Firepower"))
-			this._Firepower++;
+			Firepower++;
 		else
 			return;
-		this._Level++;
-		this.Exp -= 10;
-	}
-
-	public string Name {
-		get {
-			return this._Name;
-		}
-	}
-
-	public string Race {
-		get {
-			return this._Race;
-		}
+		Level++;
+		Exp -= 10;
 	}
 
 	public int Gold {
 		get {
-			return this._Bag.Gold;
+			return Bag.Gold;
 		}
 		set {
-			this._Bag.Gold = value;
-		}
-	}
-
-	public Bag Bag {
-		get {
-			return this._Bag;
-		}
-	}
-
-	public int Exp {
-		get {
-			return this._Exp;
-		}
-		set {
-			this._Exp = value;
-		}
-	}
-
-	public int Level {
-		get {
-			return this._Level;
-		}
-		set {
-			this._Level = value;
+			Bag.Gold = value;
 		}
 	}
 }

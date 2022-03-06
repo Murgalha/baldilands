@@ -1,36 +1,27 @@
 public class MeleeAttack {
+	public readonly int Dmg;
+	public readonly bool IsCritical;
 
-	private int _Dmg;
-	private bool _Crit;
+	public static MeleeAttack Empty => new MeleeAttack(0, false);
 
-	public MeleeAttack() {
-		this._Dmg = 0;
-		this._Crit = false;
+	private MeleeAttack(int damage, bool isCritical) {
+		Dmg = damage;
+		IsCritical = isCritical;
 	}
 
 	public MeleeAttack(Creature c) {
 		int d = Dice.Roll(6);
 
 		if(d == 6) {
-			this._Crit = true;
-			this._Dmg = d + (c.Strength*2) + c.Ability + c.AttackBuff - c.AttackDebuff;
+			IsCritical = true;
+			Dmg = d + (c.Strength*2) + c.Ability + c.AttackBuff - c.AttackDebuff;
 		}
 		else {
-			this._Crit = false;
-			this._Dmg = d + c.Strength + c.Ability + c.AttackBuff - c.AttackDebuff;
+			IsCritical = false;
+			Dmg = d + c.Strength + c.Ability + c.AttackBuff - c.AttackDebuff;
 		}
 
 		if(c.Equip.Weapon == null)
-			this._Dmg /= 2;
-	}
-
-	public bool IsCritical() {
-		return this._Crit;
-	}
-
-	public int Dmg {
-		get {
-			return this._Dmg;
-		}
+			Dmg /= 2;
 	}
 }

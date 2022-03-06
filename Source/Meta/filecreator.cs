@@ -1,7 +1,6 @@
 public class FileCreator {
-
 	/* Create monsters' files */
-	public static void Monsters() {
+	public static void CreateMonsters() {
 		Bestiary.Make("Giant Bee", 1, 3, 0, 0, 0, false);
 		Bestiary.Make("Abomination", 2, 3, 4, 1, 0, false);
 		Bestiary.Make("Rattling Sniffer", 1, 1, 3, 1, 1, true);
@@ -60,7 +59,7 @@ public class FileCreator {
 	}
 
 	/* Create items' files */
-	public static void Items() {
+	public static void CreateItems() {
 		Inventory.Make("wood sword", "melee", "weapon", 0, 50);
 		Inventory.Make("rusty iron dagger", "melee", "weapon", 1, 125);
 		Inventory.Make("iron dagger", "melee", "weapon", 3, 210);

@@ -1,33 +1,32 @@
 using System;
 
 public static class CharacterCreator {
-
-	private class Race {
+	private class RaceBonus {
 		public int StrengthBonus;
 		public int FirepowerBonus;
 		public int ResistanceBonus;
 		public int ArmorBonus;
 		public int AbilityBonus;
-		public string race;
+		public string Race;
 
-		public Race(string race) {
-			this.StrengthBonus = 0;
-			this.FirepowerBonus = 0;
-			this.ResistanceBonus = 0;
-			this.ArmorBonus = 0;
-			this.AbilityBonus = 0;
-			this.race = race;
+		public RaceBonus(string race) {
+			StrengthBonus = 0;
+			FirepowerBonus = 0;
+			ResistanceBonus = 0;
+			ArmorBonus = 0;
+			AbilityBonus = 0;
+			Race = race;
 
 			if(race.Equals("dark elf"))
-				this.AbilityBonus = 1;
+				AbilityBonus = 1;
 			else if(race.Equals("dwarf"))
-				this.ResistanceBonus = 1;
+				ResistanceBonus = 1;
 			else if(race.Equals("elf"))
-				this.FirepowerBonus = 1;
+				FirepowerBonus = 1;
 			else if(race.Equals("orc"))
-				this.StrengthBonus = 1;
+				StrengthBonus = 1;
 			else if(race.Equals("undead"))
-				this.ResistanceBonus = -1;
+				ResistanceBonus = -1;
 		}
 	}
 
@@ -39,17 +38,16 @@ public static class CharacterCreator {
 		public int Ability;
 
 		public Stats(int s, int f, int r, int a, int ab) {
-			this.Strength = s;
-			this.Firepower = f;
-			this.Resistance = r;
-			this.Armor = a;
-			this.Ability = ab;
+			Strength = s;
+			Firepower = f;
+			Resistance = r;
+			Armor = a;
+			Ability = ab;
 		}
 	}
 
 	private static string ParseRace(string Raw) {
 		string Input;
-
 		Raw = Raw.ToLower();
 
 		if(Raw.Equals("1") || Raw.Equals("dark elf"))
@@ -89,7 +87,7 @@ public static class CharacterCreator {
 		}
 	}
 
-	private static Race ChooseRace() {
+	private static RaceBonus ChooseRace() {
 		string Race;
 
 		while(true) {
@@ -109,7 +107,7 @@ public static class CharacterCreator {
 				Console.WriteLine("Invalid race\n");
 			}
 			else {
-				Race R = new Race(Race);
+				RaceBonus R = new RaceBonus(Race);
 				return R;
 			}
 		}
@@ -253,11 +251,11 @@ public static class CharacterCreator {
 		}
 	}
 
-	private static bool ConfirmData(string Name, Race race, Stats stats) {
+	private static bool ConfirmData(string Name, RaceBonus race, Stats stats) {
 		string Ans;
 		while(true) {
 			Console.WriteLine("Name: {0}", Name);
-			Console.WriteLine("Race: {0}",StringModify.FirstToUpper(race.race));
+			Console.WriteLine("Race: {0}",StringModify.FirstToUpper(race.Race));
 			Console.WriteLine("Strength: {0}", stats.Strength);
 			Console.WriteLine("Ability: {0}", stats.Ability);
 			Console.WriteLine("Resistance: {0}", stats.Resistance);
@@ -299,7 +297,7 @@ public static class CharacterCreator {
 		Console.Clear();
 		string Name = CharacterCreator.ChooseName();
 		Console.Clear();
-		Race Race = CharacterCreator.ChooseRace();
+		RaceBonus Race = CharacterCreator.ChooseRace();
 		Console.Clear();
 		Stats Stats = ChooseStats();
 
@@ -339,7 +337,7 @@ public static class CharacterCreator {
 		int Resistance = Stats.Resistance + Race.ResistanceBonus;
 		int Armor = Stats.Armor + Race.ArmorBonus;
 		int Firepower = Stats.Firepower + Race.FirepowerBonus;
-		Hero H = new Hero(Strength, Ability, Resistance, Armor, Firepower, Name, Race.race);
+		Hero H = new Hero(Strength, Ability, Resistance, Armor, Firepower, Name, Race.Race);
 		H.PickItem(new Item("wood sword", "melee", "weapon", 0, 50));
 		H.PickItem(new Item("wood bow", "ranged", "weapon", 0, 50));
 		H.EquipFromBag("wood sword");

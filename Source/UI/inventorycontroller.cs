@@ -1,7 +1,6 @@
 using System;
 
 public static class InventoryController {
-
 	private static bool IsPart(string part) {
 		if(part.Equals("head") || part.Equals("torso") || part.Equals("hand") || part.Equals("leg") || part.Equals("weapon"))
 			return true;

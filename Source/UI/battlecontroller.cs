@@ -1,15 +1,14 @@
 using System;
 
 public class BattleController {
-
 	private Hero H;
 	private Enemy E;
 	private BattleManager BM;
 
 	public BattleController(Hero h, Enemy e) {
-		this.H = h;
-		this.E = e;
-		this.BM = new BattleManager((Creature)this.H, (Creature)this.E);
+		H = h;
+		E = e;
+		BM = new BattleManager((Creature)H, (Creature)E);
 	}
 
 	private void PrintBattleLog() {
@@ -54,9 +53,9 @@ public class BattleController {
 	}
 
 	private void PrintStats() {
-		string str = "\n" + "You\t\t" + this.E.Species + "\n";
-		str += "HP: " + this.H.HP + "\t\tHP: " + this.E.HP + "\n";
-		str += "MP: " + this.H.MP + "\n";
+		string str = "\n" + "You\t\t" + E.Species + "\n";
+		str += "HP: " + H.HP + "\t\tHP: " + E.HP + "\n";
+		str += "MP: " + H.MP + "\n";
 		/* Enemy MP using skill */
 
 		Console.WriteLine(str);
@@ -71,7 +70,7 @@ public class BattleController {
 		Reward Rwrd;
 
 		Console.Clear();
-		Console.WriteLine("You are now battling a{0} {1}", (this.IsVowel(this.E.Species[0]) ? "n" : ""), this.E.Species);
+		Console.WriteLine("You are now battling a{0} {1}", (IsVowel(E.Species[0]) ? "n" : ""), E.Species);
 		while(!BM.HasEnded()) {
 			Input = null;
 			while(Input == null) {
@@ -96,21 +95,21 @@ public class BattleController {
 				break;
 		}
 
-		if(this.H.HP == 0) {
-			int Lost = this.BM.LostExp();
+		if(H.HP == 0) {
+			int Lost = BM.LostExp();
 			Console.WriteLine("You lost the battle, but you managed to escape the enemy");
 			Console.WriteLine("You lost {0} experience point{1}", Lost,
 							  (Lost > 1 ? "s" : ""));
-			this.H.Exp = Math.Max(this.H.Exp-Lost, 0);
-			this.H.Damage = -1;
+			H.Exp = Math.Max(H.Exp-Lost, 0);
+			H.Damage = -1;
 		}
 
-		else if (this.E.HP == 0) {
+		else if (E.HP == 0) {
 			Rwrd = BM.GetReward();
 			Console.WriteLine("You have slain the enemy! You won " + Rwrd.Exp + " experience point" + (Rwrd.Exp > 1 ? "s" : "") + " and " + Rwrd.Gold + " gold coin" + (Rwrd.Gold > 1 ? "s" : ""));
 			if(Rwrd.Item != null)
 				Console.WriteLine("You got " + Rwrd.Item.Name);
-			this.H.ReceiveReward(Rwrd);
+			H.ReceiveReward(Rwrd);
 		}
 
 		Input = null;

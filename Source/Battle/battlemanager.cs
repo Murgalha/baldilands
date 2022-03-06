@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 
 public class BattleManager {
-
+	// TODO: Refactor whole battle system
 	private class Battling {
 		public Creature Creature;
 		public bool ActionSet;
@@ -58,7 +58,19 @@ public class BattleManager {
 	private BattleLogger BL;
 	private bool Ended;
 	public int turn;
-	private bool _RunEnded;
+	public bool RunEnded { get; private set; }
+
+	public string TurnLog {
+		get {
+			return BL.TurnLog;
+		}
+	}
+
+	public string CombatLog {
+		get {
+			return BL.CombatLog;
+		}
+	}
 
 	private int RollIniciative(Creature c) {
 		return Dice.Roll(6) + c.Ability;
@@ -96,7 +108,7 @@ public class BattleManager {
 		}
 		this.turn = 0;
 		this.Ended = false;
-		this._RunEnded = false;
+		this.RunEnded = false;
 		this.BL = new BattleLogger();
 	}
 
@@ -138,13 +150,13 @@ public class BattleManager {
 		if(CurrentCMD.Equals("attack")) {
 			MeleeAttack MA = CurrentCreature.Melee;
 			CurrentDamage = MA.Dmg;
-			CurrentCrit = MA.IsCritical();
+			CurrentCrit = MA.IsCritical;
 		}
 
 		else if(CurrentCMD.Equals("ranged attack")) {
 			RangedAttack RA = CurrentCreature.Ranged;
 			CurrentDamage = RA.Dmg;
-			CurrentCrit = RA.IsCritical();
+			CurrentCrit = RA.IsCritical;
 		}
 
 		else if(CurrentCMD.Equals("spell")) {
@@ -172,13 +184,13 @@ public class BattleManager {
 		if(NextCMD.Equals("attack")) {
 			MeleeAttack MA = NextCreature.Melee;
 			NextDamage = MA.Dmg;
-			NextCrit = MA.IsCritical();
+			NextCrit = MA.IsCritical;
 		}
 
 		else if(NextCMD.Equals("ranged attack")) {
 			RangedAttack RA = NextCreature.Ranged;
 			NextDamage = RA.Dmg;
-			NextCrit = RA.IsCritical();
+			NextCrit = RA.IsCritical;
 		}
 
 		else if(NextCMD.Equals("spell")) {
@@ -238,7 +250,7 @@ public class BattleManager {
 			bool RunSuccess = this.CheckRun(list[turn]);
 			this.SaveRunLog(RunSuccess);
 			if(RunSuccess) {
-				this._RunEnded = true;
+				this.RunEnded = true;
 				return false;
 			}
 			else
@@ -248,7 +260,7 @@ public class BattleManager {
 			bool RunSuccess = this.CheckRun(list[Next]);
 			this.SaveRunLog(RunSuccess);
 			if(RunSuccess) {
-				this._RunEnded = true;
+				this.RunEnded = true;
 				return false;
 			}
 			else
@@ -277,18 +289,6 @@ public class BattleManager {
 		if(B.Run)
 			return true;
 		return false;
-	}
-
-	public string TurnLog {
-		get {
-			return BL.TurnLog;
-		}
-	}
-
-	public string CombatLog {
-		get {
-			return BL.CombatLog;
-		}
 	}
 
 	public bool HasEnded() {
@@ -320,11 +320,5 @@ public class BattleManager {
 		else
 			Exp = 1;
 		return Exp;
-	}
-
-	public bool RunEnded {
-		get {
-			return this._RunEnded;
-		}
 	}
 }

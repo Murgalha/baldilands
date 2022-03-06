@@ -1,5 +1,4 @@
 public static class Descriptor {
-
 	/* Description of 'Strength' on character creation */
 	public static string Strength {
 		get {
