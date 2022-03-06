@@ -69,7 +69,7 @@ public class BattleController {
 	public void Battle() {
 		string Input = null;
 		Reward Rwrd;
-		
+
 		Console.Clear();
 		Console.WriteLine("You are now battling a{0} {1}", (this.IsVowel(this.E.Species[0]) ? "n" : ""), this.E.Species);
 		while(!BM.HasEnded()) {
@@ -81,7 +81,7 @@ public class BattleController {
 				Console.WriteLine("2. Ranged Attack");
 				Console.WriteLine("3. Dodge");
 				Console.WriteLine("4. Run");
-				
+
 				Input = Console.ReadLine();
 				Input = ParseCommand(Input);
 				Console.Clear();
@@ -99,8 +99,8 @@ public class BattleController {
 		if(this.H.HP == 0) {
 			int Lost = this.BM.LostExp();
 			Console.WriteLine("You lost the battle, but you managed to escape the enemy");
-			Console.WriteLine("You lost {0} experience point{1}", Lost, 
-			(Lost > 1 ? "s" : ""));
+			Console.WriteLine("You lost {0} experience point{1}", Lost,
+							  (Lost > 1 ? "s" : ""));
 			this.H.Exp = Math.Max(this.H.Exp-Lost, 0);
 			this.H.Damage = -1;
 		}
@@ -121,7 +121,7 @@ public class BattleController {
 
 			Input = Console.ReadLine();
 			Input = ParseLogInput(Input);
-			
+
 			if(Input.Equals("yes")) {
 				Console.Clear();
 				PrintBattleLog();

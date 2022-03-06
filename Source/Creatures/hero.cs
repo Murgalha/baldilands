@@ -7,7 +7,7 @@ public class Hero : Creature {
 	protected int _Level;
 
 	public Hero(int str, int ab, int res, int armr, int firepwr, string name, string race)
-	: base(str, ab, res, armr, firepwr) {
+		: base(str, ab, res, armr, firepwr) {
 		this._Name = name;
 		this._Race = race;
 		this._Bag = new Bag();
@@ -22,7 +22,7 @@ public class Hero : Creature {
 	}
 
 	public void PickItem(Item it) {
-		this._Bag.Add(it);	
+		this._Bag.Add(it);
 	}
 
 	public void DropItem(Item it) {

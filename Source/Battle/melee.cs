@@ -1,5 +1,5 @@
 public class MeleeAttack {
-	
+
 	private int _Dmg;
 	private bool _Crit;
 

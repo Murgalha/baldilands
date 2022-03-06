@@ -80,7 +80,7 @@ public class Equipment {
 		else if(part.Equals("hand") && this._Hand != null) {
 			aux = this._Hand;
 			this._DefenseBuff -= this._Hand.Buff;
-			this._Hand = null;			
+			this._Hand = null;
 		}
 
 		else if(part.Equals("weapon") && this._Weapon != null) {

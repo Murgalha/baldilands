@@ -18,28 +18,28 @@ public static class InventoryController {
 	}
 
 	private static bool PartIsNull(Hero H, string Part) {
-	if(Part.Equals("head")) {
-		if(H.Equip.Head == null)
-		return true;
+		if(Part.Equals("head")) {
+			if(H.Equip.Head == null)
+				return true;
+		}
+		else if(Part.Equals("torso")) {
+			if(H.Equip.Torso == null)
+				return true;
+		}
+		else if(Part.Equals("hand")) {
+			if(H.Equip.Hand == null)
+				return true;
+		}
+		else if(Part.Equals("leg")) {
+			if(H.Equip.Leg == null)
+				return true;
+		}
+		else if(Part.Equals("weapon")) {
+			if(H.Weapon == null)
+				return true;
+		}
+		return false;
 	}
-	else if(Part.Equals("torso")) {
-		if(H.Equip.Torso == null)
-		return true;
-	}
-	else if(Part.Equals("hand")) {
-		if(H.Equip.Hand == null)
-		return true;
-	}
-	else if(Part.Equals("leg")) {
-		if(H.Equip.Leg == null)
-		return true;
-	}
-	else if(Part.Equals("weapon")) {
-		if(H.Weapon == null)
-		return true;
-	}
-	return false;
-}
 
 	private static void Equip(Hero H) {
 		string Name;
@@ -80,7 +80,7 @@ public static class InventoryController {
 			Console.WriteLine("> Hand ({0})", H.Equip.Hand != null ? StringModify.FirstToUpper(H.Equip.Hand.Name) : "Empty");
 			Console.WriteLine("> Leg ({0})", H.Equip.Leg != null ? StringModify.FirstToUpper(H.Equip.Leg.Name) : "Empty");
 			Console.WriteLine("> Weapon ({0})", H.Weapon != null ? StringModify.FirstToUpper(H.Weapon.Name) : "Empty");
-		
+
 			Part = Console.ReadLine();
 			Part = Part.ToLower();
 			if(Part.Equals("")) {
@@ -154,7 +154,7 @@ public static class InventoryController {
 			Console.WriteLine("2. Unequip");
 			Console.WriteLine("3. Drop");
 			Console.WriteLine("4. Return");
-		
+
 			Input = Console.ReadLine();
 			Input = InventoryController.ParseCommand(Input);
 
@@ -164,7 +164,7 @@ public static class InventoryController {
 			else if(Input.Equals("unequip"))
 				InventoryController.Unequip(H);
 			else if(Input.Equals("drop"))
-				InventoryController.Drop(H);		
+				InventoryController.Drop(H);
 			else if(Input.Equals("return"))
 				return;
 			else
