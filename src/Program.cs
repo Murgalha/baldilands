@@ -1,4 +1,4 @@
-class main {
+class Program {
 	static void Main() {
 		FileCreator.CreateItems();
 		FileCreator.CreateMonsters();
