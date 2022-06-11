@@ -1,6 +1,13 @@
-public class FileCreator {
+using System.IO;
+
+public static class FileCreator {
 	/* Create monsters' files */
 	public static void CreateMonsters() {
+		var dirInfo = new DirectoryInfo("GameData/Bestiary/");
+		if(dirInfo.Exists) {
+			return;
+		}
+
 		Bestiary.Make("Giant Bee", 1, 3, 0, 0, 0, false);
 		Bestiary.Make("Abomination", 2, 3, 4, 1, 0, false);
 		Bestiary.Make("Rattling Sniffer", 1, 1, 3, 1, 1, true);
@@ -60,6 +67,12 @@ public class FileCreator {
 
 	/* Create items' files */
 	public static void CreateItems() {
+		var armorDirInfo = new DirectoryInfo("GameData/Inventory/Armor");
+		var weaponDirInfo = new DirectoryInfo("GameData/Inventory/Weapon");
+		if(armorDirInfo.Exists && weaponDirInfo.Exists) {
+			return;
+		}
+
 		Inventory.Make("wood sword", "melee", "weapon", 0, 50);
 		Inventory.Make("rusty iron dagger", "melee", "weapon", 1, 125);
 		Inventory.Make("iron dagger", "melee", "weapon", 3, 210);
