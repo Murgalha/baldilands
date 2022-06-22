@@ -4,6 +4,7 @@ using System.Security.Cryptography;
 using System.Text;
 
 public class SaveManager {
+	public Hero Hero { get; private set; }
 	public int SlotsNum;
 	public int CurrentSlot;
 	public string[] SlotState;
@@ -244,6 +245,7 @@ public class SaveManager {
 	}
 
 	public Hero LoadGame(int slot) {
-		return SE.LoadGame(slot);
+		Hero = SE.LoadGame(slot);
+		return Hero;
 	}
 }

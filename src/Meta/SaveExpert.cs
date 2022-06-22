@@ -30,7 +30,7 @@ public class SaveExpert {
 		}
 
 		/* Open a new filestream */
-		FileStream Stream = new FileStream(Slot, FileMode.OpenOrCreate,FileAccess.Write);
+		FileStream Stream = new FileStream(Slot, FileMode.OpenOrCreate, FileAccess.Write);
 
 		DESCryptoServiceProvider Crypto = new DESCryptoServiceProvider();
 
@@ -106,7 +106,7 @@ public class SaveExpert {
 		if(!File.Exists(Slot))
 			return null;
 
-		FileStream Stream = new FileStream(Slot, FileMode.Open,FileAccess.Read);
+		FileStream Stream = new FileStream(Slot, FileMode.Open, FileAccess.Read);
 		DESCryptoServiceProvider Crypto = new DESCryptoServiceProvider();
 
 		/* Key only used to avoid simple editing of save file */
