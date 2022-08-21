@@ -76,7 +76,7 @@ public class Market {
 			Console.WriteLine("Which weapon do you want to buy? (Type ENTER on empty weapon to return)");
 			Console.WriteLine("Current gold: {0}\n", this.H.Gold);
 			foreach(var weapon in Ranged)
-				Console.WriteLine("> {0} - Buying price: {2}", StringModify.FirstToUpper(weapon.Name), weapon.Type, weapon.Value);
+				Console.WriteLine("> {0} - Buying price: {2}", weapon.Name.Capitalize(), weapon.Type, weapon.Value);
 
 			Weapon = Console.ReadLine();
 			Weapon = Weapon?.ToLower() ?? string.Empty;
@@ -101,7 +101,7 @@ public class Market {
 					this.H.Gold -= It.Value;
 					this.H.PickItem(It);
 					Console.WriteLine("{0} bought\n",
-									  StringModify.FirstToUpper(It.Name));
+									  It.Name.Capitalize());
 				}
 			}
 		}
@@ -114,7 +114,7 @@ public class Market {
 			Console.WriteLine("Which weapon do you want to buy? (Type ENTER on empty weapon to return)");
 			Console.WriteLine("Current gold: {0}\n", this.H.Gold);
 			foreach(var weapon in Melee)
-				Console.WriteLine("> {0} - Buying price: {2}", StringModify.FirstToUpper(weapon.Name), weapon.Type, weapon.Value);
+				Console.WriteLine("> {0} - Buying price: {2}", weapon.Name.Capitalize(), weapon.Type, weapon.Value);
 
 			Weapon = Console.ReadLine();
 			Weapon = Weapon?.ToLower() ?? string.Empty;
@@ -138,8 +138,7 @@ public class Market {
 				else {
 					this.H.Gold -= It.Value;
 					this.H.PickItem(It);
-					Console.WriteLine("{0} bought\n",
-									  StringModify.FirstToUpper(It.Name));
+					Console.WriteLine("{0} bought\n", It.Name.Capitalize());
 				}
 			}
 		}
@@ -166,14 +165,14 @@ public class Market {
 			Console.WriteLine("Which armor do you want to buy? (Type ENTER on empty armor to return)");
 			Console.WriteLine("Current gold: {0}\n", this.H.Gold);
 
-			Console.Write("> {0} - Buying price: {1}\t", StringModify.FirstToUpper(Armor[0].Name), Armor[0].Type,
+			Console.Write("> {0} - Buying price: {1}\t", Armor[0].Name.Capitalize(), Armor[0].Type,
 						  Armor[0].Value);
-			Console.Write("> {0} - Buying price: {1}\n", StringModify.FirstToUpper(Armor[1].Name),
+			Console.Write("> {0} - Buying price: {1}\n", Armor[1].Name.Capitalize(),
 						  Armor[1].Value);
 			for(int i = 2; i < Armor.Count; i+=2) {
-				Console.Write("> {0} - Buying price: {1}\t\t", StringModify.FirstToUpper(Armor[i].Name),
+				Console.Write("> {0} - Buying price: {1}\t\t", Armor[i].Name.Capitalize(),
 							  Armor[i].Value);
-				Console.Write("> {0} - Buying price: {1}\n", StringModify.FirstToUpper(Armor[i+1].Name),
+				Console.Write("> {0} - Buying price: {1}\n", Armor[i+1].Name.Capitalize(),
 							  Armor[i+1].Value);
 			}
 
@@ -199,8 +198,7 @@ public class Market {
 				else {
 					this.H.Gold -= It.Value;
 					this.H.PickItem(It);
-					Console.WriteLine("{0} bought\n",
-									  StringModify.FirstToUpper(It.Name));
+					Console.WriteLine("{0} bought\n", It.Name.Capitalize());
 				}
 			}
 		}
@@ -276,7 +274,7 @@ public class Market {
 		while(true) {
 			Console.WriteLine("Which item do you want to sell? (Type ENTER on empty item to return)");
 			foreach(var It in this.H.Bag.Inventory) {
-				Console.WriteLine("> {0} ({1}) - Selling price: {2}", StringModify.FirstToUpper(It.Name), StringModify.FirstToUpper(It.Type), It.Value/2);
+				Console.WriteLine("> {0} ({1}) - Selling price: {2}", It.Name.Capitalize(), It.Type.Capitalize(), It.Value/2);
 			}
 
 			Name = Console.ReadLine();
@@ -293,7 +291,7 @@ public class Market {
 			else {
 				H.DropItem(Item);
 				H.Gold += (Item.Value/2);
-				Console.WriteLine("{0} sold\n", StringModify.FirstToUpper(Item.Name));
+				Console.WriteLine("{0} sold\n", Item.Name.Capitalize());
 			}
 		}
 	}

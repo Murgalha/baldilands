@@ -256,7 +256,7 @@ public static class CharacterCreator {
 		string Ans;
 		while(true) {
 			Console.WriteLine("Name: {0}", Name);
-			Console.WriteLine("Race: {0}",StringModify.FirstToUpper(race.Race));
+			Console.WriteLine("Race: {0}", race.Race.Capitalize());
 			Console.WriteLine("Strength: {0}", stats.Strength);
 			Console.WriteLine("Ability: {0}", stats.Ability);
 			Console.WriteLine("Resistance: {0}", stats.Resistance);
