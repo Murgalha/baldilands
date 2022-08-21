@@ -11,6 +11,7 @@ public class SaveManager {
 	private SaveExpert SE;
 
 	public SaveManager() {
+		Hero = Hero.Empty;
 		SlotsNum = 20;
 		CurrentSlot = -1;
 		SlotState = new string[SlotsNum+1];
@@ -35,7 +36,7 @@ public class SaveManager {
 		Slot = String.Join("", "./GameData/Save/slot", slot, ".sav");
 
 		FileStream Stream = new FileStream(Slot, FileMode.Open,FileAccess.Read);
-		DESCryptoServiceProvider Crypto = new DESCryptoServiceProvider();
+		var Crypto = DES.Create();
 
 		Crypto.Key = ASCIIEncoding.ASCII.GetBytes("MURGALHA");
 		Crypto.IV = ASCIIEncoding.ASCII.GetBytes("MURGALHA");
@@ -83,7 +84,7 @@ public class SaveManager {
 					}
 				}
 			}
-			Num = Console.ReadLine();
+			Num = Console.ReadLine() ?? string.Empty;
 			if(Num.Equals(""))
 				return;
 			try {
@@ -134,7 +135,7 @@ public class SaveManager {
 					}
 				}
 			}
-			Num = Console.ReadLine();
+			Num = Console.ReadLine() ?? string.Empty;
 			if(Num.Equals(""))
 				return -1;
 			try {
@@ -165,7 +166,7 @@ public class SaveManager {
 					Console.WriteLine("1. Yes");
 					Console.WriteLine("2. No");
 
-					Ans = Console.ReadLine();
+					Ans = Console.ReadLine() ?? string.Empty;
 					Ans = YesNoInput.Parse(Ans);
 
 					if(Ans.Equals("yes")) {
@@ -209,7 +210,7 @@ public class SaveManager {
 					}
 				}
 			}
-			Num = Console.ReadLine();
+			Num = Console.ReadLine() ?? string.Empty;
 			if(Num.Equals("")) {
 				Console.Clear();
 				return;

@@ -9,7 +9,7 @@ public static class Bestiary {
 	public static void Make(string spec, int s, int ab, int r, int a, int fp, bool ranged) {
 		/* Create folder if it does not exist */
 		FileInfo Dir = new System.IO.FileInfo("./GameData/Bestiary/");
-		Dir.Directory.Create();
+		Dir.Directory?.Create();
 
 		string[] Tokens = spec.Split(' ');
 		string FileName = "";
@@ -23,7 +23,7 @@ public static class Bestiary {
 		/* Open a new file */
 		FileStream Stream = new FileStream(FileName, FileMode.OpenOrCreate,FileAccess.Write);
 
-		DESCryptoServiceProvider Crypto = new DESCryptoServiceProvider();
+		var Crypto = DES.Create();
 
 		/* This key is used only to avoid simple file editing on the enemies stats */
 		Crypto.Key = ASCIIEncoding.ASCII.GetBytes("THEBEAST");
@@ -57,7 +57,7 @@ public static class Bestiary {
 		/* Open and load the file */
 		string FullPath = String.Join("", "./GameData/Bestiary/", File, ".mon");
 		FileStream Stream = new FileStream(FullPath, FileMode.Open,FileAccess.Read);
-		DESCryptoServiceProvider Crypto = new DESCryptoServiceProvider();
+		var Crypto = DES.Create();
 
 		Crypto.Key = ASCIIEncoding.ASCII.GetBytes("THEBEAST");
 		Crypto.IV = ASCIIEncoding.ASCII.GetBytes("THEBEAST");
@@ -91,7 +91,7 @@ public static class Bestiary {
 		/* Create creature */
 		Enemy E = new Enemy(Strength, Ability, Resistance, Armor, Firepower, Species);
 
-		Item Weapon = null;
+		Item? Weapon = null;
 
 		/* Read weapon	*/
 		if(Tokens[k++].Equals("1")) {

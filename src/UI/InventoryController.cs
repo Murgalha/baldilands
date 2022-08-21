@@ -7,7 +7,7 @@ public static class InventoryController {
 		return false;
 	}
 
-	private static Item Find(Hero H, string Name) {
+	private static Item? Find(Hero H, string Name) {
 		foreach(var It in H.Bag.Inventory) {
 			if(It.Name.Equals(Name)) {
 				return It;
@@ -41,7 +41,7 @@ public static class InventoryController {
 	}
 
 	private static void Equip(Hero H) {
-		string Name;
+		string? Name;
 
 		while(true) {
 			Console.WriteLine("What item do you want to equip? (Type ENTER with empty name to return)");
@@ -50,12 +50,12 @@ public static class InventoryController {
 			}
 
 			Name = Console.ReadLine();
-			Name = Name.ToLower();
+			Name = Name?.ToLower() ?? string.Empty;
 			if(Name.Equals("")) {
 				Console.Clear();
 				return;
 			}
-			Item It = InventoryController.Find(H, Name);
+			Item? It = InventoryController.Find(H, Name);
 			Console.Clear();
 			if(It == null) {
 				Console.WriteLine("Item not found\n");
@@ -68,7 +68,7 @@ public static class InventoryController {
 	}
 
 	private static void Unequip(Hero H) {
-		string Part;
+		string? Part;
 		bool IsPart = false;
 
 		while(true) {
@@ -81,7 +81,7 @@ public static class InventoryController {
 			Console.WriteLine("> Weapon ({0})", H.Weapon != null ? StringModify.FirstToUpper(H.Weapon.Name) : "Empty");
 
 			Part = Console.ReadLine();
-			Part = Part.ToLower();
+			Part = Part?.ToLower() ?? string.Empty;
 			if(Part.Equals("")) {
 				Console.Clear();
 				return;
@@ -105,19 +105,19 @@ public static class InventoryController {
 	}
 
 	private static void Drop(Hero H) {
-		string Name;
+		string? Name;
 
 		while(true) {
 			Console.WriteLine("What item do you want to drop? (Type ENTER with empty name to return)");
 			foreach(var It in H.Bag.Inventory)
 				Console.WriteLine("> {0} ({1})", StringModify.FirstToUpper(It.Name), StringModify.FirstToUpper(It.Type));
 			Name = Console.ReadLine();
-			Name = Name.ToLower();
+			Name = Name?.ToLower() ?? string.Empty;
 			if(Name.Equals("")) {
 				Console.Clear();
 				return;
 			}
-			Item Item = InventoryController.Find(H, Name);
+			Item? Item = InventoryController.Find(H, Name);
 			Console.Clear();
 			if(Item == null)
 				Console.WriteLine("Item not found\n");
@@ -128,8 +128,8 @@ public static class InventoryController {
 		}
 	}
 
-	private static string ParseCommand(string Raw) {
-		Raw = Raw.ToLower();
+	private static string ParseCommand(string? Raw) {
+		Raw = Raw?.ToLower() ?? string.Empty;
 
 		if(Raw.Equals("1") || Raw.Equals("equip"))
 			return "equip";
@@ -144,7 +144,7 @@ public static class InventoryController {
 
 	public static void Manage(Hero H) {
 		Console.Clear();
-		string Input;
+		string? Input;
 
 		while(true) {
 			CharacterSheet.Show(H);

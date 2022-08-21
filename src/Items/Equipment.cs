@@ -1,9 +1,9 @@
 public class Equipment {
-	public Item Head { get; private set; }
-	public Item Torso { get; private set; }
-	public Item Leg { get; private set; }
-	public Item Hand { get; private set; }
-	public Item Weapon { get; private set; }
+	public Item? Head { get; private set; }
+	public Item? Torso { get; private set; }
+	public Item? Leg { get; private set; }
+	public Item? Hand { get; private set; }
+	public Item? Weapon { get; private set; }
 	public int AttackBuff { get; private set; }
 	public int DefenseBuff { get; private set; }
 
@@ -17,7 +17,7 @@ public class Equipment {
 		Weapon = null;
 	}
 
-	public void Equip(Item it) {
+	public void Equip(Item? it) {
 		if(it == null) return;
 
 		if(it.Type.Equals("head")) {
@@ -56,8 +56,8 @@ public class Equipment {
 		}
 	}
 
-	public Item Remove(string part) {
-		Item aux = null;
+	public Item? Remove(string part) {
+		Item? aux = null;
 		if(part.Equals("head") && Head != null) {
 			aux = Head;
 			DefenseBuff -= Head.Buff;

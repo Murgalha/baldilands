@@ -15,11 +15,11 @@ public class Market {
 				return It;
 			}
 		}
-		return null;
+		return Item.Empty;
 	}
 
-	private string ParseMerchant(string Raw) {
-		Raw = Raw.ToLower();
+	private string ParseMerchant(string? Raw) {
+		Raw = Raw?.ToLower() ?? string.Empty;
 
 		if(Raw.Equals("1") || Raw.Equals("weapons merchant") ||
 		   Raw.Equals("weapons"))
@@ -70,7 +70,7 @@ public class Market {
 	}
 
 	private void BuyRanged(List<Item> Ranged) {
-		string Weapon;
+		string? Weapon;
 		int Index = new int();
 		while(true) {
 			Console.WriteLine("Which weapon do you want to buy? (Type ENTER on empty weapon to return)");
@@ -79,7 +79,7 @@ public class Market {
 				Console.WriteLine("> {0} - Buying price: {2}", StringModify.FirstToUpper(weapon.Name), weapon.Type, weapon.Value);
 
 			Weapon = Console.ReadLine();
-			Weapon = Weapon.ToLower();
+			Weapon = Weapon?.ToLower() ?? string.Empty;
 
 			if(Weapon.Equals("")) {
 				Console.Clear();
@@ -108,7 +108,7 @@ public class Market {
 	}
 
 	private void BuyMelee(List<Item> Melee) {
-		string Weapon;
+		string? Weapon;
 		int Index = new int();
 		while(true) {
 			Console.WriteLine("Which weapon do you want to buy? (Type ENTER on empty weapon to return)");
@@ -117,7 +117,7 @@ public class Market {
 				Console.WriteLine("> {0} - Buying price: {2}", StringModify.FirstToUpper(weapon.Name), weapon.Type, weapon.Value);
 
 			Weapon = Console.ReadLine();
-			Weapon = Weapon.ToLower();
+			Weapon = Weapon?.ToLower() ?? string.Empty;
 
 			if(Weapon.Equals("")) {
 				Console.Clear();
@@ -145,8 +145,8 @@ public class Market {
 		}
 	}
 
-	private string ParseWeaponType(string Raw) {
-		Raw = Raw.ToLower();
+	private string ParseWeaponType(string? Raw) {
+		Raw = Raw?.ToLower() ?? string.Empty;
 
 		if(Raw.Equals("1") || Raw.Equals("melee"))
 			return "melee";
@@ -159,7 +159,7 @@ public class Market {
 	}
 
 	private void BuyArmor(List<Item> Armor) {
-		string ArmorName;
+		string? ArmorName;
 		int Index = new int();
 		Console.Clear();
 		while(true) {
@@ -178,7 +178,7 @@ public class Market {
 			}
 
 			ArmorName = Console.ReadLine();
-			ArmorName = ArmorName.ToLower();
+			ArmorName = ArmorName?.ToLower() ?? "";
 
 			if(ArmorName.Equals("")) {
 				Console.Clear();
@@ -210,7 +210,7 @@ public class Market {
 		List<Item> Melee;
 		List<Item> Ranged;
 		List<Item> Armor;
-		string Merchant;
+		string? Merchant;
 		this.LoadWeapons(out Melee, out Ranged);
 		this.LoadArmors(out Armor);
 
@@ -225,7 +225,7 @@ public class Market {
 			Merchant = this.ParseMerchant(Merchant);
 
 			if(Merchant.Equals("weapons")) {
-				string WeaponType;
+				string? WeaponType;
 
 				Console.Clear();
 				while(true) {
@@ -271,7 +271,7 @@ public class Market {
 	}
 
 	public void Sell() {
-		string Name;
+		string? Name;
 
 		while(true) {
 			Console.WriteLine("Which item do you want to sell? (Type ENTER on empty item to return)");
@@ -280,7 +280,7 @@ public class Market {
 			}
 
 			Name = Console.ReadLine();
-			Name = Name.ToLower();
+			Name = Name?.ToLower() ?? string.Empty;
 			if(Name.Equals("")) {
 				Console.Clear();
 				return;
@@ -298,8 +298,8 @@ public class Market {
 		}
 	}
 
-	private string ParseCommand(string Raw) {
-		Raw = Raw.ToLower();
+	private string ParseCommand(string? Raw) {
+		Raw = Raw?.ToLower() ?? string.Empty;
 
 		if(Raw.Equals("1") || Raw.Equals("buy"))
 			return "buy";
@@ -312,7 +312,7 @@ public class Market {
 	}
 
 	public void Shop() {
-		string Input;
+		string? Input;
 
 		Console.Clear();
 		while(true) {

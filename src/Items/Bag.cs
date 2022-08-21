@@ -10,13 +10,13 @@ public class Bag {
 		Gold = Dice.Roll(6)*100;
 	}
 
-	public void Add(Item it) {
+	public void Add(Item? it) {
 		if(it == null)
 			return;
 		Inventory.Add(it);
 	}
 
-	public void Remove(Item it) {
+	public void Remove(Item? it) {
 		if(it == null)
 			return;
 		Inventory.Remove(it);

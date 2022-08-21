@@ -11,7 +11,7 @@ public class TownScreen {
 		mSaveManager = saveManager;
 		mShopScreen = new ShopScreen(mSaveManager.Hero);
 		mShouldExit = false;
-		mHero = null;
+		mHero = mSaveManager.Hero;
 	}
 
 	public void Go() {
@@ -33,7 +33,7 @@ public class TownScreen {
 				Console.WriteLine($"{kvp.Key}. {kvp.Value.Item1}");
 			}
 
-			string input = Console.ReadLine();
+			string input = Console.ReadLine() ?? string.Empty;
 			var menuAction = InputParser.Parse(input, menuDict, _ExecuteInvalid);
 			menuAction();
 		}
@@ -45,8 +45,8 @@ public class TownScreen {
 		while(true) {
 			this.ShowMonsters(Monsters);
 
-			string Ans = Console.ReadLine();
-			Ans = Ans.ToLower();
+			string? Ans = Console.ReadLine();
+			Ans = Ans?.ToLower() ?? string.Empty;
 			int Index = new int();
 			int Value = -1;
 			bool Numeric = false;

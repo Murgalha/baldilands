@@ -15,6 +15,8 @@ public class Hero : Creature {
 		Level = 1;
 	}
 
+	public static Hero Empty => new Hero(0, 0, 0, 0, 0, string.Empty, string.Empty);
+
 	public void ReceiveReward(Reward R) {
 		Bag.Add(R.Item);
 		Bag.Gold += R.Gold;
@@ -30,10 +32,10 @@ public class Hero : Creature {
 	}
 
 	public void EquipFromBag(string name) {
-		Item New = Bag.Inventory.Find(x => x.Name.Equals(name));
+		Item New = Bag.Inventory.Find(x => x.Name.Equals(name)) ?? Item.Empty;
 		Item Old;
 		string Type = (New.Type.Equals("melee") || New.Type.Equals("ranged") ? "weapon" : New.Type);
-		Old = Equip.Remove(Type);
+		Old = Equip.Remove(Type) ?? Item.Empty;
 		Bag.Remove(New);
 		Equip.Equip(New);
 		if(Old != null)
@@ -41,7 +43,7 @@ public class Hero : Creature {
 	}
 
 	public void RemoveEquip(string part) {
-		Item it = Equip.Remove(part);
+		Item? it = Equip.Remove(part);
 		Bag.Add(it);
 	}
 

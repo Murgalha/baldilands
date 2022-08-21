@@ -33,7 +33,7 @@ public class MainMenuScreen {
 				Console.WriteLine($"{kvp.Key}. {kvp.Value.Item1}");
 			}
 
-			string input = Console.ReadLine();
+			string input = Console.ReadLine() ?? string.Empty;
 			var menuAction = InputParser.Parse(input, menuDict, _ExecuteInvalid);
 			menuAction();
 		}

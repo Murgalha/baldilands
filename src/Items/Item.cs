@@ -20,4 +20,6 @@ public class Item {
 		Buff = It.Buff;
 		Value = It.Value;
 	}
+
+	public static Item Empty => new Item(string.Empty, string.Empty, string.Empty, 0, 0);
 }

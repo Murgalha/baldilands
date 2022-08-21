@@ -29,7 +29,7 @@ public class BattleLogger {
 					this.TurnLog += "You strike the enemy with your " + WeaponName + ". It loses " + damage + " life point" + (damage > 1 ? "s" : "");
 				}
 				else if(cmd.Equals("ranged attack")) {
-					this.TurnLog += "You shoot the enemy with your " + c.Equip.Weapon.Name + ". It loses " + damage + " life point" + (damage > 1 ? "s" : "");
+					this.TurnLog += "You shoot the enemy with your " + (c.Weapon?.Name ?? string.Empty) + ". It loses " + damage + " life point" + (damage > 1 ? "s" : "");
 				}
 				if(crit)
 					this.TurnLog += ". It is a critical hit!";
@@ -54,7 +54,7 @@ public class BattleLogger {
 					this.TurnLog += "The enemy strikes you with its " + WeaponName + ". You lose " + damage + " life point" + (damage > 1 ? "s" : "");
 				}
 				else if(cmd.Equals("ranged attack")) {
-					this.TurnLog += "The enemy shoots you with its " + c.Equip.Weapon.Name + ". You lose " + damage + " life point" + (damage > 1 ? "s" : "");
+					this.TurnLog += "The enemy shoots you with its " + (c.Weapon?.Name ?? string.Empty) + ". You lose " + damage + " life point" + (damage > 1 ? "s" : "");
 				}
 				if(crit)
 					this.TurnLog += ". It is a critical hit!";

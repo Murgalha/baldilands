@@ -26,9 +26,9 @@ public class BattleController {
 		}
 	}
 
-	private string ParseCommand(string Raw) {
-		string Input = null;
-		Raw = Raw.ToLower();
+	private string ParseCommand(string? Raw) {
+		string Input = string.Empty;
+		Raw = Raw?.ToLower() ?? string.Empty;
 
 		if(Raw.Equals("1") || Raw.Equals("attack"))
 			Input = "attack";
@@ -41,8 +41,8 @@ public class BattleController {
 		return Input;
 	}
 
-	private string ParseLogInput(string Raw) {
-		Raw = Raw.ToLower();
+	private string ParseLogInput(string? Raw) {
+		Raw = Raw?.ToLower() ?? string.Empty;
 
 		if(Raw.Equals("1") || Raw.Equals("yes") || Raw.Equals("y"))
 			return "yes";
@@ -66,7 +66,7 @@ public class BattleController {
 	}
 
 	public void Battle() {
-		string Input = null;
+		string? Input = null;
 		Reward Rwrd;
 
 		Console.Clear();

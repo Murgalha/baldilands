@@ -58,7 +58,7 @@ public abstract class Creature {
 		}
 	}
 
-	public Item Weapon {
+	public Item? Weapon {
 		get {
 			return Equip.Weapon;
 		}

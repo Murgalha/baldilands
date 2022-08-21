@@ -19,7 +19,7 @@ public static class Inventory {
 
 		FileStream Stream = new FileStream(FileName, FileMode.OpenOrCreate,FileAccess.Write);
 
-		DESCryptoServiceProvider Crypto = new DESCryptoServiceProvider();
+		var Crypto = DES.Create();
 
 		/* This key is used only to avoid simple file editing on the enemies stats */
 		Crypto.Key = ASCIIEncoding.ASCII.GetBytes("THEITEMS");
@@ -46,7 +46,7 @@ public static class Inventory {
 		/* Generate path to load item */
 		string FullPath = String.Join("", "./GameData/Inventory/", StringModify.FirstToUpper(category), "/", item, ".itm");
 		FileStream Stream = new FileStream(FullPath, FileMode.Open,FileAccess.Read);
-		DESCryptoServiceProvider Crypto = new DESCryptoServiceProvider();
+		var Crypto = DES.Create();
 
 		/* This key is used only to avoid simple file editing on the enemies stats */
 		Crypto.Key = ASCIIEncoding.ASCII.GetBytes("THEITEMS");

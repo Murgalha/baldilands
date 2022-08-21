@@ -19,7 +19,7 @@ public class SaveExpert {
 	public bool SaveGame(Hero H, int slot) {
 		/* Create 'Save' folder if not already created */
 		FileInfo FileDir = new System.IO.FileInfo("./GameData/Save/");
-		FileDir.Directory.Create();
+		FileDir.Directory?.Create();
 		string Slot;
 
 		/* Generating slot filename */
@@ -32,7 +32,7 @@ public class SaveExpert {
 		/* Open a new filestream */
 		FileStream Stream = new FileStream(Slot, FileMode.OpenOrCreate, FileAccess.Write);
 
-		DESCryptoServiceProvider Crypto = new DESCryptoServiceProvider();
+		var Crypto = DES.Create();
 
 		/* Key only used to avoid simple editing of save file */
 		Crypto.Key = ASCIIEncoding.ASCII.GetBytes("MURGALHA");
@@ -80,7 +80,7 @@ public class SaveExpert {
 
 		if(H.Weapon != null) {
 			Data += "1,";
-			Data += H.Equip.Weapon.Name + "," + H.Equip.Weapon.Type + "," + H.Equip.Weapon.Category + "," + H.Equip.Weapon.Buff + "," + H.Equip.Weapon.Value;
+			Data += H.Weapon.Name + "," + H.Weapon.Type + "," + H.Weapon.Category + "," + H.Weapon.Buff + "," + H.Weapon.Value;
 		}
 		else
 			Data += "0";
@@ -104,10 +104,10 @@ public class SaveExpert {
 
 		/* if file exists, can't be loaded */
 		if(!File.Exists(Slot))
-			return null;
+			return Hero.Empty;
 
 		FileStream Stream = new FileStream(Slot, FileMode.Open, FileAccess.Read);
-		DESCryptoServiceProvider Crypto = new DESCryptoServiceProvider();
+		var Crypto = DES.Create();
 
 		/* Key only used to avoid simple editing of save file */
 		Crypto.Key = ASCIIEncoding.ASCII.GetBytes("MURGALHA");

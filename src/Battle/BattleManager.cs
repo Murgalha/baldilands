@@ -297,7 +297,7 @@ public class BattleManager {
 
 	public Reward GetReward() {
 		int Exp, Gold;
-		Item item = null;
+		Item? item = null;
 		if(b2.StatSum() <= b1.StatSum()/2)
 			Exp = 0;
 		else if(b2.StatSum() >= 2*b1.StatSum())

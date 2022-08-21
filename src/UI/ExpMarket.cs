@@ -7,8 +7,8 @@ public class ExpMarket {
 		H = h;
 	}
 
-	private string ParseCharacteristic(string Raw) {
-		Raw = Raw.ToLower();
+	private string ParseCharacteristic(string? Raw) {
+		Raw = Raw?.ToLower() ?? string.Empty;
 
 		if(Raw.Equals("1") || Raw.Equals("strength"))
 			return "strength";
@@ -27,7 +27,7 @@ public class ExpMarket {
 	}
 
 	private void BuyCharacteristics() {
-		string Charac;
+		string? Charac;
 
 		Console.Clear();
 		while(true) {
@@ -61,8 +61,8 @@ public class ExpMarket {
 		}
 	}
 
-	private string ParseCommand(string Raw) {
-		Raw = Raw.ToLower();
+	private string ParseCommand(string? Raw) {
+		Raw = Raw?.ToLower() ?? string.Empty;
 
 		if(Raw.Equals("1") || Raw.Equals("characteristics") ||
 		   Raw.Equals("buy characteristics"))
@@ -91,7 +91,7 @@ public class ExpMarket {
 			Console.WriteLine("How many experience points do you want to trade: (Type ENTER on empty number to return)");
 			Console.WriteLine("(Current Exp: {0})", H.Exp);
 
-			Value = Console.ReadLine();
+			Value = Console.ReadLine() ?? string.Empty;
 
 			if(Value.Equals("")) {
 				Console.Clear();
@@ -121,7 +121,7 @@ public class ExpMarket {
 	}
 
 	public void Shop() {
-		string Input;
+		string? Input;
 
 		Console.Clear();
 		while(true) {

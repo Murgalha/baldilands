@@ -46,9 +46,9 @@ public static class CharacterCreator {
 		}
 	}
 
-	private static string ParseRace(string Raw) {
+	private static string ParseRace(string? Raw) {
 		string Input;
-		Raw = Raw.ToLower();
+		Raw = Raw?.ToLower() ?? string.Empty;
 
 		if(Raw.Equals("1") || Raw.Equals("dark elf"))
 			Input = "dark elf";
@@ -68,11 +68,11 @@ public static class CharacterCreator {
 	}
 
 	private static string ChooseName() {
-		string Name;
+		string? Name;
 
 		while(true) {
 			Console.WriteLine("What is your name? (Maximum of 32 letters)");
-			Name = Console.ReadLine();
+			Name = Console.ReadLine() ?? string.Empty;
 
 			if(!Name.Equals("")) {
 				if(Name.Length > 32)
@@ -88,7 +88,7 @@ public static class CharacterCreator {
 	}
 
 	private static RaceBonus ChooseRace() {
-		string Race;
+		string? Race;
 
 		while(true) {
 			Console.WriteLine("What is your race?");
@@ -132,7 +132,8 @@ public static class CharacterCreator {
 		int RemainingPoints = MaxPoints;
 		int Step = 0;
 		string State = "", CurTop;
-		string Num, Ans;
+		string Num;
+		string Ans;
 		int Strength = 0, Ability = 0, Resistance = 0, Armor = 0, Firepower = 0;
 
 		Console.Clear();
@@ -145,7 +146,7 @@ public static class CharacterCreator {
 			CharacterCreator.PrintState(State, CurTop, RemainingPoints);
 			if(Step == 0) {
 				Console.Write("Strength: ");
-				Num = Console.ReadLine();
+				Num = Console.ReadLine() ?? string.Empty;
 				if(Num.Equals("") || !CharacterCreator.IsNum(Num) || Int32.Parse(Num) > RemainingPoints) {
 					Console.Clear();
 					CurTop = "Invalid value";
@@ -161,7 +162,7 @@ public static class CharacterCreator {
 			}
 			else if(Step == 1) {
 				Console.Write("Ability: ");
-				Num = Console.ReadLine();
+				Num = Console.ReadLine() ?? string.Empty;
 				if(Num.Equals("") || !CharacterCreator.IsNum(Num) || Int32.Parse(Num) > RemainingPoints) {
 					Console.Clear();
 					CurTop = "Invalid value";
@@ -177,7 +178,7 @@ public static class CharacterCreator {
 			}
 			else if(Step == 2) {
 				Console.Write("Resistance: ");
-				Num = Console.ReadLine();
+				Num = Console.ReadLine() ?? string.Empty;
 				if(Num.Equals("") || !CharacterCreator.IsNum(Num) || Int32.Parse(Num) > RemainingPoints) {
 					Console.Clear();
 					CurTop = "Invalid value";
@@ -193,7 +194,7 @@ public static class CharacterCreator {
 			}
 			else if(Step == 3) {
 				Console.Write("Armor: ");
-				Num = Console.ReadLine();
+				Num = Console.ReadLine() ?? string.Empty;
 				if(Num.Equals("") || !CharacterCreator.IsNum(Num) || Int32.Parse(Num) > RemainingPoints) {
 					Console.Clear();
 					CurTop = "Invalid value";
@@ -209,7 +210,7 @@ public static class CharacterCreator {
 			}
 			else if(Step == 4) {
 				Console.Write("Firepower: ");
-				Num = Console.ReadLine();
+				Num = Console.ReadLine() ?? string.Empty;
 				if(Num.Equals("") || !CharacterCreator.IsNum(Num) || Int32.Parse(Num) > RemainingPoints) {
 					Console.Clear();
 					CurTop = "Invalid value";
@@ -230,7 +231,7 @@ public static class CharacterCreator {
 						Console.WriteLine("1. Yes");
 						Console.WriteLine("2. No");
 
-						Ans = Console.ReadLine();
+						Ans = Console.ReadLine() ?? string.Empty;
 						Ans = YesNoInput.Parse(Ans);
 						if(Ans.Equals("yes")) {
 							RemainingPoints = MaxPoints;
@@ -265,7 +266,7 @@ public static class CharacterCreator {
 			Console.WriteLine("1. Yes");
 			Console.WriteLine("2. No");
 
-			Ans = Console.ReadLine();
+			Ans = Console.ReadLine() ?? string.Empty;
 			Ans = YesNoInput.Parse(Ans);
 			if(Ans.Equals("yes"))
 				return true;
@@ -278,8 +279,8 @@ public static class CharacterCreator {
 		}
 	}
 
-	private static string ParseCommand(string Raw) {
-		Raw = Raw.ToLower();
+	private static string ParseCommand(string? Raw) {
+		Raw = Raw?.ToLower() ?? string.Empty;
 
 		if(Raw.Equals("1") || Raw.Equals("name"))
 			return "name";
@@ -301,7 +302,7 @@ public static class CharacterCreator {
 		Console.Clear();
 		Stats Stats = ChooseStats();
 
-		string Input;
+		string? Input;
 
 		while(true) {
 			Console.Clear();
