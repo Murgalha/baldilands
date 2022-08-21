@@ -2,3 +2,5 @@
 *.bat
 .vscode
 *.sav
+bin/
+obj/
