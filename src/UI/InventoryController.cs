@@ -49,7 +49,7 @@ public static class InventoryController {
 		while(true) {
 			Console.WriteLine("What item do you want to equip? (Type ENTER with empty name to return)");
 			foreach (var Item in H.Bag.Inventory) {
-				Console.WriteLine("> {0} ({1})", StringModify.FirstToUpper(Item.Name), StringModify.FirstToUpper(Item.Type));
+				Console.WriteLine("> {0} ({1})", Item.Name.Capitalize(), Item.Type.Capitalize());
 			}
 
 			Name = Console.ReadLine();
@@ -65,7 +65,7 @@ public static class InventoryController {
 			}
 			else {
 				H.EquipFromBag(It.Name);
-				Console.WriteLine("{0} equipped\n", StringModify.FirstToUpper(It.Name));
+				Console.WriteLine("{0} equipped\n", It.Name.Capitalize());
 			}
 		}
 	}
@@ -77,11 +77,11 @@ public static class InventoryController {
 		while(true) {
 			IsPart = false;
 			Console.WriteLine("What part do you want to unequip? (Type ENTER on empty part to return)");
-			Console.WriteLine("> Head ({0})", H.Equip.Head != null ? StringModify.FirstToUpper(H.Equip.Head.Name) : "Empty");
-			Console.WriteLine("> Torso ({0})", H.Equip.Torso != null ? StringModify.FirstToUpper(H.Equip.Torso.Name) : "Empty");
-			Console.WriteLine("> Hand ({0})", H.Equip.Hand != null ? StringModify.FirstToUpper(H.Equip.Hand.Name) : "Empty");
-			Console.WriteLine("> Leg ({0})", H.Equip.Leg != null ? StringModify.FirstToUpper(H.Equip.Leg.Name) : "Empty");
-			Console.WriteLine("> Weapon ({0})", H.Weapon != null ? StringModify.FirstToUpper(H.Weapon.Name) : "Empty");
+			Console.WriteLine("> Head ({0})", H.Equip.Head != null ? H.Equip.Head.Name.Capitalize() : "Empty");
+			Console.WriteLine("> Torso ({0})", H.Equip.Torso != null ? H.Equip.Torso.Name.Capitalize() : "Empty");
+			Console.WriteLine("> Hand ({0})", H.Equip.Hand != null ? H.Equip.Hand.Name.Capitalize() : "Empty");
+			Console.WriteLine("> Leg ({0})", H.Equip.Leg != null ? H.Equip.Leg.Name.Capitalize() : "Empty");
+			Console.WriteLine("> Weapon ({0})", H.Weapon != null ? H.Weapon.Name.Capitalize() : "Empty");
 
 			Part = Console.ReadLine();
 			Part = Part.ToLower();
@@ -99,7 +99,7 @@ public static class InventoryController {
 				else {
 					H.RemoveEquip(Part);
 					if(InventoryController.PartIsNull(H, Part))
-						Console.WriteLine("{0} unequipped\n", StringModify.FirstToUpper(Part));
+						Console.WriteLine("{0} unequipped\n", Part.Capitalize());
 					else
 						Console.WriteLine("Error! Could not unequip {0}\n", Part);
 				}
@@ -113,7 +113,7 @@ public static class InventoryController {
 		while(true) {
 			Console.WriteLine("What item do you want to drop? (Type ENTER with empty name to return)");
 			foreach(var It in H.Bag.Inventory)
-				Console.WriteLine("> {0} ({1})", StringModify.FirstToUpper(It.Name), StringModify.FirstToUpper(It.Type));
+				Console.WriteLine("> {0} ({1})", It.Name.Capitalize(), It.Type.Capitalize());
 			Name = Console.ReadLine();
 			Name = Name.ToLower();
 			if(Name.Equals("")) {
@@ -126,7 +126,7 @@ public static class InventoryController {
 				Console.WriteLine("Item not found\n");
 			else {
 				H.DropItem(Item);
-				Console.WriteLine("{0} dropped\n", StringModify.FirstToUpper(Item.Name));
+				Console.WriteLine("{0} dropped\n", Item.Name.Capitalize());
 			}
 		}
 	}

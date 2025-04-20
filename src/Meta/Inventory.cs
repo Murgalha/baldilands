@@ -9,7 +9,7 @@ public static class Inventory {
 
 	/* Create an item file and save it on Inventory folder */
 	public static void Make(string name, string type, string category, int buff, int value) {
-		string DirPath = "./GameData/Inventory/" + StringModify.FirstToUpper(category) + "/";
+		string DirPath = "./GameData/Inventory/" + category.Capitalize() + "/";
 		Directory.CreateDirectory(DirPath);
 
 		string[] Tokens = name.Split(' ');
@@ -47,7 +47,7 @@ public static class Inventory {
 	/* Load item based on its name and category */
 	public static Item Load(string item, string category) {
 		/* Generate path to load item */
-		string FullPath = String.Join("", "./GameData/Inventory/", StringModify.FirstToUpper(category), "/", item, ".itm");
+		string FullPath = String.Join("", "./GameData/Inventory/", category.Capitalize(), "/", item, ".itm");
 		FileStream Stream = new FileStream(FullPath, FileMode.Open,FileAccess.Read);
 		DESCryptoServiceProvider Crypto = new DESCryptoServiceProvider();
 
