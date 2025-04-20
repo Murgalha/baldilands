@@ -3,6 +3,8 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 
+namespace Baldilands;
+
 public static class Inventory {
 
 	/* Create an item file and save it on Inventory folder */

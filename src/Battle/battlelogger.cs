@@ -1,3 +1,5 @@
+namespace Baldilands;
+
 public class BattleLogger {
 
 	private string _TurnLog;

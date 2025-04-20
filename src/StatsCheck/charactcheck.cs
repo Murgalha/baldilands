@@ -1,3 +1,5 @@
+namespace Baldilands;
+
 public static class CharacteristicCheck {
 
 	public static bool Ability(Creature c, string df) {

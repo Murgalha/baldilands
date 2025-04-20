@@ -1,5 +1,7 @@
 using System;
 
+namespace Baldilands;
+
 public class Spell {
 
 	int _Damage;

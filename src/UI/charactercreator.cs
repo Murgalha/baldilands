@@ -1,5 +1,7 @@
 using System;
 
+namespace Baldilands;
+
 public static class CharacterCreator {
 
 	private class Race {

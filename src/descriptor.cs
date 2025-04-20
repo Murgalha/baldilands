@@ -1,3 +1,5 @@
+namespace Baldilands;
+
 public static class Descriptor {
 
 	/* Description of 'Strength' on character creation */

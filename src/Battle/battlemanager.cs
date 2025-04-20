@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 
+namespace Baldilands;
+
 public class BattleManager {
 
 	private class Battling {

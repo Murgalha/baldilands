@@ -3,6 +3,8 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 
+namespace Baldilands;
+
 public class SaveManager {
 
 	public int SlotsNum;

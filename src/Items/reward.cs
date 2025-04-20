@@ -1,3 +1,5 @@
+namespace Baldilands;
+
 public class Reward {
 
 	protected Item _Item;

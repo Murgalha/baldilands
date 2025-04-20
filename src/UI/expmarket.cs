@@ -1,5 +1,7 @@
 using System;
 
+namespace Baldilands;
+
 public class ExpMarket {
 
 	private Hero H;

@@ -1,5 +1,7 @@
 using System;
 
+namespace Baldilands;
+
 public static class StringModify {
 
 	/* returns given string with first char on upper case */

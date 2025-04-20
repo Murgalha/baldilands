@@ -1,3 +1,5 @@
+namespace Baldilands;
+
 class main {
 
 	static void Main() {

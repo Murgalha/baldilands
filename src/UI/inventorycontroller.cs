@@ -1,5 +1,7 @@
 using System;
 
+namespace Baldilands;
+
 public static class InventoryController {
 
 	private static bool IsPart(string part) {

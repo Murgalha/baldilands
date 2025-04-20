@@ -1,3 +1,5 @@
+namespace Baldilands;
+
 public class Enemy : Creature {
 
 	protected string _Species;

@@ -1,3 +1,5 @@
+namespace Baldilands;
+
 public class Equipment {
 
 	private Item _Head;

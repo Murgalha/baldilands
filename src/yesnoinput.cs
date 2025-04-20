@@ -1,3 +1,5 @@
+namespace Baldilands;
+
 public static class YesNoInput {
 
 	/* parse input given needed on a 'yes/no' question */

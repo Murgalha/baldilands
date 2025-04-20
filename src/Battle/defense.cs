@@ -1,3 +1,5 @@
+namespace Baldilands;
+
 public class Defense {
 
 	private int _Def;

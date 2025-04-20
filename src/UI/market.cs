@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
+namespace Baldilands;
+
 public class Market {
 
 	private Hero H;

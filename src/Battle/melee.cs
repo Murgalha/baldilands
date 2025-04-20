@@ -1,3 +1,5 @@
+namespace Baldilands;
+
 public class MeleeAttack {
 
 	private int _Dmg;

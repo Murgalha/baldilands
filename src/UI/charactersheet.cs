@@ -1,5 +1,7 @@
 using System;
 
+namespace Baldilands;
+
 public static class CharacterSheet {
 
 	public static void Show(Hero H) {

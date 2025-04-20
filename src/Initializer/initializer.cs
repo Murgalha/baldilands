@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 
+namespace Baldilands;
+
 public static class Initializer {
 
 	public static List<string> InitMonsters() {

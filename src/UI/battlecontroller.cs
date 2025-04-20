@@ -1,5 +1,7 @@
 using System;
 
+namespace Baldilands;
+
 public class BattleController {
 
 	private Hero H;

@@ -1,3 +1,5 @@
+namespace Baldilands;
+
 public class DungeonMaster {
 
 	public Hero Hero;

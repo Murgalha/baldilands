@@ -1,3 +1,5 @@
+namespace Baldilands;
+
 public class Item {
 
 	private string _Name;

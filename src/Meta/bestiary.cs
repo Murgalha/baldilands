@@ -3,6 +3,8 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 
+namespace Baldilands;
+
 public static class Bestiary {
 
 	/* Create a simple encrypted beast file and store it on the 'Bestiary' folder */

@@ -1,3 +1,5 @@
+namespace Baldilands;
+
 public class Hero : Creature {
 
 	protected string _Name;

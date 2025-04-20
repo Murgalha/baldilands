@@ -1,3 +1,5 @@
+namespace Baldilands;
+
 public static class Dice {
 
 	public static int Roll(int faces) {

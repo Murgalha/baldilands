@@ -1,3 +1,5 @@
+namespace Baldilands;
+
 public abstract class Creature {
 
 	protected int _Strength;

@@ -1,3 +1,5 @@
+namespace Baldilands;
+
 public class FileCreator {
 
 	/* Create monsters' files */

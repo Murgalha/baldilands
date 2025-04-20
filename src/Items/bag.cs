@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 
+namespace Baldilands;
+
 public class Bag {
 
 	private List<Item> _Inventory;
