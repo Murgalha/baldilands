@@ -1,10 +1,10 @@
 namespace Baldilands;
 
 public static class YesNoInput {
-
-	/* parse input given needed on a 'yes/no' question */
+	/// <summary>
+	/// Parse input into "yes" or "no"
+	/// </summary>
 	public static string Parse(string Raw) {
-		/* passing string to lower case */
 		Raw = Raw.ToLower();
 
 		if(Raw.Equals("1") || Raw.Equals("yes"))

@@ -5,7 +5,7 @@ public class Defense {
 	private int _Def;
 	private bool _Crit;
 
-	public Defense(Creature c) {
+	public Defense(ICreature c) {
 		int d = Dice.Roll(6);
 
 		if(d == 6) {

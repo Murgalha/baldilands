@@ -10,7 +10,7 @@ public class RangedAttack {
 		this._Crit = false;
 	}
 
-	public RangedAttack(Creature c) {
+	public RangedAttack(ICreature c) {
 		int d = Dice.Roll(6);
 
 		if(d == 6) {

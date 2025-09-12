@@ -93,7 +93,7 @@ public static class Bestiary {
 		/* Create creature */
 		Enemy E = new Enemy(Strength, Ability, Resistance, Armor, Firepower, Species);
 
-		Item Weapon = null;
+		Item? Weapon = null;
 
 		/* Read weapon	*/
 		if(Tokens[k++].Equals("1")) {
@@ -103,10 +103,10 @@ public static class Bestiary {
 			int Buff = Int32.Parse(Tokens[k++]);
 			int Value = Int32.Parse(Tokens[k++]);
 			Weapon = new Item(Name, Type, Category, Buff, Value);
-		}
 
-		/* Equip weapon and return the monster */
-		E.Equip.Equip(Weapon);
+			/* Equip weapon and return the monster */
+			E.Equip.Equip(Weapon.Value);
+		}
 
 		return E;
 	}

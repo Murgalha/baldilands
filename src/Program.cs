@@ -1,7 +1,6 @@
 namespace Baldilands;
 
-class main {
-
+class Program {
 	static void Main() {
 		// TODO: Check and create items on startup
 		//FileCreator.Items();

@@ -1,116 +1,117 @@
+using System;
+using System.Linq;
+
 namespace Baldilands;
 
-public class Hero : Creature {
+public class Hero : ICreature {
+    public int Strength { get; set; }
+    public int Ability { get; set; }
+    public int Resistance { get; set; }
+    public int Armor { get; set; }
+    public int Firepower { get; set; }
+    public int HP { get; set; }
+    public int MP { get; set; }
+    public int AttackBuff { get; set; }
+    public int DefenseBuff { get; set; }
+    public int AttackDebuff { get; set; }
+    public int DefenseDebuff { get; set; }
+    public Equipment Equip { get; set; }
+    public string Name { get; }
+    public string Race { get; }
+    public Bag Bag { get; }
+    public int Exp { get; set; }
+    public int Level { get; set; }
 
-	protected string _Name;
-	protected string _Race;
-	protected Bag _Bag;
-	protected int _Exp;
-	protected int _Level;
+    public Hero(int str, int ab, int res, int armr, int firepwr, string name, string race) {
+        Strength = str;
+        Ability = ab;
+        Resistance = res;
+        Armor = armr;
+        Firepower = firepwr;
+        HP = (Resistance < 1 ? 1 : Resistance * 5);
+        MP = (Resistance < 1 ? 1 : Resistance * 5);
+        DefenseBuff = 0;
+        DefenseDebuff = 0;
+        AttackBuff = 0;
+        AttackDebuff = 0;
+        Equip = new Equipment();
+        Name = name;
+        Race = race;
+        Bag = new Bag();
+        Exp = 0;
+        Level = 1;
+    }
 
-	public Hero(int str, int ab, int res, int armr, int firepwr, string name, string race)
-		: base(str, ab, res, armr, firepwr) {
-		this._Name = name;
-		this._Race = race;
-		this._Bag = new Bag();
-		this._Exp = 0;
-		this._Level = 1;
-	}
+    public int TakeDamage(int dmg) {
+        HP = Math.Max(HP - dmg, 0);
+        return HP;
+    }
 
-	public void ReceiveReward(Reward R) {
-		this._Bag.Add(R.Item);
-		this._Bag.Gold += R.Gold;
-		this._Exp += R.Exp;
-	}
+    public Defense GetDefense() => new Defense(this);
 
-	public void PickItem(Item it) {
-		this._Bag.Add(it);
-	}
+    public MeleeAttack GetMeleeAttack() => new MeleeAttack(this);
 
-	public void DropItem(Item it) {
-		this._Bag.Remove(it);
-	}
+    public RangedAttack GetRangedAttack() {
+        var weapon = GetWeapon();
+        if (weapon.HasValue && weapon.Value.Type.Equals("ranged"))
+            return new RangedAttack(this);
+        else
+            return new RangedAttack();
+    }
 
-	public void EquipFromBag(string name) {
-		Item New = this._Bag.Inventory.Find(x => x.Name.Equals(name));
-		Item Old;
-		string Type = (New.Type.Equals("melee") || New.Type.Equals("ranged") ? "weapon" : New.Type);
-		Old = this._Equip.Remove(Type);
-		this._Bag.Remove(New);
-		this._Equip.Equip(New);
-		if(Old != null)
-			this._Bag.Add(Old);
-	}
+    public Item? GetWeapon() { return Equip.Weapon; }
 
-	public void RemoveEquip(string part) {
-		Item it = this._Equip.Remove(part);
-		this._Bag.Add(it);
-	}
+    public void ReceiveReward(Reward R) {
+        if (!R.Item.HasValue)
+            Bag.Add(R.Item.Value);
+        Bag.Gold += R.Gold;
+        Exp += R.Exp;
+    }
 
-	public void Rest() {
-		this._HP = (this._Resistance < 1 ? 1 : this._Resistance*5);
-		this._MP = (this._Resistance < 1 ? 1 : this._Resistance*5);
-	}
+    public void PickItem(Item it) { Bag.Add(it); }
 
-	public void LevelUp(string c) {
-		if(c.Equals("strength"))
-			this._Strength++;
-		else if(c.Equals("ability"))
-			this._Ability++;
-		else if(c.Equals("resistance"))
-			this._Resistance++;
-		else if(c.Equals("armor"))
-			this._Armor++;
-		else if(c.Equals("Firepower"))
-			this._Firepower++;
-		else
-			return;
-		this._Level++;
-		this.Exp -= 10;
-	}
+    public void DropItem(Item it) { Bag.Remove(it); }
 
-	public string Name {
-		get {
-			return this._Name;
-		}
-	}
+    public void EquipFromBag(string name) {
+        Item New = Bag.Items.FirstOrDefault(x => x.Name.Equals(name));
+        string Type = (New.Type.Equals("melee") || New.Type.Equals("ranged") ? "weapon" : New.Type);
+        Item? Old = Equip.Remove(Type);
+        Bag.Remove(New);
+        Equip.Equip(New);
+        if (Old != null)
+            Bag.Add(Old.Value);
+    }
 
-	public string Race {
-		get {
-			return this._Race;
-		}
-	}
+    public void RemoveEquip(string part) {
+        Item? it = Equip.Remove(part);
+        if (it is not null)
+            Bag.Add(it.Value);
+    }
 
-	public int Gold {
-		get {
-			return this._Bag.Gold;
-		}
-		set {
-			this._Bag.Gold = value;
-		}
-	}
+    public void Rest() {
+        HP = (Resistance < 1 ? 1 : Resistance * 5);
+        MP = (Resistance < 1 ? 1 : Resistance * 5);
+    }
 
-	public Bag Bag {
-		get {
-			return this._Bag;
-		}
-	}
+    public void LevelUp(string c) {
+        if (c.Equals("strength"))
+            Strength++;
+        else if (c.Equals("ability"))
+            Ability++;
+        else if (c.Equals("resistance"))
+            Resistance++;
+        else if (c.Equals("armor"))
+            Armor++;
+        else if (c.Equals("Firepower"))
+            Firepower++;
+        else
+            return;
+        Level++;
+        Exp -= 10;
+    }
 
-	public int Exp {
-		get {
-			return this._Exp;
-		}
-		set {
-			this._Exp = value;
-		}
-	}
-
-	public int Level {
-		get {
-			return this._Level;
-		}
-		set {
-			this._Level = value;
-		}
-	}
+    public int Gold {
+        get { return Bag.Gold; }
+        set { Bag.Gold = value; }
+    }
 }

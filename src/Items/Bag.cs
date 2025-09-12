@@ -3,49 +3,21 @@ using System.Collections.Generic;
 namespace Baldilands;
 
 public class Bag {
-
-	private List<Item> _Inventory;
-	private int _Size;
-	private int _Gold;
+	public int Size => _Items.Count;
+	public int Gold { get;set; }
+	public IEnumerable<Item> Items => _Items;
+	private List<Item> _Items;
 
 	public Bag() {
-		this._Inventory = new List<Item>();
-		this._Size = 0;
-		this._Gold = Dice.Roll(6)*100;
+		_Items = new List<Item>();
+		Gold = Dice.Roll(6)*100;
 	}
 
 	public void Add(Item it) {
-		if(it == null)
-			return;
-		this._Inventory.Add(it);
-		this._Size++;
+		_Items.Add(it);
 	}
 
 	public void Remove(Item it) {
-		if(it == null)
-			return;
-		this._Inventory.Remove(it);
-		this._Size--;
-	}
-
-	public List<Item> Inventory {
-		get {
-			return this._Inventory;
-		}
-	}
-
-	public int Size {
-		get {
-			return this._Size;
-		}
-	}
-
-	public int Gold {
-		get {
-			return this._Gold;
-		}
-		set {
-			this._Gold = value;
-		}
+		_Items.Remove(it);
 	}
 }

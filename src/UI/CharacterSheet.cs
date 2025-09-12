@@ -3,7 +3,6 @@ using System;
 namespace Baldilands;
 
 public static class CharacterSheet {
-
 	public static void Show(Hero H) {
 
 		Console.WriteLine("Name: {0}\tRace: {1}", H.Name, H.Race.Capitalize());
@@ -17,14 +16,14 @@ public static class CharacterSheet {
 		Console.WriteLine("Level: {0}", H.Level);
 		Console.WriteLine("Gold: {0}", H.Gold);
 		Console.WriteLine("Items:");
-		foreach(var item in H.Bag.Inventory)
+		foreach(var item in H.Bag.Items)
 			Console.WriteLine("> {0}", item.Name.Capitalize());
 
 		Console.WriteLine("\nEquipment:");
-		Console.WriteLine("> Weapon: {0}", (H.Equip.Weapon != null ? H.Equip.Weapon.Name.Capitalize() : ""));
-		Console.WriteLine("> Head: {0}", (H.Equip.Head != null ? H.Equip.Head.Name.Capitalize() : ""));
-		Console.WriteLine("> Torso: {0}", (H.Equip.Torso != null ? H.Equip.Torso.Name.Capitalize() : ""));
-		Console.WriteLine("> Hand: {0}", (H.Equip.Hand != null ? H.Equip.Hand.Name.Capitalize() : ""));
-		Console.WriteLine("> Leg: {0}", (H.Equip.Leg != null ? H.Equip.Leg.Name.Capitalize() : ""));
+		Console.WriteLine("> Weapon: {0}", (H.Equip.Weapon.HasValue ? H.Equip.Weapon.Value.Name.Capitalize() : ""));
+		Console.WriteLine("> Head: {0}", (H.Equip.Head.HasValue ? H.Equip.Head.Value.Name.Capitalize() : ""));
+		Console.WriteLine("> Torso: {0}", (H.Equip.Torso.HasValue ? H.Equip.Torso.Value.Name.Capitalize() : ""));
+		Console.WriteLine("> Hand: {0}", (H.Equip.Hand.HasValue ? H.Equip.Hand.Value.Name.Capitalize() : ""));
+		Console.WriteLine("> Leg: {0}", (H.Equip.Leg.HasValue ? H.Equip.Leg.Value.Name.Capitalize() : ""));
 	}
 }

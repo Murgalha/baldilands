@@ -4,9 +4,8 @@ using System.Collections.Generic;
 namespace Baldilands;
 
 public class BattleManager {
-
 	private class Battling {
-		public Creature Creature;
+		public ICreature Creature;
 		public bool ActionSet;
 		public string Cmd;
 		public bool Run;
@@ -14,7 +13,7 @@ public class BattleManager {
 		private string _BattleD;
 		private bool _IsPlayer;
 
-		public Battling(Creature c, string bd, bool p) {
+		public Battling(ICreature c, string bd, bool p) {
 			this.Creature = c;
 			this.ActionSet = false;
 			this.Cmd = "";
@@ -62,11 +61,11 @@ public class BattleManager {
 	public int turn;
 	private bool _RunEnded;
 
-	private int RollIniciative(Creature c) {
+	private int RollIniciative(ICreature c) {
 		return Dice.Roll(6) + c.Ability;
 	}
 
-	public BattleManager(Creature a, Creature b) {
+	public BattleManager(ICreature a, ICreature b) {
 		string bda;
 		string bdb;
 
@@ -126,25 +125,25 @@ public class BattleManager {
 	public bool Turn() {
 		int CurrentDamage = 0;
 		bool CurrentCrit = false;
-		Creature CurrentCreature = list[turn].Creature;
+		ICreature CurrentCreature = list[turn].Creature;
 		int CurrentDodgeBuff = 0;
 		bool CurrentRun = false;
 		bool CurrentDodgeSuccess = false;
 		string CurrentCMD = list[turn].Cmd;
-		Defense CurrentDefense = CurrentCreature.Defense;
+		Defense CurrentDefense = CurrentCreature.GetDefense();
 
 		//check spells
 
 		// save log
 
 		if(CurrentCMD.Equals("attack")) {
-			MeleeAttack MA = CurrentCreature.Melee;
+			MeleeAttack MA = CurrentCreature.GetMeleeAttack();
 			CurrentDamage = MA.Dmg;
 			CurrentCrit = MA.IsCritical();
 		}
 
 		else if(CurrentCMD.Equals("ranged attack")) {
-			RangedAttack RA = CurrentCreature.Ranged;
+			RangedAttack RA = CurrentCreature.GetRangedAttack();
 			CurrentDamage = RA.Dmg;
 			CurrentCrit = RA.IsCritical();
 		}
@@ -164,21 +163,21 @@ public class BattleManager {
 		int Next = (turn+1)%2;
 		int NextDamage = 0;
 		bool NextCrit = false;
-		Creature NextCreature = list[Next].Creature;
+		ICreature NextCreature = list[Next].Creature;
 		int NextDodgeBuff = 0;
 		bool NextRun = false;
 		bool NextDodgeSuccess = false;
 		string NextCMD = list[Next].Cmd;
-		Defense NextDefense = NextCreature.Defense;
+		Defense NextDefense = NextCreature.GetDefense();
 
 		if(NextCMD.Equals("attack")) {
-			MeleeAttack MA = NextCreature.Melee;
+			MeleeAttack MA = NextCreature.GetMeleeAttack();
 			NextDamage = MA.Dmg;
 			NextCrit = MA.IsCritical();
 		}
 
 		else if(NextCMD.Equals("ranged attack")) {
-			RangedAttack RA = NextCreature.Ranged;
+			RangedAttack RA = NextCreature.GetRangedAttack();
 			NextDamage = RA.Dmg;
 			NextCrit = RA.IsCritical();
 		}
@@ -208,7 +207,7 @@ public class BattleManager {
 		CurrentDamage = (CurrentDamage-NextDefense.Def < 0 ? 0 :
 						 CurrentDamage-NextDefense.Def);
 
-		NextCreature.Damage = CurrentDamage;
+		NextCreature.TakeDamage(CurrentDamage);
 
 		this.BL.TurnLog = "";
 
@@ -224,7 +223,7 @@ public class BattleManager {
 		NextDamage = (NextDamage-CurrentDefense.Def < 0 ? 0 :
 					  NextDamage-CurrentDefense.Def);
 
-		CurrentCreature.Damage = NextDamage;
+		CurrentCreature.TakeDamage(NextDamage);
 
 		this.BL.SaveTurnLog(NextCreature, list[Next].IsPlayer(), NextCMD,
 							NextDamage, NextCrit, CurrentDodgeSuccess);
@@ -299,7 +298,7 @@ public class BattleManager {
 
 	public Reward GetReward() {
 		int Exp, Gold;
-		Item item = null;
+		Item? item = null;
 		if(b2.StatSum() <= b1.StatSum()/2)
 			Exp = 0;
 		else if(b2.StatSum() >= 2*b1.StatSum())

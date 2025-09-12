@@ -10,7 +10,7 @@ public class MeleeAttack {
 		this._Crit = false;
 	}
 
-	public MeleeAttack(Creature c) {
+	public MeleeAttack(ICreature c) {
 		int d = Dice.Roll(6);
 
 		if(d == 6) {
