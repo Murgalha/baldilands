@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.IO;
 
@@ -8,15 +9,6 @@ public class Market {
     private Hero H;
 
     public Market(Hero h) { this.H = h; }
-
-    private Item? Find(Hero H, string Name) {
-        foreach (var It in H.Bag.Items) {
-            if (It.Name.Equals(Name)) {
-                return It;
-            }
-        }
-        return null;
-    }
 
     private string ParseMerchant(string Raw) {
         Raw = Raw.ToLower();
@@ -59,13 +51,6 @@ public class Market {
         return;
     }
 
-    private int Find(List<Item> items, string name) {
-        for (int i = 0; i < items.Count; i++)
-            if (items[i].Name.Equals(name))
-                return i;
-        return -1;
-    }
-
     private void BuyRanged(List<Item> Ranged) {
         string Weapon;
         int Index = new int();
@@ -85,7 +70,7 @@ public class Market {
                 return;
             }
 
-            Index = this.Find(Ranged, Weapon);
+            Index = Ranged.FindIndex(x => x.Name.Equals(Weapon));
 
             Console.Clear();
             if (Index < 0) {
@@ -123,7 +108,7 @@ public class Market {
                 return;
             }
 
-            Index = this.Find(Melee, Weapon);
+            Index = Melee.FindIndex(x => x.Name.Equals(Weapon));
 
             Console.Clear();
             if (Index < 0) {
@@ -183,7 +168,7 @@ public class Market {
                 return;
             }
 
-            Index = this.Find(Armor, ArmorName);
+            Index = Armor.FindIndex(x => x.Name.Equals(ArmorName));
 
             Console.Clear();
             if (Index < 0) {
@@ -261,8 +246,6 @@ public class Market {
     }
 
     public void Sell() {
-        string Name;
-
         while (true) {
             Console.WriteLine(
                 "Which item do you want to sell? (Type ENTER on empty item to return)");
@@ -271,13 +254,12 @@ public class Market {
                                   It.Type.Capitalize(), It.Value / 2);
             }
 
-            Name = Console.ReadLine();
-            Name = Name.ToLower();
-            if (Name.Equals("")) {
+            var name = Console.ReadLine().ToLower();
+            if (name.Equals("")) {
                 Console.Clear();
                 return;
             }
-            Item? Item = Find(H, Name);
+            Item? Item = H.Bag.Items.FirstOrDefault(x => x.Name.Equals(name));
             Console.Clear();
             if (!Item.HasValue) {
                 Console.WriteLine("Item not found\n");

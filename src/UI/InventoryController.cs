@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 
 namespace Baldilands;
 
@@ -9,15 +10,6 @@ public static class InventoryController {
             part.Equals("leg") || part.Equals("weapon"))
             return true;
         return false;
-    }
-
-    private static Item? Find(Hero H, string Name) {
-        foreach (var It in H.Bag.Items) {
-            if (It.Name.Equals(Name)) {
-                return It;
-            }
-        }
-        return null;
     }
 
     private static bool PartIsNull(Hero H, string Part) {
@@ -41,8 +33,6 @@ public static class InventoryController {
     }
 
     private static void Equip(Hero H) {
-        string Name;
-
         while (true) {
             Console.WriteLine(
                 "What item do you want to equip? (Type ENTER with empty name to return)");
@@ -50,13 +40,12 @@ public static class InventoryController {
                 Console.WriteLine("> {0} ({1})", Item.Name.Capitalize(), Item.Type.Capitalize());
             }
 
-            Name = Console.ReadLine();
-            Name = Name.ToLower();
-            if (Name.Equals("")) {
+            string name = Console.ReadLine().ToLower();
+            if (name.Equals("")) {
                 Console.Clear();
                 return;
             }
-            Item? It = InventoryController.Find(H, Name);
+            Item? It = H.Bag.Items.FirstOrDefault(x => x.Name.Equals(name));
             Console.Clear();
             if (It == null) {
                 Console.WriteLine("Item not found\n");
@@ -115,20 +104,17 @@ public static class InventoryController {
     }
 
     private static void Drop(Hero H) {
-        string Name;
-
         while (true) {
             Console.WriteLine(
                 "What item do you want to drop? (Type ENTER with empty name to return)");
             foreach (var It in H.Bag.Items)
                 Console.WriteLine("> {0} ({1})", It.Name.Capitalize(), It.Type.Capitalize());
-            Name = Console.ReadLine();
-            Name = Name.ToLower();
-            if (Name.Equals("")) {
+            string name = Console.ReadLine().ToLower();
+            if (name.Equals("")) {
                 Console.Clear();
                 return;
             }
-            Item? Item = InventoryController.Find(H, Name);
+            Item? Item = H.Bag.Items.FirstOrDefault(x => x.Name.Equals(name));
             Console.Clear();
             if (Item == null)
                 Console.WriteLine("Item not found\n");
