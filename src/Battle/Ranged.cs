@@ -1,35 +1,26 @@
 namespace Baldilands;
 
 public class RangedAttack {
+    public int Points { get; }
+    public bool IsCritical { get; }
 
-	private int _Dmg;
-	private bool _Crit;
+    public static RangedAttack Empty = new RangedAttack();
 
-	public RangedAttack() {
-		this._Dmg = 0;
-		this._Crit = false;
-	}
+    private RangedAttack() {
+        Points = 0;
+        IsCritical = false;
+    }
 
-	public RangedAttack(ICreature c) {
-		int d = Dice.Roll(6);
+    public RangedAttack(ICreature c) {
+        int d = Dice.Roll(6);
 
-		if(d == 6) {
-			this._Crit = true;
-			this._Dmg = d + (c.Firepower*2) + c.Ability + c.AttackBuff - c.AttackDebuff;
-		}
-		else {
-			this._Crit = false;
-			this._Dmg = d + c.Firepower + c.Ability + c.AttackBuff - c.AttackDebuff;
-		}
-	}
-
-	public bool IsCritical() {
-		return this._Crit;
-	}
-
-	public int Dmg {
-		get {
-			return this._Dmg;
-		}
-	}
+        Points = d + c.Ability + c.AttackBuff - c.AttackDebuff;
+        if (d == 6) {
+            IsCritical = true;
+            Points += (c.Firepower * 2);
+        } else {
+            IsCritical = false;
+            Points += c.Firepower;
+        }
+    }
 }

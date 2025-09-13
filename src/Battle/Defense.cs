@@ -1,30 +1,19 @@
 namespace Baldilands;
 
 public class Defense {
+    public int Points { get; }
+    public bool IsCritical { get; }
 
-	private int _Def;
-	private bool _Crit;
+    public Defense(ICreature c) {
+        int d = Dice.Roll(6);
 
-	public Defense(ICreature c) {
-		int d = Dice.Roll(6);
-
-		if(d == 6) {
-			this._Crit = true;
-			this._Def = d + (c.Armor*2) + c.Ability + c.AttackBuff + c.AttackDebuff;
-		}
-		else {
-			this._Crit = false;
-			this._Def = d + c.Armor + c.Ability + c.AttackBuff + c.AttackDebuff;
-		}
-	}
-
-	public bool IsCritical() {
-		return this._Crit;
-	}
-
-	public int Def {
-		get {
-			return this._Def;
-		}
-	}
+        Points = d + c.Ability + c.AttackBuff + c.AttackDebuff;
+        if (d == 6) {
+            IsCritical = true;
+            Points += c.Armor * 2;
+        } else {
+            IsCritical = false;
+            Points += c.Armor;
+        }
+    }
 }

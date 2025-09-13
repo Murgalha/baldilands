@@ -56,7 +56,7 @@ public class Hero : ICreature {
         if (weapon.HasValue && weapon.Value.Type.Equals("ranged"))
             return new RangedAttack(this);
         else
-            return new RangedAttack();
+            return RangedAttack.Empty;
     }
 
     public Item? GetWeapon() { return Equip.Weapon; }
