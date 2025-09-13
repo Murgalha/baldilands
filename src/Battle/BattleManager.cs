@@ -4,54 +4,6 @@ using System.Collections.Generic;
 namespace Baldilands;
 
 public class BattleManager {
-    private class Battling {
-        public ICreature Creature;
-        public bool ActionSet;
-        public string Cmd;
-        public bool Run;
-        public bool Dodge;
-        private string _BattleD;
-        private bool _IsPlayer;
-
-        public Battling(ICreature c, string bd, bool p) {
-            this.Creature = c;
-            this.ActionSet = false;
-            this.Cmd = "";
-            this.Run = false;
-            this.Dodge = false;
-            this._BattleD = bd;
-            this._IsPlayer = p;
-        }
-
-        public bool SetCommand(string cmd) {
-            Cmd = cmd;
-            ActionSet = true;
-
-            if (Cmd.Equals("run"))
-                Run = true;
-            return true;
-        }
-
-        public void PostTurn() {
-            Run = false;
-            ActionSet = false;
-            Cmd = "";
-        }
-
-        public bool RunAttempt() {
-            if (CharacteristicCheck.Ability(this.Creature, this._BattleD))
-                return true;
-            return false;
-        }
-
-        public bool IsPlayer() { return this._IsPlayer; }
-
-        public int StatSum() {
-            return this.Creature.Strength + this.Creature.Ability + this.Creature.Resistance +
-                   this.Creature.Armor + this.Creature.Firepower;
-        }
-    }
-
     private Battling b1;
     private Battling b2;
     private List<Battling> list;
@@ -106,7 +58,7 @@ public class BattleManager {
 
     public void SetTurn(string cmd1, string cmd2, params Spell[] CastSpell) {
         int Next = (turn + 1) % 2;
-        if (list[turn].IsPlayer()) {
+        if (list[turn].IsPlayer) {
             list[turn].SetCommand(cmd1);
             list[Next].SetCommand(cmd2);
         } else {
@@ -204,7 +156,7 @@ public class BattleManager {
 
         this.BL.TurnLog = "";
 
-        this.BL.SaveTurnLog(CurrentCreature, list[turn].IsPlayer(), CurrentCMD, CurrentDamage,
+        this.BL.SaveTurnLog(CurrentCreature, list[turn].IsPlayer, CurrentCMD, CurrentDamage,
                             CurrentCrit, NextDodgeSuccess);
 
         if (NextCreature.HP == 0) {
@@ -218,7 +170,7 @@ public class BattleManager {
 
         CurrentCreature.TakeDamage(NextDamage);
 
-        this.BL.SaveTurnLog(NextCreature, list[Next].IsPlayer(), NextCMD, NextDamage, NextCrit,
+        this.BL.SaveTurnLog(NextCreature, list[Next].IsPlayer, NextCMD, NextDamage, NextCrit,
                             CurrentDodgeSuccess);
 
         this.BL.CombatLog += TurnLog;
