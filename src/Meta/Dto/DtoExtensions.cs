@@ -5,6 +5,7 @@ namespace Baldilands;
 public static class DtoExtensions {
     public static HeroDto ToDto(this Hero hero) {
         return new HeroDto {
+            DisplayName = $"{hero.Name}, the {hero.Race}",
             Strength = hero.Strength,
             Ability = hero.Ability,
             Resistance = hero.Resistance,

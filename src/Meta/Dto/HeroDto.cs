@@ -4,6 +4,7 @@ namespace Baldilands;
 
 [Serializable]
 public class HeroDto {
+    public string DisplayName;
     public int Strength;
     public int Ability;
     public int Resistance;

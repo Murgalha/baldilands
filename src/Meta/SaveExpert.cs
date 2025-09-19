@@ -13,8 +13,8 @@ public class SaveExpert {
         try {
             Directory.CreateDirectory(_savePath);
 
-            string slotPath = Path.Combine(_savePath, $"{slot}.sav");
-            FileStream stream = new(slotPath, FileMode.CreateNew, FileAccess.Write);
+            string slotPath = GetSlotPath(slot);
+            FileStream stream = new(slotPath, FileMode.Truncate, FileAccess.Write);
             _serializer.Serialize(stream, H.ToDto());
 
             return true;
@@ -26,7 +26,7 @@ public class SaveExpert {
 
     public Hero LoadGame(int slot) {
         try {
-            string slotPath = Path.Combine(_savePath, $"{slot}.sav");
+            string slotPath = GetSlotPath(slot);
 
             if (!File.Exists(slotPath))
                 return null;
@@ -46,7 +46,7 @@ public class SaveExpert {
 
     public bool DeleteGame(int slot) {
         try {
-            string slotPath = Path.Combine(_savePath, $"{slot}.sav");
+            string slotPath = GetSlotPath(slot);
             File.Delete(slotPath);
             return false;
         } catch {
@@ -54,4 +54,27 @@ public class SaveExpert {
             return false;
         }
     }
+
+    public string GetDisplayName(int slot) {
+        try {
+            string slotPath = GetSlotPath(slot);
+
+            if (!File.Exists(slotPath))
+                return string.Empty;
+
+            FileStream stream = new(slotPath, FileMode.Open, FileAccess.Read);
+            HeroDto heroDto = (HeroDto)_serializer.Deserialize(stream);
+
+            if (heroDto is null)
+                return string.Empty;
+
+            return heroDto.DisplayName;
+
+        } catch {
+            // TODO: Add logging
+            return string.Empty;
+        }
+    }
+
+    public string GetSlotPath(int slot) => Path.Combine(_savePath, $"slot{slot}.sav");
 }
