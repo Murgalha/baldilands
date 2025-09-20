@@ -1,83 +1,53 @@
 using System;
 using System.IO;
-using System.Security.Cryptography;
-using System.Text;
+using System.Xml.Serialization;
 
 namespace Baldilands;
 
 public static class Inventory {
+    private static string _itemsPath =
+        Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "game data", "items");
+    private static XmlSerializer _serializer = new(typeof(ItemDto));
 
-	/* Create an item file and save it on Inventory folder */
-	public static void Make(string name, string type, string category, int buff, int value) {
-		string DirPath = "./GameData/Inventory/" + category.Capitalize() + "/";
-		Directory.CreateDirectory(DirPath);
+    public static bool CreateFile(Item item) {
+        try {
+            Directory.CreateDirectory(_itemsPath);
 
-		string[] Tokens = name.Split(' ');
-		string FileName = "";
+            string itemPath = GetItemPath(item);
+            FileStream stream = new(itemPath, FileMode.Create, FileAccess.Write);
+            _serializer.Serialize(stream, item.ToDto());
 
-		/* Generating filename string */
-		FileName = String.Join("", Tokens);
+            return true;
+        } catch {
+            // TODO: Add logging
+            return false;
+        }
+    }
 
-		FileName = String.Join("", DirPath, FileName, ".itm");
+    public static Item? Load(string file) {
+        try {
+            if (!File.Exists(file))
+                return null;
 
-		FileStream Stream = new FileStream(FileName, FileMode.OpenOrCreate,FileAccess.Write);
+            FileStream stream = new(file, FileMode.Open, FileAccess.Read);
+            ItemDto itemDto = (ItemDto)_serializer.Deserialize(stream);
 
-		DESCryptoServiceProvider Crypto = new DESCryptoServiceProvider();
+            if (itemDto is null)
+                return null;
 
-		/* This key is used only to avoid simple file editing on the enemies stats */
-		Crypto.Key = ASCIIEncoding.ASCII.GetBytes("THEITEMS");
-		Crypto.IV = ASCIIEncoding.ASCII.GetBytes("THEITEMS");
+            return itemDto.ToItem();
+        } catch {
+            // TODO: Add logging
+            return null;
+        }
+    }
 
-		CryptoStream CrStream = new CryptoStream(Stream, Crypto.CreateEncryptor(), CryptoStreamMode.Write);
+    public static string GetItemPath(Item item) { return _GetItemPath(item.Name); }
 
-		/* Concatenating item data with comma */
-		string Data = name + "," + type + "," + category + "," + buff + "," + value;
+    public static string GetItemPath(string itemName) { return _GetItemPath(itemName); }
 
-		byte[] EncodedData = ASCIIEncoding.ASCII.GetBytes(Data);
-
-		/* Write file */
-		CrStream.Write(EncodedData, 0, EncodedData.Length);
-
-		File.SetAttributes(FileName, FileAttributes.ReadOnly);
-
-		CrStream.Close();
-		Stream.Close();
-	}
-
-	/* Load item based on its name and category */
-	public static Item Load(string item, string category) {
-		/* Generate path to load item */
-		string FullPath = String.Join("", "./GameData/Inventory/", category.Capitalize(), "/", item, ".itm");
-		FileStream Stream = new FileStream(FullPath, FileMode.Open,FileAccess.Read);
-		DESCryptoServiceProvider Crypto = new DESCryptoServiceProvider();
-
-		/* This key is used only to avoid simple file editing on the enemies stats */
-		Crypto.Key = ASCIIEncoding.ASCII.GetBytes("THEITEMS");
-		Crypto.IV = ASCIIEncoding.ASCII.GetBytes("THEITEMS");
-
-		CryptoStream CrStream = new CryptoStream(Stream,
-			Crypto.CreateDecryptor(),CryptoStreamMode.Read);
-
-		StreamReader Reader = new StreamReader(CrStream);
-
-		/* Read file and split tokens */
-		string Data = Reader.ReadToEnd();
-
-		Reader.Close();
-		Stream.Close();
-
-		string[] Tokens = Data.Split(',');
-
-		/* Create item with tokens */
-		int k = 0;
-		string Name = Tokens[k++];
-		string Type = Tokens[k++];
-		string Category = Tokens[k++];
-		int Buff = Int32.Parse(Tokens[k++]);
-		int Value = Int32.Parse(Tokens[k++]);
-
-		Item I = new Item(Name, Type, Category, Buff, Value);
-
-		return I;
-	}
+    private static string _GetItemPath(string itemName) {
+        var slugName = itemName.Replace(' ', '-').ToLower();
+        return Path.Combine(_itemsPath, $"{slugName}.itm");
+    }
 }

@@ -26,27 +26,31 @@ public class Market {
     }
 
     private void LoadWeapons(out List<Item> Melee, out List<Item> Ranged) {
-        string[] paths = Directory.GetFileSystemEntries("./GameData/Inventory/Weapon", "*.itm");
+        // TODO: I think we don't need to load all items here
+        string[] itemNames = Initializer.Weapons();
         Melee = new List<Item>();
         Ranged = new List<Item>();
-        foreach (var filepath in paths) {
-            string file = Path.GetFileNameWithoutExtension(filepath);
-            Item It = Inventory.Load(file, "weapon");
-            if (It.Type.Equals("melee"))
-                Melee.Add(It);
-            else
-                Ranged.Add(It);
+        foreach (var itemName in itemNames) {
+            string file = Inventory.GetItemPath(itemName);
+            Item? it = Inventory.Load(file);
+            if (it is not null) {
+                if (it.Value.Type.Equals("melee"))
+                    Melee.Add(it.Value);
+                else
+                    Ranged.Add(it.Value);
+            }
         }
         return;
     }
 
     private void LoadArmors(out List<Item> Armor) {
-        string[] paths = Directory.GetFileSystemEntries("./GameData/Inventory/Armor", "*.itm");
+        // TODO: I think we don't need to load all items here
+        string[] armorNames = Initializer.Armors();
         Armor = new List<Item>();
-        foreach (var filepath in paths) {
-            string file = Path.GetFileNameWithoutExtension(filepath);
-            Item It = Inventory.Load(file, "armor");
-            Armor.Add(It);
+        foreach (var armorName in armorNames) {
+            string file = Inventory.GetItemPath(armorName);
+            Item? it = Inventory.Load(file);
+            Armor.Add(it.Value);
         }
         return;
     }

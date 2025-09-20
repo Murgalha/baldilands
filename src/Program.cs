@@ -2,9 +2,10 @@ namespace Baldilands;
 
 class Program {
     static void Main() {
-        // TODO: Check and create items on startup
-        // FileCreator.Items();
-        DungeonMaster DM = new DungeonMaster();
-        DM.StartGame();
+        FileCreator.EnsureMonsterFilesExist();
+        FileCreator.EnsureItemFilesExist();
+
+        DungeonMaster dungeonMaster = new DungeonMaster();
+        dungeonMaster.StartGame();
     }
 }
