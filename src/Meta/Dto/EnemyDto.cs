@@ -3,7 +3,8 @@ using System;
 namespace Baldilands;
 
 [Serializable]
-public class EnemyDto {
+public class EnemyDto
+{
     public int Strength;
     public int Ability;
     public int Resistance;

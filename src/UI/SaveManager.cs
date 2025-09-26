@@ -3,47 +3,59 @@ using System.IO;
 
 namespace Baldilands;
 
-public class SaveManager {
+public class SaveManager
+{
     private SaveExpert _saveExpert;
 
     public int MaxSlots { get; }
     public int CurrentSlot { get; private set; }
 
-    public SaveManager() {
+    public SaveManager()
+    {
         MaxSlots = 20;
         CurrentSlot = -1;
         _saveExpert = new SaveExpert();
     }
 
-    public void SetLoadSlot() {
+    public void SetLoadSlot()
+    {
         string Num;
         int Value;
 
         Console.Clear();
-        while (true) {
+        while (true)
+        {
             Console.WriteLine(
-                "Which slot would you like to load? (Type ENTER on empty slot to return)");
+                "Which slot would you like to load? (Type ENTER on empty slot to return)"
+            );
             PrintSaveSlots();
 
             Num = Console.ReadLine();
             if (Num.Equals(""))
                 return;
-            try {
+            try
+            {
                 Value = Int32.Parse(Num);
-            } catch (FormatException) {
+            }
+            catch (FormatException)
+            {
                 Console.Clear();
                 Console.WriteLine("Invalid slot number\n");
                 continue;
             }
-            if (Value < 1 || Value > MaxSlots) {
+            if (Value < 1 || Value > MaxSlots)
+            {
                 Console.Clear();
                 Console.WriteLine("Invalid slot number\n");
                 continue;
             }
-            if (File.Exists(_saveExpert.GetSlotPath(Value))) {
+            if (File.Exists(_saveExpert.GetSlotPath(Value)))
+            {
                 CurrentSlot = Value;
                 return;
-            } else {
+            }
+            else
+            {
                 Console.Clear();
                 Console.WriteLine("Empty slot\n");
                 continue;
@@ -51,39 +63,50 @@ public class SaveManager {
         }
     }
 
-    public int SetSaveSlot() {
+    public int SetSaveSlot()
+    {
         string Num;
         int Value = 0;
 
         Console.Clear();
-        while (true) {
+        while (true)
+        {
             Console.WriteLine(
-                "Which slot do you want to save in? (Type ENTER on empty slot to return)");
+                "Which slot do you want to save in? (Type ENTER on empty slot to return)"
+            );
             PrintSaveSlots();
 
             Num = Console.ReadLine();
             if (Num.Equals(""))
                 return -1;
-            try {
+            try
+            {
                 Value = Int32.Parse(Num);
-            } catch (FormatException) {
+            }
+            catch (FormatException)
+            {
                 Console.Clear();
                 Console.WriteLine("Invalid slot number\n");
                 continue;
             }
-            if (Value < 1 || Value > MaxSlots) {
+            if (Value < 1 || Value > MaxSlots)
+            {
                 Console.Clear();
                 Console.WriteLine("Invalid slot number\n");
                 continue;
             }
-            if (!File.Exists(_saveExpert.GetSlotPath(Value))) {
+            if (!File.Exists(_saveExpert.GetSlotPath(Value)))
+            {
                 CurrentSlot = Value;
                 return Value;
-            } else {
+            }
+            else
+            {
                 Console.Clear();
                 string Ans;
 
-                while (true) {
+                while (true)
+                {
                     Console.WriteLine("This slot is already full");
                     Console.WriteLine("Do you wish to overwrite it?");
                     Console.WriteLine("1. Yes");
@@ -92,13 +115,18 @@ public class SaveManager {
                     Ans = Console.ReadLine();
                     Ans = YesNoInput.Parse(Ans);
 
-                    if (Ans.Equals("yes")) {
+                    if (Ans.Equals("yes"))
+                    {
                         CurrentSlot = Value;
                         return Value;
-                    } else if (Ans.Equals("no")) {
+                    }
+                    else if (Ans.Equals("no"))
+                    {
                         Console.Clear();
                         break;
-                    } else {
+                    }
+                    else
+                    {
                         Console.Clear();
                         Console.WriteLine("Invalid command\n");
                     }
@@ -107,37 +135,48 @@ public class SaveManager {
         }
     }
 
-    public void ClearSlot() {
+    public void ClearSlot()
+    {
         string Num;
         int Value = 0;
 
         Console.Clear();
-        while (true) {
+        while (true)
+        {
             Console.WriteLine(
-                "Which slot would you like to delete? (Type ENTER on empty slot to return)");
+                "Which slot would you like to delete? (Type ENTER on empty slot to return)"
+            );
             PrintSaveSlots();
             Num = Console.ReadLine();
-            if (Num.Equals("")) {
+            if (Num.Equals(""))
+            {
                 Console.Clear();
                 return;
             }
-            try {
+            try
+            {
                 Value = Int32.Parse(Num);
-            } catch (FormatException) {
+            }
+            catch (FormatException)
+            {
                 Console.Clear();
                 Console.WriteLine("Invalid slot number\n");
                 continue;
             }
-            if (Value < 1 || Value > MaxSlots) {
+            if (Value < 1 || Value > MaxSlots)
+            {
                 Console.Clear();
                 Console.WriteLine("Invalid slot number\n");
                 continue;
             }
-            if (File.Exists(_saveExpert.GetSlotPath(Value))) {
+            if (File.Exists(_saveExpert.GetSlotPath(Value)))
+            {
                 Console.Clear();
                 _saveExpert.DeleteGame(Value);
                 Console.WriteLine("Slot {0} deleted\n", Value);
-            } else {
+            }
+            else
+            {
                 Console.Clear();
                 Console.WriteLine("Empty slot\n");
             }
@@ -148,17 +187,23 @@ public class SaveManager {
 
     public Hero LoadGame(int slot) => _saveExpert.LoadGame(slot);
 
-    private void PrintSaveSlots() {
-        for (int i = 1; i <= MaxSlots; i++) {
+    private void PrintSaveSlots()
+    {
+        for (int i = 1; i <= MaxSlots; i++)
+        {
             string slotPath = _saveExpert.GetSlotPath(i);
             if (!File.Exists(slotPath))
                 Console.WriteLine("> {0} - Empty", i);
-            else {
+            else
+            {
                 string displayName = _saveExpert.GetDisplayName(i);
 
-                if (string.IsNullOrEmpty(displayName)) {
+                if (string.IsNullOrEmpty(displayName))
+                {
                     Console.WriteLine("> {0} - Empty", i);
-                } else {
+                }
+                else
+                {
                     Console.WriteLine("> {0} - {1}", i, displayName);
                 }
             }

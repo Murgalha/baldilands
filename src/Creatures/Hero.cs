@@ -3,7 +3,8 @@ using System.Linq;
 
 namespace Baldilands;
 
-public class Hero : ICreature {
+public class Hero : ICreature
+{
     public int Strength { get; set; }
     public int Ability { get; set; }
     public int Resistance { get; set; }
@@ -22,7 +23,8 @@ public class Hero : ICreature {
     public int Exp { get; set; }
     public int Level { get; set; }
 
-    public Hero(int str, int ab, int res, int armr, int firepwr, string name, string race) {
+    public Hero(int str, int ab, int res, int armr, int firepwr, string name, string race)
+    {
         Strength = str;
         Ability = ab;
         Resistance = res;
@@ -42,7 +44,8 @@ public class Hero : ICreature {
         Level = 1;
     }
 
-    public int TakeDamage(int dmg) {
+    public int TakeDamage(int dmg)
+    {
         HP = Math.Max(HP - dmg, 0);
         return HP;
     }
@@ -51,7 +54,8 @@ public class Hero : ICreature {
 
     public MeleeAttack GetMeleeAttack() => new MeleeAttack(this);
 
-    public RangedAttack GetRangedAttack() {
+    public RangedAttack GetRangedAttack()
+    {
         var weapon = GetWeapon();
         if (weapon.HasValue && weapon.Value.Type.Equals("ranged"))
             return new RangedAttack(this);
@@ -59,20 +63,31 @@ public class Hero : ICreature {
             return RangedAttack.Empty;
     }
 
-    public Item? GetWeapon() { return Equip.Weapon; }
+    public Item? GetWeapon()
+    {
+        return Equip.Weapon;
+    }
 
-    public void ReceiveReward(Reward R) {
+    public void ReceiveReward(Reward R)
+    {
         if (!R.Item.HasValue)
             Bag.Add(R.Item.Value);
         Bag.Gold += R.Gold;
         Exp += R.Exp;
     }
 
-    public void PickItem(Item it) { Bag.Add(it); }
+    public void PickItem(Item it)
+    {
+        Bag.Add(it);
+    }
 
-    public void DropItem(Item it) { Bag.Remove(it); }
+    public void DropItem(Item it)
+    {
+        Bag.Remove(it);
+    }
 
-    public void EquipFromBag(string name) {
+    public void EquipFromBag(string name)
+    {
         Item New = Bag.Items.FirstOrDefault(x => x.Name.Equals(name));
         string Type = (New.Type.Equals("melee") || New.Type.Equals("ranged") ? "weapon" : New.Type);
         Item? Old = Equip.Remove(Type);
@@ -82,18 +97,21 @@ public class Hero : ICreature {
             Bag.Add(Old.Value);
     }
 
-    public void RemoveEquip(string part) {
+    public void RemoveEquip(string part)
+    {
         Item? it = Equip.Remove(part);
         if (it is not null)
             Bag.Add(it.Value);
     }
 
-    public void Rest() {
+    public void Rest()
+    {
         HP = (Resistance < 1 ? 1 : Resistance * 5);
         MP = (Resistance < 1 ? 1 : Resistance * 5);
     }
 
-    public void LevelUp(string c) {
+    public void LevelUp(string c)
+    {
         if (c.Equals("strength"))
             Strength++;
         else if (c.Equals("ability"))
@@ -110,7 +128,8 @@ public class Hero : ICreature {
         Exp -= 10;
     }
 
-    public int Gold {
+    public int Gold
+    {
         get { return Bag.Gold; }
         set { Bag.Gold = value; }
     }

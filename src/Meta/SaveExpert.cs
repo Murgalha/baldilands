@@ -4,13 +4,19 @@ using System.Xml.Serialization;
 
 namespace Baldilands;
 
-public class SaveExpert {
-    private string _savePath =
-        Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "game data", "save");
+public class SaveExpert
+{
+    private string _savePath = Path.Combine(
+        AppDomain.CurrentDomain.BaseDirectory,
+        "game data",
+        "save"
+    );
     private XmlSerializer _serializer = new(typeof(HeroDto));
 
-    public bool SaveGame(Hero H, int slot) {
-        try {
+    public bool SaveGame(Hero H, int slot)
+    {
+        try
+        {
             Directory.CreateDirectory(_savePath);
 
             string slotPath = GetSlotPath(slot);
@@ -18,14 +24,18 @@ public class SaveExpert {
             _serializer.Serialize(stream, H.ToDto());
 
             return true;
-        } catch {
+        }
+        catch
+        {
             // TODO: Add logging
             return false;
         }
     }
 
-    public Hero LoadGame(int slot) {
-        try {
+    public Hero LoadGame(int slot)
+    {
+        try
+        {
             string slotPath = GetSlotPath(slot);
 
             if (!File.Exists(slotPath))
@@ -38,25 +48,33 @@ public class SaveExpert {
                 return null;
 
             return heroDto.ToHero();
-        } catch {
+        }
+        catch
+        {
             // TODO: Add logging
             return null;
         }
     }
 
-    public bool DeleteGame(int slot) {
-        try {
+    public bool DeleteGame(int slot)
+    {
+        try
+        {
             string slotPath = GetSlotPath(slot);
             File.Delete(slotPath);
             return false;
-        } catch {
+        }
+        catch
+        {
             // TODO: Add logging
             return false;
         }
     }
 
-    public string GetDisplayName(int slot) {
-        try {
+    public string GetDisplayName(int slot)
+    {
+        try
+        {
             string slotPath = GetSlotPath(slot);
 
             if (!File.Exists(slotPath))
@@ -69,8 +87,9 @@ public class SaveExpert {
                 return string.Empty;
 
             return heroDto.DisplayName;
-
-        } catch {
+        }
+        catch
+        {
             // TODO: Add logging
             return string.Empty;
         }

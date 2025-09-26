@@ -4,13 +4,19 @@ using System.Xml.Serialization;
 
 namespace Baldilands;
 
-public static class Bestiary {
-    private static string _monsterPath =
-        Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "game data", "monsters");
+public static class Bestiary
+{
+    private static string _monsterPath = Path.Combine(
+        AppDomain.CurrentDomain.BaseDirectory,
+        "game data",
+        "monsters"
+    );
     private static XmlSerializer _serializer = new(typeof(EnemyDto));
 
-    public static bool CreateFile(Enemy enemy) {
-        try {
+    public static bool CreateFile(Enemy enemy)
+    {
+        try
+        {
             Directory.CreateDirectory(_monsterPath);
 
             string monsterPath = GetMonsterPath(enemy);
@@ -18,14 +24,18 @@ public static class Bestiary {
             _serializer.Serialize(stream, enemy.ToDto());
 
             return true;
-        } catch {
+        }
+        catch
+        {
             // TODO: Add logging
             return false;
         }
     }
 
-    public static Enemy Load(string file) {
-        try {
+    public static Enemy Load(string file)
+    {
+        try
+        {
             if (!File.Exists(file))
                 return null;
 
@@ -36,13 +46,16 @@ public static class Bestiary {
                 return null;
 
             return enemyDto.ToEnemy();
-        } catch {
+        }
+        catch
+        {
             // TODO: Add logging
             return null;
         }
     }
 
-    public static string GetMonsterPath(Enemy enemy) {
+    public static string GetMonsterPath(Enemy enemy)
+    {
         string slugName = enemy.Species.ToLower().Replace(' ', '-');
         return Path.Combine(_monsterPath, $"{slugName}.mon");
     }

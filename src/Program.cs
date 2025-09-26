@@ -1,7 +1,9 @@
 namespace Baldilands;
 
-class Program {
-    static void Main() {
+class Program
+{
+    static void Main()
+    {
         FileCreator.EnsureMonsterFilesExist();
         FileCreator.EnsureItemFilesExist();
 

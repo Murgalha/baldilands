@@ -2,7 +2,8 @@ using System;
 
 namespace Baldilands;
 
-public class Enemy : ICreature {
+public class Enemy : ICreature
+{
     public int Strength { get; set; }
     public int Ability { get; set; }
     public int Resistance { get; set; }
@@ -17,7 +18,8 @@ public class Enemy : ICreature {
     public Equipment Equip { get; set; }
     public string Species { get; }
 
-    public Enemy(int str, int ab, int res, int armr, int firepwr, string spec) {
+    public Enemy(int str, int ab, int res, int armr, int firepwr, string spec)
+    {
         Strength = str;
         Ability = ab;
         Resistance = res;
@@ -33,7 +35,8 @@ public class Enemy : ICreature {
         Species = spec;
     }
 
-    public int TakeDamage(int dmg) {
+    public int TakeDamage(int dmg)
+    {
         HP = Math.Max(HP - dmg, 0);
         return HP;
     }
@@ -42,7 +45,8 @@ public class Enemy : ICreature {
 
     public MeleeAttack GetMeleeAttack() => new MeleeAttack(this);
 
-    public RangedAttack GetRangedAttack() {
+    public RangedAttack GetRangedAttack()
+    {
         var weapon = GetWeapon();
         if (weapon.HasValue && weapon.Value.Type.Equals("ranged"))
             return new RangedAttack(this);
@@ -50,5 +54,8 @@ public class Enemy : ICreature {
             return RangedAttack.Empty;
     }
 
-    public Item? GetWeapon() { return Equip.Weapon; }
+    public Item? GetWeapon()
+    {
+        return Equip.Weapon;
+    }
 }

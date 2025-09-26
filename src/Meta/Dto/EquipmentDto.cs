@@ -3,7 +3,8 @@ using System;
 namespace Baldilands;
 
 [Serializable]
-public class EquipmentDto {
+public class EquipmentDto
+{
     public ItemDto Head;
     public ItemDto Torso;
     public ItemDto Leg;

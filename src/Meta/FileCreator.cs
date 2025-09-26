@@ -1,8 +1,11 @@
 namespace Baldilands;
 
-public class FileCreator {
-    public static void EnsureMonsterFilesExist() {
-        Enemy[] enemies = [
+public class FileCreator
+{
+    public static void EnsureMonsterFilesExist()
+    {
+        Enemy[] enemies =
+        [
             new(1, 3, 0, 0, 0, "Giant Bee"),
             new(2, 3, 4, 1, 0, "Abomination"),
             new(1, 1, 3, 1, 1, "Rattling Sniffer"),
@@ -57,16 +60,19 @@ public class FileCreator {
             new(3, 2, 3, 1, 0, "White Bear"),
             new(5, 5, 4, 4, 3, "Wyvern"),
             new(10, 1, 30, 4, 0, "Cave Worm"),
-            new(1, 2, 2, 2, 0, "Carrion Worm")
+            new(1, 2, 2, 2, 0, "Carrion Worm"),
         ];
 
-        foreach (Enemy enemy in enemies) {
+        foreach (Enemy enemy in enemies)
+        {
             Bestiary.CreateFile(enemy);
         }
     }
 
-    public static void EnsureItemFilesExist() {
-        Item[] items = [
+    public static void EnsureItemFilesExist()
+    {
+        Item[] items =
+        [
             new("wood sword", "melee", "weapon", 0, 50),
             new("rusty iron dagger", "melee", "weapon", 1, 125),
             new("iron dagger", "melee", "weapon", 3, 210),
@@ -127,7 +133,8 @@ public class FileCreator {
             new("mithril gauntlets", "hand", "armor", 10, 500),
         ];
 
-        foreach (Item item in items) {
+        foreach (Item item in items)
+        {
             Inventory.CreateFile(item);
         }
     }

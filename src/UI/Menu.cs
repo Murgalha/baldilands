@@ -3,17 +3,19 @@ using System.Collections.Generic;
 
 namespace Baldilands;
 
-public class Menu {
-
+public class Menu
+{
     public SaveManager SM;
     public DungeonMaster DM;
 
-    public Menu(DungeonMaster DM) {
+    public Menu(DungeonMaster DM)
+    {
         this.SM = new SaveManager();
         this.DM = DM;
     }
 
-    private string ParseCommand(string Raw) {
+    private string ParseCommand(string Raw)
+    {
         Raw = Raw.ToLower();
 
         if (Raw.Equals("1") || Raw.Equals("new game"))
@@ -28,7 +30,8 @@ public class Menu {
             return "";
     }
 
-    private string ParseTownCommand(string Raw) {
+    private string ParseTownCommand(string Raw)
+    {
         Raw = Raw.ToLower();
 
         if (Raw.Equals("1") || Raw.Equals("battle"))
@@ -47,26 +50,40 @@ public class Menu {
             return "";
     }
 
-    private void ShowMonsters(List<string> Monsters) {
+    private void ShowMonsters(List<string> Monsters)
+    {
         Console.WriteLine(
-            "Which monster do you want to battle with? (Type ENTER on empty monster to return)\n");
+            "Which monster do you want to battle with? (Type ENTER on empty monster to return)\n"
+        );
         Console.WriteLine("1. Random\t\t21. Ghost\t\t41. Phoenix");
-        for (int i = 2; i <= 16; i++) {
-            Console.WriteLine("{0}. {3}\t{6}{1}. {4}\t{7}{2}. {5}", i, i + 20, i + 40,
-                              Monsters[i - 2].Capitalize(), Monsters[i + 18].Capitalize(),
-                              Monsters[i + 38].Capitalize(),
-                              Monsters[i - 2].Length < 12 ? "\t" : "",
-                              Monsters[i + 18].Length < 12 ? "\t" : "");
+        for (int i = 2; i <= 16; i++)
+        {
+            Console.WriteLine(
+                "{0}. {3}\t{6}{1}. {4}\t{7}{2}. {5}",
+                i,
+                i + 20,
+                i + 40,
+                Monsters[i - 2].Capitalize(),
+                Monsters[i + 18].Capitalize(),
+                Monsters[i + 38].Capitalize(),
+                Monsters[i - 2].Length < 12 ? "\t" : "",
+                Monsters[i + 18].Length < 12 ? "\t" : ""
+            );
         }
     }
 
-    private string ParseShop(string Raw) {
+    private string ParseShop(string Raw)
+    {
         Raw = Raw.ToLower();
 
         if (Raw.Equals("1") || Raw.Equals("gold shop") || Raw.Equals("gold"))
             return "gold";
-        else if (Raw.Equals("2") || Raw.Equals("experience shop") || Raw.Equals("experience") ||
-                 Raw.Equals("exp"))
+        else if (
+            Raw.Equals("2")
+            || Raw.Equals("experience shop")
+            || Raw.Equals("experience")
+            || Raw.Equals("exp")
+        )
             return "exp";
         else if (Raw.Equals("3") || Raw.Equals("return"))
             return "return";
@@ -74,11 +91,13 @@ public class Menu {
             return "";
     }
 
-    public void Town() {
+    public void Town()
+    {
         string Input;
 
         Console.Clear();
-        while (true) {
+        while (true)
+        {
             Console.WriteLine("Where do you want to go now?");
             Console.WriteLine("1. Battle");
             Console.WriteLine("2. Shop");
@@ -90,10 +109,12 @@ public class Menu {
             Input = Console.ReadLine();
             Input = this.ParseTownCommand(Input);
 
-            if (Input.Equals("battle")) {
+            if (Input.Equals("battle"))
+            {
                 Console.Clear();
                 List<string> Monsters = Initializer.InitMonsters();
-                while (true) {
+                while (true)
+                {
                     this.ShowMonsters(Monsters);
 
                     string Ans = Console.ReadLine();
@@ -102,7 +123,8 @@ public class Menu {
                     int Value = -1;
                     bool Numeric = false;
 
-                    if (Ans.Equals("1") || Ans.Equals("random")) {
+                    if (Ans.Equals("1") || Ans.Equals("random"))
+                    {
                         int d = Dice.Roll(Monsters.Count) - 1;
                         string[] tokens = Monsters[d].Split(' ');
                         string file = String.Join("", tokens);
@@ -111,13 +133,18 @@ public class Menu {
                         BC.Battle();
                         Console.Clear();
                         break;
-                    } else if (Ans.Equals(""))
+                    }
+                    else if (Ans.Equals(""))
                         break;
-                    else {
-                        try {
+                    else
+                    {
+                        try
+                        {
                             Value = Int32.Parse(Ans);
                             Numeric = true;
-                        } catch (SystemException) {
+                        }
+                        catch (SystemException)
+                        {
                             Console.Clear();
                             Console.WriteLine("Invalid monster\n");
                             Numeric = false;
@@ -132,10 +159,13 @@ public class Menu {
                     else
                         Index = Monsters.BinarySearch(Ans);
 
-                    if (Index < 0) {
+                    if (Index < 0)
+                    {
                         Console.Clear();
                         Console.WriteLine("Invalid monster\n");
-                    } else {
+                    }
+                    else
+                    {
                         string[] tokens = Monsters[Index].Split(' ');
                         string file = String.Join("", tokens);
                         Enemy E = Bestiary.Load(file);
@@ -145,11 +175,14 @@ public class Menu {
                         break;
                     }
                 }
-            } else if (Input.Equals("shop")) {
+            }
+            else if (Input.Equals("shop"))
+            {
                 string Market;
 
                 Console.Clear();
-                while (true) {
+                while (true)
+                {
                     Console.WriteLine("Which shop do you want to visit?");
                     Console.WriteLine("1. Gold Shop");
                     Console.WriteLine("2. Experience Shop");
@@ -158,50 +191,67 @@ public class Menu {
                     Market = Console.ReadLine();
                     Market = this.ParseShop(Market);
 
-                    if (Market.Equals("gold")) {
+                    if (Market.Equals("gold"))
+                    {
                         Market MK = new Market(this.DM.Hero);
                         MK.Shop();
                         Console.Clear();
-                    } else if (Market.Equals("exp")) {
+                    }
+                    else if (Market.Equals("exp"))
+                    {
                         ExpMarket EM = new ExpMarket(this.DM.Hero);
                         EM.Shop();
                         Console.Clear();
-                    } else if (Market.Equals("return")) {
+                    }
+                    else if (Market.Equals("return"))
+                    {
                         Console.Clear();
                         break;
-                    } else {
+                    }
+                    else
+                    {
                         Console.Clear();
                         Console.WriteLine("Invalid shop\n");
                     }
                 }
-            } else if (Input.Equals("manage inventory"))
+            }
+            else if (Input.Equals("manage inventory"))
                 InventoryController.Manage(this.DM.Hero);
-            else if (Input.Equals("rest")) {
+            else if (Input.Equals("rest"))
+            {
                 this.DM.Hero.Rest();
                 Console.Clear();
                 Console.WriteLine("You are fully replenished\n");
-            } else if (Input.Equals("save game")) {
+            }
+            else if (Input.Equals("save game"))
+            {
                 Console.Clear();
                 if (this.SM.SaveGame(this.DM.Hero, this.SM.CurrentSlot))
                     Console.WriteLine("Game saved!\n");
                 else
                     Console.WriteLine("Error! Could not save game\n");
-            } else if (Input.Equals("exit")) {
+            }
+            else if (Input.Equals("exit"))
+            {
                 Console.Clear();
                 return;
-            } else {
+            }
+            else
+            {
                 Console.Clear();
                 Console.WriteLine("Invalid command\n");
             }
         }
     }
 
-    public bool MainMenu() {
+    public bool MainMenu()
+    {
         string Input;
         Hero H = null;
 
         Console.Clear();
-        while (true) {
+        while (true)
+        {
             Console.WriteLine("+------------+");
             Console.WriteLine("| Baldilands |");
             Console.WriteLine("+------------+\n");
@@ -213,33 +263,47 @@ public class Menu {
             Input = Console.ReadLine();
             Input = this.ParseCommand(Input);
 
-            if (Input.Equals("new game")) {
+            if (Input.Equals("new game"))
+            {
                 this.SM.SetSaveSlot();
                 if (this.SM.CurrentSlot != -1)
                     H = CharacterCreator.Create();
-                else {
+                else
+                {
                     Console.Clear();
                     continue;
                 }
-            } else if (Input.Equals("load game")) {
+            }
+            else if (Input.Equals("load game"))
+            {
                 this.SM.SetLoadSlot();
-                if (this.SM.CurrentSlot != -1) {
+                if (this.SM.CurrentSlot != -1)
+                {
                     H = this.SM.LoadGame(this.SM.CurrentSlot);
-                } else {
+                }
+                else
+                {
                     Console.Clear();
                     continue;
                 }
-            } else if (Input.Equals("delete")) {
+            }
+            else if (Input.Equals("delete"))
+            {
                 Console.Clear();
                 this.SM.ClearSlot();
-            } else if (Input.Equals("exit")) {
+            }
+            else if (Input.Equals("exit"))
+            {
                 Console.Clear();
                 return false;
-            } else {
+            }
+            else
+            {
                 Console.Clear();
                 Console.WriteLine("Invalid command\n");
             }
-            if (H != null) {
+            if (H != null)
+            {
                 this.DM.Hero = H;
                 this.SM.SaveGame(H, this.SM.CurrentSlot);
                 return true;

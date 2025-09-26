@@ -1,9 +1,9 @@
-using System;
 using System.Collections.Generic;
 
 namespace Baldilands;
 
-public class BattleManager {
+public class BattleManager
+{
     private Battling b1;
     private Battling b2;
     private List<Battling> list;
@@ -12,23 +12,28 @@ public class BattleManager {
     public int turn;
     private bool _RunEnded;
 
-    private int RollIniciative(ICreature c) { return Dice.Roll(6) + c.Ability; }
+    private int RollIniciative(ICreature c)
+    {
+        return Dice.Roll(6) + c.Ability;
+    }
 
-    public BattleManager(ICreature a, ICreature b) {
+    public BattleManager(ICreature a, ICreature b)
+    {
         string bda;
         string bdb;
 
-        if (a.Ability > b.Ability) {
+        if (a.Ability > b.Ability)
+        {
             bda = "easy";
             bdb = "hard";
         }
-
-        else if (a.Ability < b.Ability) {
+        else if (a.Ability < b.Ability)
+        {
             bda = "hard";
             bdb = "easy";
         }
-
-        else {
+        else
+        {
             bda = "normal";
             bdb = "normal";
         }
@@ -36,10 +41,13 @@ public class BattleManager {
         this.b2 = new Battling(b, bdb, false);
         list = new List<Battling>();
 
-        if (RollIniciative(a) > RollIniciative(b)) {
+        if (RollIniciative(a) > RollIniciative(b))
+        {
             list.Add(b1);
             list.Add(b2);
-        } else {
+        }
+        else
+        {
             list.Add(b2);
             list.Add(b1);
         }
@@ -49,25 +57,34 @@ public class BattleManager {
         this.BL = new BattleLogger();
     }
 
-    private bool DodgeAttempt(int Buff) {
+    private bool DodgeAttempt(int Buff)
+    {
         int dice = Dice.Roll(100);
         return (dice <= Buff + 2);
     }
 
-    public void SaveRunLog(bool HasRun) { BL.SaveRunLog(HasRun); }
+    public void SaveRunLog(bool HasRun)
+    {
+        BL.SaveRunLog(HasRun);
+    }
 
-    public void SetTurn(string cmd1, string cmd2, params Spell[] CastSpell) {
+    public void SetTurn(string cmd1, string cmd2, params Spell[] CastSpell)
+    {
         int Next = (turn + 1) % 2;
-        if (list[turn].IsPlayer) {
+        if (list[turn].IsPlayer)
+        {
             list[turn].SetCommand(cmd1);
             list[Next].SetCommand(cmd2);
-        } else {
+        }
+        else
+        {
             list[Next].SetCommand(cmd1);
             list[turn].SetCommand(cmd2);
         }
     }
 
-    public bool Turn() {
+    public bool Turn()
+    {
         int CurrentDamage = 0;
         bool CurrentCrit = false;
         ICreature CurrentCreature = list[turn].Creature;
@@ -81,27 +98,28 @@ public class BattleManager {
 
         // save log
 
-        if (CurrentCMD.Equals("attack")) {
+        if (CurrentCMD.Equals("attack"))
+        {
             MeleeAttack MA = CurrentCreature.GetMeleeAttack();
             CurrentDamage = MA.Points;
             CurrentCrit = MA.IsCritical;
         }
-
-        else if (CurrentCMD.Equals("ranged attack")) {
+        else if (CurrentCMD.Equals("ranged attack"))
+        {
             RangedAttack RA = CurrentCreature.GetRangedAttack();
             CurrentDamage = RA.Points;
             CurrentCrit = RA.IsCritical;
         }
-
-        else if (CurrentCMD.Equals("spell")) {
+        else if (CurrentCMD.Equals("spell"))
+        {
             // spell mechanics
         }
-
-        else if (CurrentCMD.Equals("dodge")) {
+        else if (CurrentCMD.Equals("dodge"))
+        {
             CurrentDodgeBuff = 20;
         }
-
-        else if (CurrentCMD.Equals("run")) {
+        else if (CurrentCMD.Equals("run"))
+        {
             CurrentRun = true;
         }
 
@@ -115,87 +133,112 @@ public class BattleManager {
         string NextCMD = list[Next].Cmd;
         Defense NextDefense = NextCreature.GetDefense();
 
-        if (NextCMD.Equals("attack")) {
+        if (NextCMD.Equals("attack"))
+        {
             MeleeAttack MA = NextCreature.GetMeleeAttack();
             NextDamage = MA.Points;
             NextCrit = MA.IsCritical;
         }
-
-        else if (NextCMD.Equals("ranged attack")) {
+        else if (NextCMD.Equals("ranged attack"))
+        {
             RangedAttack RA = NextCreature.GetRangedAttack();
             NextDamage = RA.Points;
             NextCrit = RA.IsCritical;
         }
-
-        else if (NextCMD.Equals("spell")) {
+        else if (NextCMD.Equals("spell"))
+        {
             // spell mechanics
         }
-
-        else if (NextCMD.Equals("dodge")) {
+        else if (NextCMD.Equals("dodge"))
+        {
             NextDodgeBuff = 20;
         }
-
-        else if (NextCMD.Equals("run")) {
+        else if (NextCMD.Equals("run"))
+        {
             NextRun = true;
         }
 
-        if (this.DodgeAttempt(CurrentDodgeBuff)) {
+        if (this.DodgeAttempt(CurrentDodgeBuff))
+        {
             CurrentDodgeSuccess = true;
             NextDamage = 0;
         }
 
-        if (this.DodgeAttempt(NextDodgeBuff)) {
+        if (this.DodgeAttempt(NextDodgeBuff))
+        {
             NextDodgeSuccess = true;
             CurrentDamage = 0;
         }
 
-        CurrentDamage =
-            (CurrentDamage - NextDefense.Points < 0 ? 0 : CurrentDamage - NextDefense.Points);
+        CurrentDamage = (
+            CurrentDamage - NextDefense.Points < 0 ? 0 : CurrentDamage - NextDefense.Points
+        );
 
         NextCreature.TakeDamage(CurrentDamage);
 
         this.BL.TurnLog = "";
 
-        this.BL.SaveTurnLog(CurrentCreature, list[turn].IsPlayer, CurrentCMD, CurrentDamage,
-                            CurrentCrit, NextDodgeSuccess);
+        this.BL.SaveTurnLog(
+            CurrentCreature,
+            list[turn].IsPlayer,
+            CurrentCMD,
+            CurrentDamage,
+            CurrentCrit,
+            NextDodgeSuccess
+        );
 
-        if (NextCreature.HP == 0) {
+        if (NextCreature.HP == 0)
+        {
             this.BL.CombatLog += TurnLog;
             this.Ended = true;
             return false;
         }
 
-        NextDamage =
-            (NextDamage - CurrentDefense.Points < 0 ? 0 : NextDamage - CurrentDefense.Points);
+        NextDamage = (
+            NextDamage - CurrentDefense.Points < 0 ? 0 : NextDamage - CurrentDefense.Points
+        );
 
         CurrentCreature.TakeDamage(NextDamage);
 
-        this.BL.SaveTurnLog(NextCreature, list[Next].IsPlayer, NextCMD, NextDamage, NextCrit,
-                            CurrentDodgeSuccess);
+        this.BL.SaveTurnLog(
+            NextCreature,
+            list[Next].IsPlayer,
+            NextCMD,
+            NextDamage,
+            NextCrit,
+            CurrentDodgeSuccess
+        );
 
         this.BL.CombatLog += TurnLog;
 
-        if (CurrentCreature.HP == 0) {
+        if (CurrentCreature.HP == 0)
+        {
             this.Ended = true;
             return false;
         }
 
-        if (CurrentRun) {
+        if (CurrentRun)
+        {
             bool RunSuccess = this.CheckRun(list[turn]);
             this.SaveRunLog(RunSuccess);
-            if (RunSuccess) {
+            if (RunSuccess)
+            {
                 this._RunEnded = true;
                 return false;
-            } else
+            }
+            else
                 return true;
         }
-        if (NextRun) {
+        if (NextRun)
+        {
             bool RunSuccess = this.CheckRun(list[Next]);
             this.SaveRunLog(RunSuccess);
-            if (RunSuccess) {
+            if (RunSuccess)
+            {
                 this._RunEnded = true;
                 return false;
-            } else
+            }
+            else
                 return true;
         }
 
@@ -208,33 +251,43 @@ public class BattleManager {
         return true;
     }
 
-    private bool CheckRun(Battling B) {
-        if (B.Run && B.RunAttempt()) {
+    private bool CheckRun(Battling B)
+    {
+        if (B.Run && B.RunAttempt())
+        {
             this.Ended = true;
             return true;
         }
         return false;
     }
 
-    public bool TriedRun() {
+    public bool TriedRun()
+    {
         Battling B = list[turn];
         if (B.Run)
             return true;
         return false;
     }
 
-    public string TurnLog {
+    public string TurnLog
+    {
         get { return BL.TurnLog; }
     }
 
-    public string CombatLog {
+    public string CombatLog
+    {
         get { return BL.CombatLog; }
     }
 
-    public bool HasEnded() { return this.Ended; }
+    public bool HasEnded()
+    {
+        return this.Ended;
+    }
 
-    public Reward GetReward() {
-        int Exp, Gold;
+    public Reward GetReward()
+    {
+        int Exp,
+            Gold;
         Item? item = null;
         if (b2.StatSum() <= b1.StatSum() / 2)
             Exp = 0;
@@ -249,7 +302,8 @@ public class BattleManager {
         return r;
     }
 
-    public int LostExp() {
+    public int LostExp()
+    {
         int Exp;
         if (b2.StatSum() <= b1.StatSum() / 2)
             Exp = 2;
@@ -260,7 +314,8 @@ public class BattleManager {
         return Exp;
     }
 
-    public bool RunEnded {
+    public bool RunEnded
+    {
         get { return this._RunEnded; }
     }
 }
